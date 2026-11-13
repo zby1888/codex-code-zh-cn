@@ -303,8 +303,8 @@
 -            "Choose the working directory when resuming, with --cd taking precedence for this session"
 +            "恢复会话时选择工作目录；本次会话中 --cd 参数优先级更高"
 @@ -306,1 +306,1 @@
--            Some("Requires --cd for remote sessions".to_string())
-+            Some("远程会话需要指定 --cd".to_string())
+-                    Some("Requires --cd for remote sessions".to_string())
++                    Some("远程会话需要指定 --cd".to_string())
 @@ -340,1 +340,1 @@
 -    let subtitle = notice.unwrap_or_else(|| "Changes save automatically".to_string());
 +    let subtitle = notice.unwrap_or_else(|| "更改会自动保存".to_string());
