@@ -1,0 +1,155 @@
+--- a/codex-rs/tui/src/slash_command.rs
++++ b/codex-rs/tui/src/slash_command.rs
+@@ -92,71 +92,71 @@
+     /// User-visible description shown in the popup.
+     pub fn description(self) -> &'static str {
+         match self {
+-            SlashCommand::Config => "configure Codex preferences",
+-            SlashCommand::Feedback => "send logs to maintainers or save a ZIP",
+-            SlashCommand::New => "start a new chat during a conversation",
+-            SlashCommand::Init => "create an AGENTS.md file with instructions for Codex",
+-            SlashCommand::Compact => "summarize conversation to prevent hitting the context limit",
+-            SlashCommand::Recap => "summarize the current conversation now",
+-            SlashCommand::Review => "review my current changes and find issues",
+-            SlashCommand::Rename => "rename the current thread",
+-            SlashCommand::Resume => "resume a saved chat",
+-            SlashCommand::Archive => "archive this session",
+-            SlashCommand::Delete => "permanently delete this session",
+-            SlashCommand::Clear => "clear the terminal and start a new chat",
+-            SlashCommand::Fork => "fork the current chat",
+-            SlashCommand::Worktree => "start or continue a conversation in a new worktree",
+-            SlashCommand::App => "continue this session in the Desktop app",
+-            SlashCommand::Quit | SlashCommand::Exit => "exit Codex",
+-            SlashCommand::Copy => "copy the last response or part of it",
+-            SlashCommand::Export => "export the conversation as markdown",
+-            SlashCommand::Raw => "toggle raw scrollback mode for copy-friendly terminal selection",
+-            SlashCommand::Tui => "choose the TUI mode for the next launch",
+-            SlashCommand::Diff => "show git diff (including untracked files)",
+-            SlashCommand::Mention => "mention a file",
+-            SlashCommand::Skills => "use skills to improve how Codex performs specific tasks",
+-            SlashCommand::Import => "import setup, this project, and recent chats from Claude Code",
+-            SlashCommand::Hooks => "view and manage lifecycle hooks",
+-            SlashCommand::Daemon => "Manage the local background server",
+-            SlashCommand::Warnings => "view retained warnings and diagnostic details",
+-            SlashCommand::Status => "show current session configuration and token usage",
+-            SlashCommand::Cd => "change the current working directory",
+-            SlashCommand::Pwd => "show the current working directory",
+-            SlashCommand::Usage => "view account usage or use a usage limit reset",
+-            SlashCommand::DebugConfig => "show config layers and requirement sources for debugging",
+-            SlashCommand::Title => "configure which items appear in the terminal title",
+-            SlashCommand::Statusline => "configure which items appear in the status line",
+-            SlashCommand::Theme => "choose a syntax highlighting theme",
+-            SlashCommand::Pets => "choose or hide the terminal pet",
+-            SlashCommand::Ps => "list background terminals",
+-            SlashCommand::Stop => "stop all background terminals",
++            SlashCommand::Config => "配置 Codex 偏好设置",
++            SlashCommand::Feedback => "向维护者发送日志或保存为 ZIP 文件",
++            SlashCommand::New => "在当前对话中开始新聊天",
++            SlashCommand::Init => "创建包含 Codex 指令的 AGENTS.md 文件",
++            SlashCommand::Compact => "总结对话，避免达到上下文长度限制",
++            SlashCommand::Recap => "立即总结当前对话",
++            SlashCommand::Review => "检查当前更改并查找问题",
++            SlashCommand::Rename => "重命名当前会话",
++            SlashCommand::Resume => "恢复已保存的聊天",
++            SlashCommand::Archive => "归档此会话",
++            SlashCommand::Delete => "永久删除此会话",
++            SlashCommand::Clear => "清空终端并开始新聊天",
++            SlashCommand::Fork => "从当前聊天创建分支",
++            SlashCommand::Worktree => "在新的工作树中开始或继续对话",
++            SlashCommand::App => "在桌面应用中继续此会话",
++            SlashCommand::Quit | SlashCommand::Exit => "退出 Codex",
++            SlashCommand::Copy => "复制上一条回复或其中一部分",
++            SlashCommand::Export => "将对话导出为 Markdown",
++            SlashCommand::Raw => "切换原始滚屏模式，方便在终端中选择和复制文本",
++            SlashCommand::Tui => "选择下次启动时使用的 TUI 模式",
++            SlashCommand::Diff => "显示 Git 差异（包括未跟踪文件）",
++            SlashCommand::Mention => "引用文件",
++            SlashCommand::Skills => "使用技能提升 Codex 执行特定任务的能力",
++            SlashCommand::Import => "从 Claude Code 导入配置、本项目和最近的聊天记录",
++            SlashCommand::Hooks => "查看和管理生命周期钩子",
++            SlashCommand::Daemon => "管理本地后台服务器",
++            SlashCommand::Warnings => "查看保留的警告和诊断详情",
++            SlashCommand::Status => "显示当前会话配置和令牌用量",
++            SlashCommand::Cd => "更改当前工作目录",
++            SlashCommand::Pwd => "显示当前工作目录",
++            SlashCommand::Usage => "查看账户用量或重置用量限制",
++            SlashCommand::DebugConfig => "显示配置层级和调试所需的来源信息",
++            SlashCommand::Title => "配置终端标题中显示的项目",
++            SlashCommand::Statusline => "配置状态栏中显示的项目",
++            SlashCommand::Theme => "选择语法高亮主题",
++            SlashCommand::Pets => "选择或隐藏终端宠物",
++            SlashCommand::Ps => "列出后台终端",
++            SlashCommand::Stop => "停止所有后台终端",
+             SlashCommand::MemoryDrop => "DO NOT USE",
+             SlashCommand::MemoryUpdate => "DO NOT USE",
+-            SlashCommand::Model => "choose what model and reasoning effort to use",
+-            SlashCommand::Presets => "run or save reusable prompts and slash commands",
+-            SlashCommand::Daybreak => "turn Daybreak on or off",
++            SlashCommand::Model => "选择模型和推理强度",
++            SlashCommand::Presets => "运行或保存可重复使用的提示词和斜杠命令",
++            SlashCommand::Daybreak => "开启或关闭 Daybreak",
+             SlashCommand::Ide => {
+-                "include current selection, open files, and other context from your IDE"
++                "包含 IDE 中当前选区、打开的文件及其他上下文"
+             }
+-            SlashCommand::Plan => "switch to Plan mode",
+-            SlashCommand::Voice => "start or stop voice; use /voice settings to choose a voice",
+-            SlashCommand::Goal => "set or view the goal for a long-running task",
+-            SlashCommand::Agents => "open the agent command center",
+-            SlashCommand::MultiAgents => "switch between this session's subagents",
+-            SlashCommand::Side | SlashCommand::Btw => "start a side conversation",
+-            SlashCommand::Permissions => "choose what Codex is allowed to do",
+-            SlashCommand::Keymap => "remap TUI shortcuts",
+-            SlashCommand::Vim => "toggle Vim mode for the composer",
+-            SlashCommand::ElevateSandbox => "set up elevated agent sandbox",
+-            SlashCommand::Experimental => "toggle experimental features",
+-            SlashCommand::AutoReview => "approve one retry of a recent auto-review denial",
+-            SlashCommand::Memories => "configure memory use and generation",
+-            SlashCommand::Mcp => "list MCP tools; use /mcp verbose or /mcp login <name>",
+-            SlashCommand::Apps => "manage apps",
+-            SlashCommand::Plugins => "browse plugins",
+-            SlashCommand::Logout => "log out of Codex",
+-            SlashCommand::Rollout => "print the rollout file path",
+-            SlashCommand::TestApproval => "test approval request",
++            SlashCommand::Plan => "切换到计划模式",
++            SlashCommand::Voice => "开始或停止语音；使用 /voice settings 选择语音",
++            SlashCommand::Goal => "设置或查看长期任务的目标",
++            SlashCommand::Agents => "打开智能体指挥中心",
++            SlashCommand::MultiAgents => "在当前会话的子智能体之间切换",
++            SlashCommand::Side | SlashCommand::Btw => "开始旁支对话",
++            SlashCommand::Permissions => "选择 Codex 可以执行的操作",
++            SlashCommand::Keymap => "重新映射 TUI 快捷键",
++            SlashCommand::Vim => "为输入框切换 Vim 模式",
++            SlashCommand::ElevateSandbox => "配置增强型智能体沙盒",
++            SlashCommand::Experimental => "切换实验性功能",
++            SlashCommand::AutoReview => "批准对最近一次自动审查拒绝结果进行一次重试",
++            SlashCommand::Memories => "配置记忆的使用和生成",
++            SlashCommand::Mcp => "列出 MCP 工具；使用 /mcp verbose 查看详细信息，或使用 /mcp login <name> 登录",
++            SlashCommand::Apps => "管理应用",
++            SlashCommand::Plugins => "浏览插件",
++            SlashCommand::Logout => "退出 Codex 账户",
++            SlashCommand::Rollout => "输出会话运行记录文件路径",
++            SlashCommand::TestApproval => "测试审批请求",
+         }
+     }
+ 
+@@ -366,7 +366,19 @@
+         assert!(SlashCommand::App.available_during_task());
+     }
+ 
++
+     #[test]
++    fn common_command_descriptions_are_simplified_chinese() {
++        assert_eq!(SlashCommand::Model.description(), "选择模型和推理强度");
++        assert_eq!(
++            SlashCommand::Presets.description(),
++            "运行或保存可重复使用的提示词和斜杠命令"
++        );
++        assert_eq!(SlashCommand::Review.description(), "检查当前更改并查找问题");
++        assert_eq!(SlashCommand::Mcp.description(), "列出 MCP 工具；使用 /mcp verbose 查看详细信息，或使用 /mcp login <name> 登录");
++    }
++
++    #[test]
+     fn auto_review_command_is_approve() {
+         assert_eq!(SlashCommand::AutoReview.command(), "approve");
+         assert_eq!(
