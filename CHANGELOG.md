@@ -1,3 +1,11 @@
+## 1.3.0
+
+- Add Codex slash-menu prompts for Chinese and English mode using the native custom-prompt picker.
+- Add the codex-zh-language helper and live settings-file watching so prompt-driven changes switch the current wrapper session.
+- Add 0.169.0 UI translations for slash commands, settings, permissions, agent task center, side chats, feedback, diagnostics, and usage panels.
+- Add an upstream Codex 0.169.0 TUI source audit to the Termux cloud build.
+- Keep the original codex command, Codex auth/provider settings, and user-owned prompts untouched.
+
 ## v1.2.0（2026-08-16）
 
 ### 变更（定位调整：只做 CLI）
