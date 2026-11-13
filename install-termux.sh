@@ -42,12 +42,14 @@ tar --exclude='./.git' --exclude='./.github' --exclude='./dist' \
 PTY_BINARY="$INSTALL_DIR/node_modules/node-pty/prebuilds/android-arm64/pty.node"
 if [[ ! -f "$PTY_BINARY" ]]; then
   info "Android PTY prebuild missing; installing the published prebuilt package (no scripts, no compilation)"
+  TMP_DIR="$(mktemp -d)"
   (
-    cd "$INSTALL_DIR"
-    npm install --omit=dev --ignore-scripts --no-audit --no-fund
-    npm install --no-save --ignore-scripts --package-lock=false \
-      "node-pty@npm:@mmmbuto/node-pty-android-arm64@1.1.2"
+    cd "$TMP_DIR"
+    TARBALL="$(npm pack --silent @mmmbuto/node-pty-android-arm64@1.1.2)"
+    mkdir -p "$INSTALL_DIR/node_modules/node-pty"
+    tar -xzf "$TMP_DIR/$TARBALL" --strip-components=1 -C "$INSTALL_DIR/node_modules/node-pty"
   )
+  rm -rf "$TMP_DIR"
   PTY_BINARY="$INSTALL_DIR/node_modules/node-pty/prebuilds/android-arm64/pty.node"
 fi
 
