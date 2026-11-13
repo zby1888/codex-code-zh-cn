@@ -18,6 +18,11 @@ fi
 for cmd in node npm tar; do
   command -v "$cmd" >/dev/null 2>&1 || { err "Missing $cmd. Run: pkg install nodejs"; exit 1; }
 done
+NODE_MAJOR="$(node -p 'process.versions.node.split(".")[0]')"
+if [[ "$NODE_MAJOR" -lt 18 ]]; then
+  err "Node.js 18 or newer is required; detected $(node -v)."
+  exit 1
+fi
 command -v codex >/dev/null 2>&1 || {
   err "Codex CLI was not found. Install it first (for example: pkg install codex)."
   exit 1
