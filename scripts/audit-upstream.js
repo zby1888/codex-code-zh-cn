@@ -17,7 +17,7 @@ const DATA_FILES = [
   'data/ui-patterns.json',
   'verbs/zh-CN.json',
 ];
-const SOURCE_DIRS = ['codex-rs/tui/src', 'codex-rs/cli/src'];
+const SOURCE_DIRS = ['codex-rs/tui/src'];
 
 const dictionary = new Map();
 for (const file of DATA_FILES) {
@@ -102,7 +102,7 @@ for (const list of Object.values(report)) {
 const lines = [
   '# Codex CLI 0.169.0 静态界面汉化审计',
   '',
-  '基准：OpenAI Codex CLI tag rust-v0.169.0；扫描 TUI 与 CLI Rust 源码中的用户可见文本候选。',
+  '基准：OpenAI Codex CLI tag rust-v0.169.0；扫描 TUI Rust 源码中的界面文本候选。',
   '注意：提取结果包含部分诊断/内部文本；“部分命中”表示句子中至少有一个翻译片段，不代表整句完整汉化。',
   '',
   '- 唯一候选文本：' + unique.size,
