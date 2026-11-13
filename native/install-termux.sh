@@ -88,8 +88,14 @@ if [ -z "\$CODEX_HOME" ]; then
     exit 1
   fi
   CODEX_HOME="\$HOME/.codex-zh-native"
-  export CODEX_HOME
 fi
+if [ ! -d "\$CODEX_HOME" ]; then
+  mkdir -p "\$CODEX_HOME" || {
+    echo "codex-zh-native: 无法创建 CODEX_HOME：\$CODEX_HOME" >&2
+    exit 1
+  }
+fi
+export CODEX_HOME
 exec "\$APP_DIR/codex" "\$@"
 EOF
 chmod 700 "$WRAPPER_TMP"
