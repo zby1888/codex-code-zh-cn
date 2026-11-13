@@ -8,9 +8,14 @@ const { StreamTranslator } = require('../lib/translator');
 
 const ROOT = path.join(__dirname, '..');
 const DATA_FILES = [
-  'data/ui-translations-slash.json',
+  'data/ui-translations.json',
+  'data/ui-translations-extra.json',
   'data/ui-translations-0169.json',
+  'data/ui-translations-slash.json',
+  'data/ui-translations-words.json',
   'data/ui-translations-source.json',
+  'data/ui-patterns.json',
+  'verbs/zh-CN.json',
 ];
 const ENTRIES = DATA_FILES.flatMap((file) =>
   JSON.parse(fs.readFileSync(path.join(ROOT, file), 'utf8'))
