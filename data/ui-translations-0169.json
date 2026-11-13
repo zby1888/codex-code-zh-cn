@@ -1366,5 +1366,129 @@
   {
     "en": "maybe retro-grab later",
     "zh": "可能稍后再补抓"
+  },
+  {
+    "en": "This stops any running work in this task and archives it. Child agents stay unchanged. Its history can be restored from the resume picker.",
+    "zh": "这会停止此任务中正在运行的工作并将其归档。子代理不受影响。可从恢复会话选择器中恢复其历史记录。"
+  },
+  {
+    "en": "This stops any running work in this task and its child agents, then archives them. Their history can be restored from the resume picker.",
+    "zh": "这会停止此任务及其子代理中正在运行的工作，然后将它们归档。可从恢复会话选择器中恢复其历史记录。"
+  },
+  {
+    "en": "Permanently delete “{name}”?",
+    "zh": "永久删除“{name}”？"
+  },
+  {
+    "en": "Tasks with saved side chats stay intact. Otherwise, deleting this task stops its running work and permanently deletes its history and its child agents’ history.",
+    "zh": "包含已保存侧边对话的任务将保持不变。否则，删除此任务会停止其正在运行的工作，并永久删除任务及其子代理的历史记录。"
+  },
+  {
+    "en": "Permanently delete task and child agents",
+    "zh": "永久删除任务及其子代理"
+  },
+  {
+    "en": "Work may have stopped. Resume the task to continue, or retry the action.",
+    "zh": "任务可能已停止。恢复任务以继续，或重试此操作。"
+  },
+  {
+    "en": "Back to agents",
+    "zh": "返回代理列表"
+  },
+  {
+    "en": "Failed to archive side conversation {target}: {err}",
+    "zh": "归档侧边对话 {target} 失败：{err}"
+  },
+  {
+    "en": "Failed to interrupt side conversation {target}: {err}",
+    "zh": "中断侧边对话 {target} 失败：{err}"
+  },
+  {
+    "en": "Failed to close side conversation {target}: {err}",
+    "zh": "关闭侧边对话 {target} 失败：{err}"
+  },
+  {
+    "en": "Project-local config, hooks, and exec policies are disabled in the following folders",
+    "zh": "在以下文件夹中，项目级配置、Hook 和执行策略已禁用"
+  },
+  {
+    "en": "until the project is trusted, but skills still load.",
+    "zh": "直到项目被信任为止，但仍会加载技能。"
+  },
+  {
+    "en": "{current_name} is {availability}\n\nCodex now uses {target_name} in place of {current_name}. Switch to {target_name} to continue.",
+    "zh": "{current_name} 当前状态为 {availability}\n\nCodex 现在使用 {target_name} 替代 {current_name}。请切换到 {target_name} 以继续。"
+  },
+  {
+    "en": "continue without info",
+    "zh": "不提供信息并继续"
+  },
+  {
+    "en": "'/{}' is disabled while a task is in progress.",
+    "zh": "任务运行期间，'/{ }' 已禁用。"
+  },
+  {
+    "en": "{prefix} You can share this in #codex-feedback:",
+    "zh": "{prefix} 你可以在 #codex-feedback 中分享此内容："
+  },
+  {
+    "en": "{prefix} Please open an issue using the following URL:",
+    "zh": "{prefix} 请使用以下 URL 创建问题："
+  },
+  {
+    "en": "{prefix} Thanks for the feedback!",
+    "zh": "{prefix} 感谢反馈！"
+  },
+  {
+    "en": "Sentry Feedback ID:",
+    "zh": "Sentry 反馈 ID："
+  },
+  {
+    "en": "Or mention your thread ID",
+    "zh": "或者提供你的会话 ID"
+  },
+  {
+    "en": "in an existing issue.",
+    "zh": "在现有问题中。"
+  },
+  {
+    "en": "Thread ID:",
+    "zh": "会话 ID："
+  },
+  {
+    "en": "Benign usage blocked due to safety checks or refusals",
+    "zh": "正常使用被安全检查或拒绝机制阻止"
+  },
+  {
+    "en": "Copy transcript, footer, and composer selections on release; Auto follows terminal defaults",
+    "zh": "松开鼠标时复制对话记录、页脚和输入框中的选区；自动模式遵循终端默认设置"
+  },
+  {
+    "en": "Animate the welcome screen, working indicator, and transitions",
+    "zh": "为欢迎界面、工作指示器和过渡效果添加动画"
+  },
+  {
+    "en": "Show stars briefly for new Astra tasks",
+    "zh": "新 Astra 任务开始时短暂显示星光效果"
+  },
+  {
+    "en": "Turn on Animations to show Astra task stars",
+    "zh": "开启“动画”以显示 Astra 任务星光效果"
+  },
+  {
+    "en": "Choose the working directory when resuming, with --cd taking precedence for this session",
+    "zh": "恢复会话时选择工作目录；本次会话优先使用 --cd 指定的目录"
+  },
+  {
+    "en": "Requires --cd for remote sessions",
+    "zh": "远程会话需要使用 --cd"
+  },
+  {
+    "en": "clear search/close",
+    "zh": "清除搜索/关闭"
+  },
+  {
+    "en": "clear search",
+    "zh": "清除搜索"
   }
 ]
