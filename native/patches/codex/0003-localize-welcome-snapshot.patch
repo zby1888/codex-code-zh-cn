@@ -1,0 +1,9 @@
+--- a/codex-rs/tui/src/onboarding/snapshots/codex_tui__onboarding__welcome__tests__welcome_logo_160x48.snap
++++ b/codex-rs/tui/src/onboarding/snapshots/codex_tui__onboarding__welcome__tests__welcome_logo_160x48.snap
+@@ -22,5 +22,5 @@
+ 
+ 
+ 
+-  Welcome to Codex, OpenAI's command-line coding agent
++  欢迎使用 Codex，OpenAI 的命令行编程智能体
+ 

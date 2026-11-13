@@ -1,0 +1,17 @@
+--- a/codex-rs/tui/src/onboarding/onboarding_screen.rs
++++ b/codex-rs/tui/src/onboarding/onboarding_screen.rs
+@@ -600,11 +600,11 @@
+     super::auth::render_device_code_prompt(
+         area,
+         buf,
+-        "  Sign in to your gateway".into(),
++        "  登录到你的网关".into(),
+         Some((&prompt.verification_url, &prompt.user_code)),
+         [
+-            "  1. Open this link in a browser",
+-            "  2. Enter this one-time code when prompted",
++            "  1. 在浏览器中打开此链接",
++            "  2. 按提示输入此一次性验证码",
+         ],
+         keys::CANCEL[0],
+     );
