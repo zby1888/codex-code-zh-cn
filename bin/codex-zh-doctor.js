@@ -101,6 +101,23 @@ healthy = check('包装器语言设置', () => {
   return true;
 }) && healthy;
 
+healthy = check('语言切换助手命令', () => {
+  const found = detect.which('codex-zh-language');
+  if (!found) throw new Error('缺少 codex-zh-language；请重新运行 install-termux.sh');
+  console.log(`    路径：${found}`);
+  return true;
+}) && healthy;
+
+healthy = check('Codex 斜杠菜单入口', () => {
+  const home = process.env.HOME || require('os').homedir();
+  const promptDir = path.join(home, '.codex', 'prompts');
+  const names = ['codex-zh-cn.md', 'codex-zh-en.md'];
+  const missing = names.filter((name) => !fs.existsSync(path.join(promptDir, name)));
+  if (missing.length) throw new Error('缺少菜单 prompt：' + missing.join(', ') + '；请重新运行 install-termux.sh');
+  console.log('    已安装：/prompts:codex-zh-cn、/prompts:codex-zh-en');
+  return true;
+}) && healthy;
+
 healthy = check('PATH 中的 codex-zh', () => {
   const found = detect.which('codex-zh');
   if (!found) throw new Error('codex-zh 不在 PATH 中；请重新运行 install.sh / install.ps1');
