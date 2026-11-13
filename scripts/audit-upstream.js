@@ -109,8 +109,26 @@ function extract(source, relative) {
   return out;
 }
 
+function isNonLocalizable(text) {
+  const value = text.trim();
+  if (/^%[A-Za-z0-9_ %-]+$/.test(value)) return true;
+  if (/^GPT-[0-9]/i.test(value)) return true;
+  if (/^codex-diagnostics-/i.test(value)) return true;
+  if (/^(?:Option::deserialize|minLength|maxLength|additionalProperties|-NoProfile)$/.test(value)) return true;
+  if (/^(?:tui-project-trust-write-|projects\\.)/.test(value)) return true;
+  if (/^(?:app|codex):\\/\\//.test(value)) return true;
+  if (/^(?:colors dark light palette|animations motion|welcome hints|statusline footer|title tab window|alerts bell|keymap bindings|burst clipboard|dense comfortable|cwd folder|editor modal|clipboard mouse|collapse_turn_details)/.test(value)) return true;
+  if (/^on_plain_char_no_hold/.test(value)) return true;
+  const remainder = value
+    .replace(/\\{[^}]*\\}/g, '')
+    .replace(/%[A-Za-z0-9_]+/g, '')
+    .replace(/[0-9\\s:.,%/\\\\_$#-]/g, '');
+  return remainder.length === 0;
+}
+
 function classify(text) {
   if (dictionary.has(text)) return 'exact';
+  if (isNonLocalizable(text)) return 'excluded';
   const keys = [...dictionary.keys()].filter((key) => key.length >= 4 && text.includes(key));
   return keys.length ? 'partial' : 'missing';
 }
@@ -127,7 +145,7 @@ for (const relative of AUDIT_FILES) {
   }
 }
 
-const report = { exact: [], partial: [], missing: [] };
+const report = { exact: [], partial: [], missing: [], excluded: [] };
 for (const item of unique.values()) report[classify(item.text)].push(item);
 for (const list of Object.values(report)) {
   list.sort((a, b) => a.file.localeCompare(b.file) || a.line - b.line);
@@ -143,6 +161,7 @@ const lines = [
   '- 完整命中：' + report.exact.length,
   '- 部分命中：' + report.partial.length,
   '- 未命中：' + report.missing.length,
+  '- 非翻译项（格式符、路径、模型名等）：' + report.excluded.length,
   '',
   '## 未命中候选（最多显示 250 条）',
   '',
