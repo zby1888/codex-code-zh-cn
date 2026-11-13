@@ -57,7 +57,7 @@ fi
 
 mkdir -p "$RELEASES"
 printf '%s\n' 'managed by codex-zh-native installer' > "$APP_ROOT/.managed-by-codex-zh-native"
-STAGE="$RELEASES/.stage-$VERSION-$"
+STAGE="$RELEASES/.stage-$VERSION-$(date +%s)"
 trap 'rm -rf "$STAGE"' 0 HUP INT TERM
 rm -rf "$STAGE"
 mkdir -p "$STAGE"
