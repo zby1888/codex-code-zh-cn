@@ -31,6 +31,13 @@ command -v codex >/dev/null 2>&1 || {
 SOURCE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 INSTALL_DIR="${CODEX_ZH_INSTALL_DIR:-$HOME/.local/share/codex-code-zh-cn}"
 BIN_DIR="$PREFIX/bin"
+HOME_REAL="$(cd "$HOME" && pwd -P)"
+mkdir -p "$INSTALL_DIR"
+INSTALL_DIR="$(cd "$INSTALL_DIR" && pwd -P)"
+case "$INSTALL_DIR" in
+  "$HOME_REAL"/*) ;;
+  *) err "Install directory must be inside HOME: $INSTALL_DIR"; exit 1 ;;
+esac
 EXPECTED_SHA256="660a3025230f6035b7b8c000e8cca6ca3992bedaa05f7b165e7c3a5f1ae8ec8a"
 
 if [[ ! -f "$SOURCE_DIR/package.json" ]]; then
