@@ -60,7 +60,6 @@ jobs:
           path: upstream-codex
           sparse-checkout: |
             codex-rs/tui/src
-            codex-rs/cli/src
           sparse-checkout-cone-mode: true
           fetch-depth: 1
 
