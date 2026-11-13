@@ -217,7 +217,7 @@ async function main() {
         return text.slice(end + suffix.length);
       }
 
-      const m = /Unrecognized command '\\/(chinese|zh|english|en|language|lang)'/i.exec(text);
+      const m = /Unrecognized command '\/(chinese|zh|english|en|language|lang)'/i.exec(text);
       if (!m) return undefined;
 
       const cmd = m[1].toLowerCase();
@@ -249,7 +249,7 @@ async function main() {
           : `⚠️ Failed to switch to English; settings were not saved: ${err.message}`;
       }
 
-      const lineStart = Math.max(0, text.lastIndexOf('\\n', m.index - 1) + 1);
+      const lineStart = Math.max(0, text.lastIndexOf('\n', m.index - 1) + 1);
       const suffix = 'supported commands.';
       const end = text.indexOf(suffix, m.index);
       if (end >= 0) return text.slice(0, lineStart) + text.slice(end + suffix.length);
