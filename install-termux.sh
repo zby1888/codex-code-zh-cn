@@ -77,6 +77,9 @@ if [[ "$ACTUAL_SHA256" != "$EXPECTED_SHA256" ]]; then
   exit 1
 fi
 
+info "Loading Android PTY module on this device"
+node -e 'const p=require(process.argv[1]); if (typeof p.spawn !== "function") throw new Error("node-pty spawn() is unavailable")' "$INSTALL_DIR/node_modules/node-pty"
+
 chmod +x "$INSTALL_DIR/bin/codex-zh.js" "$INSTALL_DIR/bin/codex-zh-doctor.js"
 
 # Termux does not guarantee /usr/bin/env; use Termux's own bash and invoke Node explicitly.
