@@ -17,7 +17,41 @@ const DATA_FILES = [
   'data/ui-patterns.json',
   'verbs/zh-CN.json',
 ];
-const SOURCE_DIRS = ['codex-rs/tui/src'];
+const AUDIT_FILES = [
+  'codex-rs/tui/src/bottom_pane/command_popup.rs',
+  'codex-rs/tui/src/bottom_pane/slash_commands.rs',
+  'codex-rs/tui/src/bottom_pane/chat_composer.rs',
+  'codex-rs/tui/src/bottom_pane/config_panel.rs',
+  'codex-rs/tui/src/config_panel/mod.rs',
+  'codex-rs/tui/src/config_panel/render.rs',
+  'codex-rs/tui/src/app/config_panel.rs',
+  'codex-rs/tui/src/app/provider.rs',
+  'codex-rs/tui/src/app/provider/fields.rs',
+  'codex-rs/tui/src/app/provider/editor/form.rs',
+  'codex-rs/tui/src/app/agent_center/render.rs',
+  'codex-rs/tui/src/app/agents_overview_view.rs',
+  'codex-rs/tui/src/app/agents_overview_actions.rs',
+  'codex-rs/tui/src/app/history_ui.rs',
+  'codex-rs/tui/src/onboarding/welcome.rs',
+  'codex-rs/tui/src/onboarding/onboarding_screen.rs',
+  'codex-rs/tui/src/app/experimental_features.rs',
+  'codex-rs/tui/src/app/daemon_menu.rs',
+  'codex-rs/tui/src/bottom_pane/approval_overlay.rs',
+  'codex-rs/tui/src/bottom_pane/async_questions/render.rs',
+  'codex-rs/tui/src/bottom_pane/request_user_input/render.rs',
+  'codex-rs/tui/src/app/startup_warnings.rs',
+  'codex-rs/tui/src/app/startup_prompts.rs',
+  'codex-rs/tui/src/app/recap.rs',
+  'codex-rs/tui/src/analytics/summary_panel.rs',
+  'codex-rs/tui/src/analytics/task_panel.rs',
+  'codex-rs/tui/src/analytics/activity_chart.rs',
+  'codex-rs/tui/src/bottom_pane/feedback_view.rs',
+  'codex-rs/tui/src/app/feedback_upload.rs',
+  'codex-rs/tui/src/app/side_pane.rs',
+  'codex-rs/tui/src/sidebar_chooser.rs',
+  'codex-rs/tui/src/app/sidebar_close.rs',
+  'codex-rs/tui/src/app/side_focus.rs',
+];
 
 const dictionary = new Map();
 for (const file of DATA_FILES) {
@@ -82,14 +116,14 @@ function classify(text) {
 }
 
 const unique = new Map();
-for (const sourceDir of SOURCE_DIRS) {
-  const root = path.join(UPSTREAM, sourceDir);
-  for (const file of walk(root)) {
-    const relative = path.relative(UPSTREAM, file).split(path.sep).join('/');
-    const source = fs.readFileSync(file, 'utf8');
-    for (const item of extract(source, relative)) {
-      if (!unique.has(item.text)) unique.set(item.text, item);
-    }
+for (const relative of AUDIT_FILES) {
+  const file = path.join(UPSTREAM, relative);
+  if (!fs.existsSync(file)) {
+    throw new Error('Pinned upstream source file is missing: ' + relative);
+  }
+  const source = fs.readFileSync(file, 'utf8');
+  for (const item of extract(source, relative)) {
+    if (!unique.has(item.text)) unique.set(item.text, item);
   }
 }
 
@@ -102,7 +136,7 @@ for (const list of Object.values(report)) {
 const lines = [
   '# Codex CLI 0.169.0 静态界面汉化审计',
   '',
-  '基准：OpenAI Codex CLI tag rust-v0.169.0；扫描 TUI Rust 源码中的界面文本候选。',
+  '基准：OpenAI Codex CLI tag rust-v0.169.0；扫描欢迎界面、斜杠命令、设置、权限、提供商、侧边对话、反馈和用量统计等重点 TUI 模块。',
   '注意：提取结果包含部分诊断/内部文本；“部分命中”表示句子中至少有一个翻译片段，不代表整句完整汉化。',
   '',
   '- 唯一候选文本：' + unique.size,
