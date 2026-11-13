@@ -123,3 +123,59 @@ test('Codex 0.169 new TUI panels and permission prompts have Chinese coverage', 
     );
   }
 });
+
+
+test('Codex 0.169 slash menu descriptions translate when TUI wraps or splits them', () => {
+  const cases = [
+    ['choose what model and reasoning effort', '选择要使用的模型与推理'],
+    ['to use', '强度'],
+    ['1.5x speed', '1.5 倍速度'],
+    ['include current selection, open files,', '包含当前选中内容和已打开文件，'],
+    ['and other context from your IDE', '以及 IDE 中的其他上下文'],
+    ['approve one retry of a recent auto-', '批准重试最近一次自动'],
+    ['review denial', '审查拒绝的操作'],
+    ['configure memory use and', '配置记忆的使用与'],
+    ['generation', '生成'],
+    ['use skills to improve how Codex', '使用技能提升 Codex 执行'],
+    ['performs specific tasks', '特定任务的能力'],
+    ['import setup, this project, and recent', '导入设置、本项目及最近的'],
+    ['chats from Claude Code', 'Claude Code 对话'],
+    ['permanently delete this', '永久删除当前'],
+    ['fork the current', '派生当前'],
+    ['start or continue a conversation in a', '在新的工作树中开始或继续'],
+    ['new worktree', '对话'],
+    ['create an AGENTS.md file with', '创建 AGENTS.md 文件，其中'],
+    ['instructions for Codex', '包含 Codex 的使用说明'],
+    ['summarize conversation to prevent', '总结对话，以避免'],
+    ['hitting the context limit', '超出上下文长度限制'],
+    ['configure Codex', '配置 Codex'],
+    ['preferences', '偏好设置'],
+    ['summarize the current conversation', '总结当前对话'],
+    ['switch to Plan', '切换到 Plan'],
+    ['mode', '模式'],
+    ['export the conversation as', '导出当前对话为'],
+    ['toggle raw scrollback mode for copy-', '切换原始滚动模式，以便'],
+    ['friendly terminal selection', '在终端中方便地选择和复制文本'],
+    ['choose the TUI mode', '选择 TUI 模式'],
+    ['for the next launch', '供下次启动使用'],
+    ['show git diff', '显示 Git 差异'],
+    ['including untracked', '包括未跟踪的'],
+    ['show current session configuration and', '显示当前会话配置及'],
+    ['token usage', 'Token 用量'],
+    ['view retained warnings and diagnostic', '查看保留的警告和诊断'],
+    ['details', '详情'],
+    ['show the current working', '显示当前工作'],
+    ['configure which items appear in the', '配置要显示在'],
+    ['terminal title', '终端标题中的项目'],
+    ['status line', '状态栏中的项目'],
+    ['a syntax highlighting theme', '语法高亮主题'],
+    ['or hide the terminal pet', '或隐藏终端宠物']
+  ];
+
+  for (const [english, chinese] of cases) {
+    assert.ok(
+      translate(english).includes(chinese),
+      `Expected wrapped-menu translation for: ${english}`
+    );
+  }
+});
