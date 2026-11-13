@@ -1,68 +1,81 @@
 --- a/codex-rs/tui/src/config_panel/mod.rs
 +++ b/codex-rs/tui/src/config_panel/mod.rs
-@@ -37 +37 @@
+@@ -37,1 +37,1 @@
 -const RIGHT_CLICK_PASTE_DESCRIPTION: &str = "Paste when nothing is selected, with Auto following platform defaults and On also enabling macOS";
 +const RIGHT_CLICK_PASTE_DESCRIPTION: &str = "未选择内容时粘贴；自动模式遵循平台默认设置，开启时也会在 macOS 上启用";
-@@ -143,7 +143,7 @@
+@@ -143,1 +143,1 @@
 -            Self::ModelProviders => "Choose".to_string(),
--            Self::Theme => tui.theme.clone().unwrap_or_else(|| "Automatic".to_string()),
 +            Self::ModelProviders => "选择".to_string(),
+@@ -144,1 +144,1 @@
+-            Self::Theme => tui.theme.clone().unwrap_or_else(|| "Automatic".to_string()),
 +            Self::Theme => tui.theme.clone().unwrap_or_else(|| "自动".to_string()),
-@@ -146,2 +146,2 @@
+@@ -146,1 +146,1 @@
 -                codex_config::types::SessionPickerViewMode::Comfortable => "Comfortable",
--                codex_config::types::SessionPickerViewMode::Dense => "Dense",
 +                codex_config::types::SessionPickerViewMode::Comfortable => "宽松",
+@@ -147,1 +147,1 @@
+-                codex_config::types::SessionPickerViewMode::Dense => "Dense",
 +                codex_config::types::SessionPickerViewMode::Dense => "紧凑",
-@@ -151,3 +151,3 @@
+@@ -151,1 +151,1 @@
 -                None => "Ask",
--                Some(codex_config::types::ResumeCwdMode::Current) => "Current directory",
--                Some(codex_config::types::ResumeCwdMode::Session) => "Session directory",
 +                None => "询问",
+@@ -152,1 +152,1 @@
+-                Some(codex_config::types::ResumeCwdMode::Current) => "Current directory",
 +                Some(codex_config::types::ResumeCwdMode::Current) => "当前目录",
+@@ -153,1 +153,1 @@
+-                Some(codex_config::types::ResumeCwdMode::Session) => "Session directory",
 +                Some(codex_config::types::ResumeCwdMode::Session) => "会话目录",
-@@ -158,9 +158,9 @@
+@@ -158,1 +158,1 @@
 -                    "Auto · {}",
--                    if status.copy_on_select { "On" } else { "Off" }
 +                    "自动 · {}",
+@@ -159,1 +159,1 @@
+-                    if status.copy_on_select { "On" } else { "Off" }
 +                    if status.copy_on_select { "开启" } else { "关闭" }
-@@
+@@ -161,1 +161,1 @@
 -                CopyOnSelect::Always => "On".to_string(),
--                CopyOnSelect::Never => "Off".to_string(),
 +                CopyOnSelect::Always => "开启".to_string(),
+@@ -162,1 +162,1 @@
+-                CopyOnSelect::Never => "Off".to_string(),
 +                CopyOnSelect::Never => "关闭".to_string(),
-@@ -166,9 +166,9 @@
+@@ -166,1 +166,1 @@
 -                    RightClickPaste::Auto => "Auto",
--                    RightClickPaste::On => "On",
--                    RightClickPaste::Off => "Off",
 +                    RightClickPaste::Auto => "自动",
+@@ -167,1 +167,1 @@
+-                    RightClickPaste::On => "On",
 +                    RightClickPaste::On => "开启",
+@@ -168,1 +168,1 @@
+-                    RightClickPaste::Off => "Off",
 +                    RightClickPaste::Off => "关闭",
-@@
+@@ -172,1 +172,1 @@
 -                        format!("Auto · {}", if enabled { "On" } else { "Off" })
 +                        format!("自动 · {}", if enabled { "开启" } else { "关闭" })
-@@
+@@ -175,1 +175,1 @@
 -                    Err(_) => format!("{preference} · Unavailable"),
 +                    Err(_) => format!("{preference} · 不可用"),
-@@ -179,6 +179,6 @@
+@@ -179,1 +179,1 @@
 -                NotificationCondition::Unfocused => "Unfocused",
--                NotificationCondition::Always => "Always",
 +                NotificationCondition::Unfocused => "未聚焦时",
+@@ -180,1 +180,1 @@
+-                NotificationCondition::Always => "Always",
 +                NotificationCondition::Always => "始终",
-@@
+@@ -184,1 +184,1 @@
 -                "Configure".to_string()
 +                "配置".to_string()
-@@ -214,5 +214,5 @@
+@@ -214,1 +214,1 @@
 -            Self::Appearance => "Appearance",
--            Self::Notifications => "Notifications",
--            Self::Input => "Input",
--            Self::Sessions => "Sessions",
--            Self::TextSelection => "Text selection",
 +            Self::Appearance => "外观",
+@@ -215,1 +215,1 @@
+-            Self::Notifications => "Notifications",
 +            Self::Notifications => "通知",
+@@ -216,1 +216,1 @@
+-            Self::Input => "Input",
 +            Self::Input => "输入",
+@@ -217,1 +217,1 @@
+-            Self::Sessions => "Sessions",
 +            Self::Sessions => "会话",
+@@ -218,1 +218,1 @@
+-            Self::TextSelection => "Text selection",
 +            Self::TextSelection => "文本选择",
-@@ -260,3 +260,3 @@
+@@ -260,1 +260,1 @@
 -            } => if *enabled { "[x] On" } else { "[ ] Off" }.to_string(),
 +            } => if *enabled { "[x] 开启" } else { "[ ] 关闭" }.to_string(),
 @@ -262,1 +262,1 @@
@@ -71,270 +84,301 @@
 @@ -267,1 +267,1 @@
 -            | Self::Unavailable { .. } => "Unavailable".to_string(),
 +            | Self::Unavailable { .. } => "不可用".to_string(),
-@@ -280,2 +280,2 @@
+@@ -280,1 +280,1 @@
 -            label: "Theme",
--            description: "Choose a syntax color palette with a live preview",
 +            label: "主题",
+@@ -281,1 +281,1 @@
+-            description: "Choose a syntax color palette with a live preview",
 +            description: "选择语法配色方案，并实时预览效果",
-@@ -287,2 +287,2 @@
+@@ -287,1 +287,1 @@
 -            label: "Effects",
--            description: "Configure animations and composer effects",
 +            label: "效果",
+@@ -288,1 +288,1 @@
+-            description: "Configure animations and composer effects",
 +            description: "配置动画和输入框效果",
-@@ -294,2 +294,2 @@
+@@ -294,1 +294,1 @@
 -            label: "Tips",
--            description: "Show helpful shortcuts and suggestions",
 +            label: "提示",
+@@ -295,1 +295,1 @@
+-            description: "Show helpful shortcuts and suggestions",
 +            description: "显示实用快捷键和建议",
-@@ -304,2 +304,2 @@
+@@ -304,1 +304,1 @@
 -            label: "Status line colors",
--            description: "Use theme colors for the model, branch, and other status line details",
 +            label: "状态栏颜色",
+@@ -305,1 +305,1 @@
+-            description: "Use theme colors for the model, branch, and other status line details",
 +            description: "使用主题颜色显示模型、分支及其他状态栏信息",
-@@ -314,2 +314,2 @@
+@@ -314,1 +314,1 @@
 -            label: "Status line display",
--            description: "Choose and reorder the information below the composer",
 +            label: "状态栏显示",
+@@ -315,1 +315,1 @@
+-            description: "Choose and reorder the information below the composer",
 +            description: "选择并调整输入框下方信息的显示顺序",
-@@ -321,2 +321,2 @@
+@@ -321,1 +321,1 @@
 -            label: "Terminal title display",
--            description: "Choose and reorder the information in your terminal tab or window title",
 +            label: "终端标题显示",
+@@ -322,1 +322,1 @@
+-            description: "Choose and reorder the information in your terminal tab or window title",
 +            description: "选择并调整终端标签页或窗口标题中的信息顺序",
-@@ -328,3 +328,3 @@
+@@ -328,1 +328,1 @@
 -            label: "Notifications",
--            description: "Let your terminal notify you when a turn finishes or approval is needed",
 +            label: "通知",
+@@ -329,1 +329,1 @@
+-            description: "Let your terminal notify you when a turn finishes or approval is needed",
 +            description: "在一轮任务完成或需要审批时，通过终端发送通知",
-@@
+@@ -333,1 +333,1 @@
 -                    reason: "Event-specific notifications are configured in config.toml",
 +                    reason: "按事件区分的通知需在 config.toml 中配置",
-@@ -344,2 +344,2 @@
+@@ -344,1 +344,1 @@
 -            label: "Notify when",
--            description: "Notify only while you are away or while this terminal is focused too",
 +            label: "通知时机",
+@@ -345,1 +345,1 @@
+-            description: "Notify only while you are away or while this terminal is focused too",
 +            description: "可设置为仅在你离开时通知，或在终端处于前台时也通知",
-@@
+@@ -351,1 +351,1 @@
 -                    reason: "Turn on notifications to choose when they appear",
 +                    reason: "启用通知后才能选择通知显示时机",
-@@ -357,2 +357,2 @@
+@@ -357,1 +357,1 @@
 -            label: "Test notification",
--            description: "Send in 5 seconds so you can switch apps before the notification appears",
 +            label: "测试通知",
+@@ -358,1 +358,1 @@
+-            description: "Send in 5 seconds so you can switch apps before the notification appears",
 +            description: "将在 5 秒后发送，以便你切换应用并查看通知",
-@@ -364,2 +364,2 @@
+@@ -364,1 +364,1 @@
 -            label: "Keyboard shortcuts",
--            description: "Browse actions and remap their keys",
 +            label: "键盘快捷键",
+@@ -365,1 +365,1 @@
+-            description: "Browse actions and remap their keys",
 +            description: "浏览操作并重新设置对应按键",
-@@ -371,2 +371,2 @@
+@@ -371,1 +371,1 @@
 -            label: "Start in Vim mode",
--            description: "Start new composers in Vim mode and use /vim for the current composer",
 +            label: "启动时启用 Vim 模式",
+@@ -372,1 +372,1 @@
+-            description: "Start new composers in Vim mode and use /vim for the current composer",
 +            description: "新建输入框时启用 Vim 模式；使用 /vim 可切换当前输入框的模式",
-@@ -381,2 +381,2 @@
+@@ -381,1 +381,1 @@
 -            label: "Paste detection",
--            description: "Recognize pasted-text bursts and keep multiline input together",
 +            label: "粘贴检测",
+@@ -382,1 +382,1 @@
+-            description: "Recognize pasted-text bursts and keep multiline input together",
 +            description: "识别连续粘贴的文本，并将多行输入保持为一个整体",
-@@ -391,2 +391,2 @@
+@@ -391,1 +391,1 @@
 -            label: "Automatic recaps",
--            description: "Prepare recaps while the terminal is unfocused",
 +            label: "自动摘要",
+@@ -392,1 +392,1 @@
+-            description: "Prepare recaps while the terminal is unfocused",
 +            description: "终端未处于前台时预先生成对话摘要",
-@@ -401,2 +401,2 @@
+@@ -401,1 +401,1 @@
 -            label: "Session picker layout",
--            description: "Choose tighter rows or a roomier list when resuming and forking conversations",
 +            label: "会话选择器布局",
+@@ -402,1 +402,1 @@
+-            description: "Choose tighter rows or a roomier list when resuming and forking conversations",
 +            description: "恢复或分叉对话时，选择紧凑行距或宽松列表布局",
-@@ -408,2 +408,2 @@
+@@ -408,1 +408,1 @@
 -            label: "Resume directory",
--            description: "Choose which working directory to use when the current directory and saved session differ",
 +            label: "恢复会话时的目录",
+@@ -409,1 +409,1 @@
+-            description: "Choose which working directory to use when the current directory and saved session differ",
 +            description: "当前目录与已保存会话的目录不同时，选择要使用的工作目录",
-@@ -415,2 +415,2 @@
+@@ -415,1 +415,1 @@
 -            label: "Model providers",
--            description: "Choose the default provider for new chats on the connected server",
 +            label: "模型提供方",
+@@ -416,1 +416,1 @@
+-            description: "Choose the default provider for new chats on the connected server",
 +            description: "选择连接的服务器上新建对话时默认使用的提供方",
-@@ -422,2 +422,2 @@
+@@ -422,1 +422,1 @@
 -            label: "Copy on select",
--            description: "Copy transcript, footer, and composer selections on release; Auto follows terminal defaults",
 +            label: "选中时复制",
+@@ -423,1 +423,1 @@
+-            description: "Copy transcript, footer, and composer selections on release; Auto follows terminal defaults",
 +            description: "松开鼠标时复制对话记录、页脚和输入框中的选中文本；自动模式遵循终端默认设置",
-@@ -429,2 +429,2 @@
+@@ -429,1 +429,1 @@
 -            label: "Deselect after copy",
--            description: "Remove read-only transcript and footer highlights after automatic copy succeeds",
 +            label: "复制后取消选中",
+@@ -430,1 +430,1 @@
+-            description: "Remove read-only transcript and footer highlights after automatic copy succeeds",
 +            description: "自动复制成功后，清除对话记录和页脚中的只读文本高亮",
-@@
+@@ -436,1 +436,1 @@
 -                unavailable_reason: "Turn on Copy on select to deselect after copying",
 +                unavailable_reason: "启用“选中时复制”后，才能在复制后取消选中",
 @@ -441,1 +441,1 @@
 -            label: "Right-click paste",
 +            label: "右键粘贴",
-@@ -453,2 +453,2 @@
+@@ -453,1 +453,1 @@
 -            label: "Collapse turn details",
--            description: "Summarize tool calls in the conversation",
 +            label: "折叠轮次详情",
+@@ -454,1 +454,1 @@
+-            description: "Summarize tool calls in the conversation",
 +            description: "在对话中汇总工具调用信息",
 --- a/codex-rs/tui/src/config_panel/render.rs
 +++ b/codex-rs/tui/src/config_panel/render.rs
-@@ -52 +52 @@
+@@ -52,1 +52,1 @@
 -    let footer_hint = [(ListAction::Accept, "toggle"), (ListAction::Cancel, "back")]
 +    let footer_hint = [(ListAction::Accept, "切换"), (ListAction::Cancel, "返回")]
-@@ -62,7 +62,7 @@
+@@ -62,1 +62,1 @@
 -            "Animations",
--            "Animate the welcome screen, working indicator, and transitions",
 +            "动画",
+@@ -63,1 +63,1 @@
+-            "Animate the welcome screen, working indicator, and transitions",
 +            "为欢迎界面、工作指示器和过渡效果启用动画",
-@@
+@@ -67,1 +67,1 @@
 -            "Composer stars",
--            "Show stars briefly for new Astra tasks",
 +            "输入框星光效果",
+@@ -68,1 +68,1 @@
+-            "Show stars briefly for new Astra tasks",
 +            "为新的 Astra 任务短暂显示星光效果",
-@@ -80,2 +80,2 @@
+@@ -80,1 +80,1 @@
 -        title: Some("Effects".to_string()),
--        subtitle: Some("Configure visual effects".to_string()),
 +        title: Some("效果".to_string()),
+@@ -81,1 +81,1 @@
+-        subtitle: Some("Configure visual effects".to_string()),
 +        subtitle: Some("配置视觉效果".to_string()),
-@@ -111 +111 @@
+@@ -111,1 +111,1 @@
 -                        .then(|| "Turn on Animations to show Astra task stars".to_string()),
 +                        .then(|| "启用“动画”后才能显示 Astra 任务的星光效果".to_string()),
-@@ -129,7 +129,7 @@
+@@ -129,1 +129,1 @@
 -        ("Unfocused", NotificationCondition::Unfocused),
--        ("Always", NotificationCondition::Always),
 +        ("未聚焦时", NotificationCondition::Unfocused),
+@@ -130,1 +130,1 @@
+-        ("Always", NotificationCondition::Always),
 +        ("始终", NotificationCondition::Always),
-@@
+@@ -133,1 +133,1 @@
 -        title: Some("Notify when".to_string()),
 +        title: Some("通知时机".to_string()),
-@@
+@@ -135,1 +135,1 @@
 -            "Notify only while you are away or while this terminal is focused too".to_string(),
 +            "可设置为仅在你离开时通知，或在终端处于前台时也通知".to_string(),
-@@ -168,8 +168,8 @@
+@@ -168,1 +168,1 @@
 -        ("Auto (default)", CopyOnSelect::Auto),
--        ("On", CopyOnSelect::Always),
--        ("Off", CopyOnSelect::Never),
 +        ("自动（默认）", CopyOnSelect::Auto),
+@@ -169,1 +169,1 @@
+-        ("On", CopyOnSelect::Always),
 +        ("开启", CopyOnSelect::Always),
+@@ -170,1 +170,1 @@
+-        ("Off", CopyOnSelect::Never),
 +        ("关闭", CopyOnSelect::Never),
-@@
+@@ -173,1 +173,1 @@
 -        title: Some("Copy on select".to_string()),
 +        title: Some("选中时复制".to_string()),
-@@
+@@ -175,1 +175,1 @@
 -            "Copy transcript, footer, and composer selections on release; Auto follows terminal defaults"
 +            "松开鼠标时复制对话记录、页脚和输入框中的选中文本；自动模式遵循终端默认设置"
-@@ -207,8 +207,8 @@
+@@ -207,1 +207,1 @@
 -        ("Auto (default)", RightClickPaste::Auto),
--        ("On", RightClickPaste::On),
--        ("Off", RightClickPaste::Off),
 +        ("自动（默认）", RightClickPaste::Auto),
+@@ -208,1 +208,1 @@
+-        ("On", RightClickPaste::On),
 +        ("开启", RightClickPaste::On),
+@@ -209,1 +209,1 @@
+-        ("Off", RightClickPaste::Off),
 +        ("关闭", RightClickPaste::Off),
-@@
+@@ -212,1 +212,1 @@
 -        title: Some("Right-click paste".to_string()),
 +        title: Some("右键粘贴".to_string()),
-@@ -243,8 +243,8 @@
+@@ -243,1 +243,1 @@
 -        ("Dense", SessionPickerViewMode::Dense),
--        ("Comfortable", SessionPickerViewMode::Comfortable),
 +        ("紧凑", SessionPickerViewMode::Dense),
+@@ -244,1 +244,1 @@
+-        ("Comfortable", SessionPickerViewMode::Comfortable),
 +        ("宽松", SessionPickerViewMode::Comfortable),
-@@
+@@ -247,1 +247,1 @@
 -        title: Some("Session picker layout".to_string()),
 +        title: Some("会话选择器布局".to_string()),
-@@
+@@ -249,1 +249,1 @@
 -            "Choose tighter rows or a roomier list when resuming and forking conversations"
 +            "恢复或分叉对话时，选择紧凑行距或宽松列表布局"
-@@ -282,7 +282,7 @@
+@@ -282,1 +282,1 @@
 -        ("Ask", None),
--        ("Current directory", Some(ResumeCwdMode::Current)),
--        ("Session directory", Some(ResumeCwdMode::Session)),
 +        ("询问", None),
+@@ -283,1 +283,1 @@
+-        ("Current directory", Some(ResumeCwdMode::Current)),
 +        ("当前目录", Some(ResumeCwdMode::Current)),
+@@ -284,1 +284,1 @@
+-        ("Session directory", Some(ResumeCwdMode::Session)),
 +        ("会话目录", Some(ResumeCwdMode::Session)),
-@@
+@@ -287,1 +287,1 @@
 -        title: Some("Resume directory".to_string()),
 +        title: Some("恢复会话时的目录".to_string()),
-@@
+@@ -289,1 +289,1 @@
 -            "Choose the working directory when resuming, with --cd taking precedence for this session"
 +            "恢复会话时选择工作目录；本次会话中 --cd 参数优先级更高"
-@@ -306 +306 @@
+@@ -306,1 +306,1 @@
 -            Some("Requires --cd for remote sessions".to_string())
 +            Some("远程会话需要指定 --cd".to_string())
-@@ -340,2 +340,2 @@
+@@ -340,1 +340,1 @@
 -    let subtitle = notice.unwrap_or_else(|| "Changes save automatically".to_string());
 +    let subtitle = notice.unwrap_or_else(|| "更改会自动保存".to_string());
-@@
--    Line::from("Configuration".bold()),
-+    Line::from("配置".bold()),
-@@ -366 +366 @@
+@@ -342,1 +342,1 @@
+-        Line::from("Configuration".bold()),
++        Line::from("配置".bold()),
+@@ -366,1 +366,1 @@
 -        items.push((keys, "group".into()));
 +        items.push((keys, "分组".into()));
-@@ -369 +369 @@
+@@ -369,1 +369,1 @@
 -        items.push((search.display_label(), "search".into()));
 +        items.push((search.display_label(), "搜索".into()));
-@@ -375 +375 @@
--        .chain([(ListAction::Cancel, "clear search/close")])
-+        .chain([(ListAction::Cancel, "清除搜索/关闭")])
-@@ -401,4 +401,4 @@
--        (None, Some("toggle"))
-+        (None, Some("切换"))
-@@
+@@ -375,1 +375,1 @@
+-            .chain([(ListAction::Cancel, "clear search/close")])
++            .chain([(ListAction::Cancel, "清除搜索/关闭")])
+@@ -401,1 +401,1 @@
+-            (None, Some("toggle"))
++            (None, Some("切换"))
+@@ -403,1 +403,1 @@
 -        ConfigSettingValue::Editor { .. } => (None, Some("open")),
--        ConfigSettingValue::NotificationTest => (None, Some("test")),
 +        ConfigSettingValue::Editor { .. } => (None, Some("打开")),
+@@ -404,1 +404,1 @@
+-        ConfigSettingValue::NotificationTest => (None, Some("test")),
 +        ConfigSettingValue::NotificationTest => (None, Some("测试")),
-@@ -412 +412 @@
--        .chain([("esc".to_string(), "clear search".to_string())])
-+        .chain([("esc".to_string(), "清除搜索".to_string())])
-@@ -473 +473 @@
+@@ -412,1 +412,1 @@
+-            .chain([("esc".to_string(), "clear search".to_string())])
++            .chain([("esc".to_string(), "清除搜索".to_string())])
+@@ -473,1 +473,1 @@
 -        search_placeholder: Some("Type to search settings".to_string()),
 +        search_placeholder: Some("输入关键词搜索设置".to_string()),
 --- a/codex-rs/tui/src/bottom_pane/experimental_features_view.rs
 +++ b/codex-rs/tui/src/bottom_pane/experimental_features_view.rs
-@@ -80 +80 @@
--            "Loading server experiments…"
-+            "正在加载服务器实验功能…"
-@@ -104 +104 @@
+@@ -80,1 +80,1 @@
+-                "Loading server experiments…"
++                "正在加载服务器实验功能…"
+@@ -104,1 +104,1 @@
 -            Paragraph::new(Line::from("Experimental features".bold())).wrap(Wrap { trim: false }),
 +            Paragraph::new(Line::from("实验性功能".bold())).wrap(Wrap { trim: false }),
-@@ -107 +107 @@
--                "Checked features are configured on. Some experimental features take effect only in new tasks or after restarting the Codex server.",
-+                "已勾选的功能表示已启用。部分实验性功能仅在新任务中生效，或需要重启 Codex 服务器后才会生效。",
-@@ -127 +127 @@
--                Line::from("Saving… Closing this popup will not cancel the write.")
-+                Line::from("正在保存…关闭此弹窗不会取消写入。")
-@@ -129 +129 @@
--                Line::from("Selections retained. Save to retry, or cancel to close.")
-+                Line::from("已保留所选项。选择“保存”以重试，或选择“取消”关闭。")
-@@ -149 +149 @@
--        let read_only = if item.writable { "" } else { " (read-only)" };
-+        let read_only = if item.writable { "" } else { "（只读）" };
-@@ -219 +219 @@
--        self.discovery_status = "Saving experimental features…".to_string();
-+        self.discovery_status = "正在保存实验性功能…".to_string();
-@@ -238 +238 @@
--                "Saving was interrupted. Reopen /experimental to check configured values."
-+                "保存已中断。请重新打开 /experimental 检查已配置的值。"
-@@ -276 +276 @@
+@@ -107,1 +107,1 @@
+-            "Checked features are configured on. Some experimental features take effect only in new tasks or after restarting the Codex server.",
++            "已勾选的功能表示已启用。部分实验性功能仅在新任务中生效，或需要重启 Codex 服务器后才会生效。",
+@@ -127,1 +127,1 @@
+-            Line::from("Saving… Closing this popup will not cancel the write.")
++            Line::from("正在保存…关闭此弹窗不会取消写入。")
+@@ -129,1 +129,1 @@
+-            Line::from("Selections retained. Save to retry, or cancel to close.")
++            Line::from("已保留所选项。选择“保存”以重试，或选择“取消”关闭。")
+@@ -149,1 +149,1 @@
+-            let read_only = if item.writable { "" } else { " (read-only)" };
++            let read_only = if item.writable { "" } else { "（只读）" };
+@@ -219,1 +219,1 @@
+-            self.discovery_status = "Saving experimental features…".to_string();
++            self.discovery_status = "正在保存实验性功能…".to_string();
+@@ -238,1 +238,1 @@
+-                    "Saving was interrupted. Reopen /experimental to check configured values."
++                    "保存已中断。请重新打开 /experimental 检查已配置的值。"
+@@ -276,1 +276,1 @@
 -                Err("Discovery was interrupted".to_string())
 +                Err("实验功能发现过程已中断".to_string())
-@@ -308 +308 @@
+@@ -308,1 +308,1 @@
 -                    "No server experiments available."
 +                    "当前没有可用的服务器实验功能。"
-@@ -317 +317 @@
+@@ -317,1 +317,1 @@
 -                self.discovery_status = "Server experiments unavailable. Reopen /experimental to retry; restart this Codex client if requests remain unanswered.".to_string();
 +                self.discovery_status = "服务器实验功能不可用。请重新打开 /experimental 重试；如果请求仍未响应，请重启此 Codex 客户端。".to_string();
-@@ -419 +419 @@
+@@ -419,1 +419,1 @@
 -                "  No experimental features available for now",
 +                "  暂无可用的实验性功能",
-@@ -451 +451 @@
+@@ -451,1 +451,1 @@
 -    let mut spans = vec![key_hint::plain(KeyCode::Char(' ')).into(), " toggle".into()];
 +    let mut spans = vec![key_hint::plain(KeyCode::Char(' ')).into(), " 切换".into()];
-@@ -455 +455 @@
+@@ -455,1 +455,1 @@
 -        spans.push(" save".into());
 +        spans.push(" 保存".into());
-@@ -460 +460 @@
+@@ -460,1 +460,1 @@
 -        spans.push(" save/close".into());
 +        spans.push(" 保存/关闭".into());
