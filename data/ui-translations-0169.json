@@ -1,0 +1,1110 @@
+[
+  {
+    "en": "create an AGENTS.md file with instructions for Codex",
+    "zh": "创建包含 Codex 使用说明的 AGENTS.md 文件"
+  },
+  {
+    "en": "show current session configuration and token usage",
+    "zh": "显示当前会话配置和 Token 用量"
+  },
+  {
+    "en": "review my current changes and find issues",
+    "zh": "审查当前更改并查找问题"
+  },
+  {
+    "en": "configure Codex preferences",
+    "zh": "配置 Codex 偏好设置"
+  },
+  {
+    "en": "send logs to maintainers or save a ZIP",
+    "zh": "向维护者发送日志或保存 ZIP"
+  },
+  {
+    "en": "start a new chat during a conversation",
+    "zh": "在当前对话中开始新会话"
+  },
+  {
+    "en": "summarize the current conversation now",
+    "zh": "立即总结当前对话"
+  },
+  {
+    "en": "resume a saved chat",
+    "zh": "恢复已保存的会话"
+  },
+  {
+    "en": "archive this session",
+    "zh": "归档当前会话"
+  },
+  {
+    "en": "permanently delete this session",
+    "zh": "永久删除当前会话"
+  },
+  {
+    "en": "clear the terminal and start a new chat",
+    "zh": "清空终端并开始新会话"
+  },
+  {
+    "en": "fork the current chat",
+    "zh": "分叉当前会话"
+  },
+  {
+    "en": "start or continue a conversation in a new worktree",
+    "zh": "在新的工作树中开始或继续对话"
+  },
+  {
+    "en": "continue this session in the Desktop app",
+    "zh": "在桌面应用中继续此会话"
+  },
+  {
+    "en": "copy the last response or part of it",
+    "zh": "复制上一条回复或其中一部分"
+  },
+  {
+    "en": "export the conversation as markdown",
+    "zh": "将对话导出为 Markdown"
+  },
+  {
+    "en": "toggle raw scrollback mode for copy-friendly terminal selection",
+    "zh": "切换原始回滚模式，以便在终端中选择并复制文本"
+  },
+  {
+    "en": "choose the TUI mode for the next launch",
+    "zh": "选择下次启动时使用的 TUI 模式"
+  },
+  {
+    "en": "show git diff (including untracked files)",
+    "zh": "显示 Git 差异（包括未跟踪文件）"
+  },
+  {
+    "en": "mention a file",
+    "zh": "提及文件"
+  },
+  {
+    "en": "use skills to improve how Codex performs specific tasks",
+    "zh": "使用技能改进 Codex 执行特定任务的方式"
+  },
+  {
+    "en": "import setup, this project, and recent chats from Claude Code",
+    "zh": "从 Claude Code 导入设置、当前项目和最近的会话"
+  },
+  {
+    "en": "Manage the local background server",
+    "zh": "管理本地后台服务器"
+  },
+  {
+    "en": "view retained warnings and diagnostic details",
+    "zh": "查看保留的警告和诊断详情"
+  },
+  {
+    "en": "change the current working directory",
+    "zh": "更改当前工作目录"
+  },
+  {
+    "en": "show the current working directory",
+    "zh": "显示当前工作目录"
+  },
+  {
+    "en": "view account usage or use a usage limit reset",
+    "zh": "查看账户用量或重置用量限制"
+  },
+  {
+    "en": "show config layers and requirement sources for debugging",
+    "zh": "显示配置层和要求来源以便调试"
+  },
+  {
+    "en": "choose what model and reasoning effort to use",
+    "zh": "选择使用的模型和推理强度"
+  },
+  {
+    "en": "run or save reusable prompts and slash commands",
+    "zh": "运行或保存可重复使用的提示词和斜杠命令"
+  },
+  {
+    "en": "turn Daybreak on or off",
+    "zh": "开启或关闭 Daybreak"
+  },
+  {
+    "en": "include current selection, open files, and other context from your IDE",
+    "zh": "包含 IDE 中当前选区、打开的文件和其他上下文"
+  },
+  {
+    "en": "switch to Plan mode",
+    "zh": "切换到计划模式"
+  },
+  {
+    "en": "start or stop voice; use /voice settings to choose a voice",
+    "zh": "启动或停止语音；使用 /voice settings 选择语音"
+  },
+  {
+    "en": "set or view the goal for a long-running task",
+    "zh": "设置或查看长期任务的目标"
+  },
+  {
+    "en": "open the agent command center",
+    "zh": "打开代理命令中心"
+  },
+  {
+    "en": "switch between this session's subagents",
+    "zh": "切换当前会话的子代理"
+  },
+  {
+    "en": "start a side conversation",
+    "zh": "开始侧边对话"
+  },
+  {
+    "en": "choose what Codex is allowed to do",
+    "zh": "选择允许 Codex 执行的操作"
+  },
+  {
+    "en": "set up elevated agent sandbox",
+    "zh": "设置增强型代理沙盒"
+  },
+  {
+    "en": "approve one retry of a recent auto-review denial",
+    "zh": "批准重试一次最近被自动审查拒绝的操作"
+  },
+  {
+    "en": "configure memory use and generation",
+    "zh": "配置记忆的使用和生成"
+  },
+  {
+    "en": "list MCP tools; use /mcp verbose or /mcp login <name>",
+    "zh": "列出 MCP 工具；使用 /mcp verbose 或 /mcp login <name>"
+  },
+  {
+    "en": "log out of Codex",
+    "zh": "退出 Codex 账户"
+  },
+  {
+    "en": "print the rollout file path",
+    "zh": "输出运行记录文件路径"
+  },
+  {
+    "en": "Collapse turn details",
+    "zh": "折叠轮次详情"
+  },
+  {
+    "en": "Summarize tool calls in the conversation",
+    "zh": "在对话中汇总工具调用"
+  },
+  {
+    "en": "Create a custom provider or gateway",
+    "zh": "创建自定义提供商或网关"
+  },
+  {
+    "en": "Loading model providers…",
+    "zh": "正在加载模型提供商…"
+  },
+  {
+    "en": "Reconnect to the app server to browse model providers.",
+    "zh": "重新连接应用服务器以浏览模型提供商。"
+  },
+  {
+    "en": "Model providers",
+    "zh": "模型提供商"
+  },
+  {
+    "en": "Model provider details",
+    "zh": "模型提供商详情"
+  },
+  {
+    "en": "Edit configuration",
+    "zh": "编辑配置"
+  },
+  {
+    "en": "Server default",
+    "zh": "服务器默认值"
+  },
+  {
+    "en": "Default for new chats",
+    "zh": "新会话默认值"
+  },
+  {
+    "en": "This client's launch settings select {id} for new chats.",
+    "zh": "此客户端的启动设置将 {id} 选为新会话的提供商。"
+  },
+  {
+    "en": "The server configuration fixes the default provider.",
+    "zh": "服务器配置已固定默认提供商。"
+  },
+  {
+    "en": "Use /new to start a chat with the selected provider.",
+    "zh": "使用 /new 以所选提供商启动新会话。"
+  },
+  {
+    "en": "Current chat: {current_label} · {default_label}: {}",
+    "zh": "当前会话：{current_label} · {default_label}：{}"
+  },
+  {
+    "en": "set default",
+    "zh": "设为默认"
+  },
+  {
+    "en": "Provider ID",
+    "zh": "提供商 ID"
+  },
+  {
+    "en": "Built-in OpenAI provider",
+    "zh": "内置 OpenAI 提供商"
+  },
+  {
+    "en": "Managed externally",
+    "zh": "由外部管理"
+  },
+  {
+    "en": "Not set",
+    "zh": "未设置"
+  },
+  {
+    "en": "Paste when nothing is selected, with Auto following platform defaults and On also enabling macOS",
+    "zh": "未选中内容时粘贴；自动遵循平台默认设置，开启则同时启用 macOS 对应行为"
+  },
+  {
+    "en": "Choose a syntax color palette with a live preview",
+    "zh": "选择语法配色方案并实时预览"
+  },
+  {
+    "en": "Configure animations and composer effects",
+    "zh": "配置动画和输入框效果"
+  },
+  {
+    "en": "Show helpful shortcuts and suggestions",
+    "zh": "显示实用快捷键和建议"
+  },
+  {
+    "en": "Use theme colors for the model, branch, and other status line details",
+    "zh": "使用主题颜色显示模型、分支及其他状态栏信息"
+  },
+  {
+    "en": "Choose and reorder the information below the composer",
+    "zh": "选择并调整输入框下方显示的信息顺序"
+  },
+  {
+    "en": "Choose and reorder the information in your terminal tab or window title",
+    "zh": "选择并调整终端标签页或窗口标题中显示的信息顺序"
+  },
+  {
+    "en": "Let your terminal notify you when a turn finishes or approval is needed",
+    "zh": "在一轮任务完成或需要批准时通过终端通知你"
+  },
+  {
+    "en": "Event-specific notifications are configured in config.toml",
+    "zh": "特定事件的通知在 config.toml 中配置"
+  },
+  {
+    "en": "Turn on notifications to choose when they appear",
+    "zh": "开启通知后即可选择通知显示时机"
+  },
+  {
+    "en": "Send in 5 seconds so you can switch apps before the notification appears",
+    "zh": "将在 5 秒后发送，让你有时间切换应用"
+  },
+  {
+    "en": "Browse actions and remap their keys",
+    "zh": "浏览操作并重新映射快捷键"
+  },
+  {
+    "en": "Start new composers in Vim mode and use /vim for the current composer",
+    "zh": "让新输入框默认使用 Vim 模式；使用 /vim 切换当前输入框"
+  },
+  {
+    "en": "Recognize pasted-text bursts and keep multiline input together",
+    "zh": "识别连续粘贴的文本，并保持多行输入完整"
+  },
+  {
+    "en": "Prepare recaps while the terminal is unfocused",
+    "zh": "终端未处于焦点时预先生成摘要"
+  },
+  {
+    "en": "Choose tighter rows or a roomier list when resuming and forking conversations",
+    "zh": "恢复或分叉会话时，选择紧凑行距或宽松列表"
+  },
+  {
+    "en": "Choose which working directory to use when the current directory and saved session differ",
+    "zh": "当前目录与已保存会话目录不同时，选择要使用的工作目录"
+  },
+  {
+    "en": "Choose the default provider for new chats on the connected server",
+    "zh": "选择连接的服务器中新会话的默认提供商"
+  },
+  {
+    "en": "Remove read-only transcript and footer highlights after automatic copy succeeds",
+    "zh": "自动复制成功后，清除对话记录和页脚中的只读高亮"
+  },
+  {
+    "en": "Turn on Copy on select to deselect after copying",
+    "zh": "开启“选中即复制”后，可在复制完成时自动取消选择"
+  },
+  {
+    "en": "Resize · ←/h →/l · Shift+←/→ 10 cols · Enter/Esc done",
+    "zh": "调整大小 · ←/h →/l · Shift+←/→ 每次 10 列 · Enter/Esc 完成"
+  },
+  {
+    "en": "Could not save sidebar width: {err}",
+    "zh": "无法保存侧边栏宽度：{err}"
+  },
+  {
+    "en": "←/→ resize · Enter/Esc done",
+    "zh": "←/→ 调整大小 · Enter/Esc 完成"
+  },
+  {
+    "en": "You can start a side chat after your first message in the main chat.",
+    "zh": "在主会话发送第一条消息后，即可开始侧边对话。"
+  },
+  {
+    "en": "Loading side chats…",
+    "zh": "正在加载侧边对话…"
+  },
+  {
+    "en": "Refreshing side chats…",
+    "zh": "正在刷新侧边对话…"
+  },
+  {
+    "en": "{marker} + New side chat",
+    "zh": "{marker} + 新建侧边对话"
+  },
+  {
+    "en": "Start from the main chat",
+    "zh": "从主会话开始"
+  },
+  {
+    "en": "Side chats  {total}",
+    "zh": "侧边对话  {total}"
+  },
+  {
+    "en": "Retrying…",
+    "zh": "正在重试…"
+  },
+  {
+    "en": "Retry loading side chats",
+    "zh": "重试加载侧边对话"
+  },
+  {
+    "en": "Side chat {index}",
+    "zh": "侧边对话 {index}"
+  },
+  {
+    "en": "Waiting to open…",
+    "zh": "等待打开…"
+  },
+  {
+    "en": "Opening…",
+    "zh": "正在打开…"
+  },
+  {
+    "en": "Retry · {error}",
+    "zh": "重试 · {error}"
+  },
+  {
+    "en": "Resize to review · Esc to cancel",
+    "zh": "调整大小以查看 · Esc 取消"
+  },
+  {
+    "en": "stop the running turn",
+    "zh": "停止正在运行的轮次"
+  },
+  {
+    "en": "discard unsent input",
+    "zh": "丢弃尚未发送的输入"
+  },
+  {
+    "en": "lose this temporary chat’s history",
+    "zh": "丢失此临时会话的历史记录"
+  },
+  {
+    "en": "remove it from Side chats",
+    "zh": "从侧边对话中移除"
+  },
+  {
+    "en": "Side chat is still closing. Try again in a moment.",
+    "zh": "侧边对话仍在关闭，请稍后重试。"
+  },
+  {
+    "en": "Feedback uploads are disabled, and saving a ZIP requires a local app server.",
+    "zh": "反馈上传已禁用，保存 ZIP 需要本地应用服务器。"
+  },
+  {
+    "en": "Saving a ZIP does not submit feedback to OpenAI.\nFiles may contain prompts, commands, and tool output:",
+    "zh": "保存 ZIP 不会向 OpenAI 提交反馈。\n文件可能包含提示词、命令和工具输出："
+  },
+  {
+    "en": "Include logs and session history?",
+    "zh": "是否包含日志和会话历史？"
+  },
+  {
+    "en": "Connectivity diagnostics",
+    "zh": "连接诊断"
+  },
+  {
+    "en": "Include session logs and diagnostics in the report",
+    "zh": "在报告中包含会话日志和诊断信息"
+  },
+  {
+    "en": "Keep only your note and report metadata",
+    "zh": "仅保留你的备注和报告元数据"
+  },
+  {
+    "en": "Proxy environment variables are set and may affect connectivity.",
+    "zh": "已设置代理环境变量，可能会影响连接。"
+  },
+  {
+    "en": "Could not create the feedback directory at {directory}",
+    "zh": "无法在 {directory} 创建反馈目录"
+  },
+  {
+    "en": "Update the Codex server to save a feedback ZIP",
+    "zh": "更新 Codex 服务器以保存反馈 ZIP"
+  },
+  {
+    "en": "Feedback uploaded.",
+    "zh": "反馈已上传。"
+  },
+  {
+    "en": "Feedback recorded (no logs).",
+    "zh": "反馈已记录（未包含日志）。"
+  },
+  {
+    "en": "How was this?",
+    "zh": "体验如何？"
+  },
+  {
+    "en": "Crash, error message, hang, or broken UI/behavior",
+    "zh": "崩溃、错误消息、卡死或界面/行为异常"
+  },
+  {
+    "en": "Output was off-target, incorrect, incomplete, or unhelpful",
+    "zh": "输出偏题、不正确、不完整或没有帮助"
+  },
+  {
+    "en": "Helpful, correct, high‑quality, or delightful result worth celebrating",
+    "zh": "结果有帮助、正确、高质量或令人满意，值得分享"
+  },
+  {
+    "en": "Slowness, feature suggestion, UX feedback, or anything else",
+    "zh": "运行缓慢、功能建议、用户体验反馈或其他问题"
+  },
+  {
+    "en": "App server did not report $CODEX_HOME; cannot stage feedback logs",
+    "zh": "应用服务器未提供 $CODEX_HOME；无法暂存反馈日志"
+  },
+  {
+    "en": "TUI client logs were omitted because they could not be staged on the app-server.",
+    "zh": "由于无法在应用服务器上暂存，已省略 TUI 客户端日志。"
+  },
+  {
+    "en": "The app server did not report its Codex home directory",
+    "zh": "应用服务器未提供 Codex 主目录"
+  },
+  {
+    "en": "Search older tasks",
+    "zh": "搜索较早的任务"
+  },
+  {
+    "en": "Search tasks by name, prompt, or working directory",
+    "zh": "按名称、提示词或工作目录搜索任务"
+  },
+  {
+    "en": "Message exceeds the maximum length of {MAX_USER_INPUT_TEXT_CHARS} characters ({actual_chars} provided).",
+    "zh": "消息超过最大长度 {MAX_USER_INPUT_TEXT_CHARS} 个字符（当前为 {actual_chars} 个字符）。"
+  },
+  {
+    "en": "Viewing sub-agent — direct input is disabled",
+    "zh": "正在查看子代理 — 已禁用直接输入"
+  },
+  {
+    "en": "Input disabled.",
+    "zh": "输入已禁用。"
+  },
+  {
+    "en": "Shell mode",
+    "zh": "Shell 模式"
+  },
+  {
+    "en": "1 MCP server",
+    "zh": "1 个 MCP 服务器"
+  },
+  {
+    "en": "{mcp_server_count} MCP servers",
+    "zh": "{mcp_server_count} 个 MCP 服务器"
+  },
+  {
+    "en": "{app_count} apps",
+    "zh": "{app_count} 个应用"
+  },
+  {
+    "en": "Plugin · {}",
+    "zh": "插件 · {}"
+  },
+  {
+    "en": "Agent command center",
+    "zh": "代理命令中心"
+  },
+  {
+    "en": "Group: {grouping}  {group_key}",
+    "zh": "分组：{grouping}  {group_key}"
+  },
+  {
+    "en": "Creating worktree…",
+    "zh": "正在创建工作树…"
+  },
+  {
+    "en": "Archiving task…  You can still browse.",
+    "zh": "正在归档任务…仍可浏览。"
+  },
+  {
+    "en": "Deleting task…  You can still browse.",
+    "zh": "正在删除任务…仍可浏览。"
+  },
+  {
+    "en": "Error loading tasks",
+    "zh": "加载任务时出错"
+  },
+  {
+    "en": "… resize to see all",
+    "zh": "… 调整终端大小以查看全部"
+  },
+  {
+    "en": "Needs input",
+    "zh": "需要输入"
+  },
+  {
+    "en": "Untitled task",
+    "zh": "未命名任务"
+  },
+  {
+    "en": "Task details",
+    "zh": "任务详情"
+  },
+  {
+    "en": "No prompt available.",
+    "zh": "没有可用的提示词。"
+  },
+  {
+    "en": "Last message",
+    "zh": "最后一条消息"
+  },
+  {
+    "en": "Opened this session in the Desktop app.",
+    "zh": "已在桌面应用中打开此会话。"
+  },
+  {
+    "en": "The Desktop app is only available on macOS and Windows",
+    "zh": "桌面应用仅支持 macOS 和 Windows"
+  },
+  {
+    "en": "Welcome to",
+    "zh": "欢迎使用"
+  },
+  {
+    "en": ", OpenAI's command-line coding agent",
+    "zh": "，OpenAI 的命令行编程代理"
+  },
+  {
+    "en": "Sign in to your gateway",
+    "zh": "登录你的网关"
+  },
+  {
+    "en": "1. Open this link in a browser",
+    "zh": "1. 在浏览器中打开此链接"
+  },
+  {
+    "en": "2. Enter this one-time code when prompted",
+    "zh": "2. 按提示输入此一次性验证码"
+  },
+  {
+    "en": "Copying link…",
+    "zh": "正在复制链接…"
+  },
+  {
+    "en": "Clipboard busy; try again",
+    "zh": "剪贴板正忙，请重试"
+  },
+  {
+    "en": "Copied link to clipboard",
+    "zh": "链接已复制到剪贴板"
+  },
+  {
+    "en": "Copy requested; check your clipboard",
+    "zh": "已请求复制，请检查剪贴板"
+  },
+  {
+    "en": "Could not copy link: {error}",
+    "zh": "无法复制链接：{error}"
+  },
+  {
+    "en": "{label} setting saved on the server for new threads. This thread is unchanged. Project or task settings may override it.",
+    "zh": "{label} 设置已保存到服务器，并将用于新会话。当前会话不受影响。项目或任务设置可能覆盖此设置。"
+  },
+  {
+    "en": "{label} setting was saved but is overridden: {}",
+    "zh": "{label} 设置已保存，但当前被其他设置覆盖：{}"
+  },
+  {
+    "en": "An experimental feature save is still in progress. Retry after it finishes.",
+    "zh": "实验性功能设置仍在保存，完成后请重试。"
+  },
+  {
+    "en": "Running daemon: {}",
+    "zh": "正在运行的后台服务：{}"
+  },
+  {
+    "en": "Not connected to the local background server.",
+    "zh": "未连接到本地后台服务器。"
+  },
+  {
+    "en": "Manage this server on its host. Local daemon updates are unavailable for remote connections.",
+    "zh": "请在服务器所在主机上管理它。远程连接不支持本地后台服务更新。"
+  },
+  {
+    "en": "Run the Codex CLI to manage the daemon from this menu.",
+    "zh": "运行 Codex CLI 后，可从此菜单管理后台服务。"
+  },
+  {
+    "en": "Install latest public stable",
+    "zh": "安装最新公开稳定版"
+  },
+  {
+    "en": "Use this CLI build",
+    "zh": "使用当前 CLI 构建版本"
+  },
+  {
+    "en": "This CLI has no local package to copy",
+    "zh": "当前 CLI 没有可复制的本地安装包"
+  },
+  {
+    "en": "Restart background server",
+    "zh": "重启后台服务器"
+  },
+  {
+    "en": "Codex hasn't verified it manages this server. Restart it where it was started.",
+    "zh": "Codex 尚未确认由它管理此服务器。请在启动服务器的环境中重启。"
+  },
+  {
+    "en": "Restart background server?",
+    "zh": "确定要重启后台服务器吗？"
+  },
+  {
+    "en": "Active or queued work in other chats may be interrupted.",
+    "zh": "其他会话中正在运行或排队的任务可能会中断。"
+  },
+  {
+    "en": "Codex will reconnect automatically.",
+    "zh": "Codex 将自动重新连接。"
+  },
+  {
+    "en": "Install the latest public stable release. Restore production updates; keep your automatic-update setting.",
+    "zh": "安装最新公开稳定版。恢复正式版更新，同时保留自动更新设置。"
+  },
+  {
+    "en": "Use this CLI package v{version} from {}. Copy the complete package and pin it against automatic updates.",
+    "zh": "使用来自 {} 的 CLI 软件包 v{version}。复制完整软件包，并固定版本以避免自动更新。"
+  },
+  {
+    "en": "This may restart the daemon and interrupt active or queued work.\nCodex exits to update in this terminal. Relaunch it afterward.",
+    "zh": "这可能会重启后台服务器，并中断正在运行或排队的任务。\nCodex 将退出以在此终端中更新，完成后请重新启动。"
+  },
+  {
+    "en": "Update daemon and exit Codex?",
+    "zh": "更新后台服务器并退出 Codex？"
+  },
+  {
+    "en": "Update and exit",
+    "zh": "更新并退出"
+  },
+  {
+    "en": "Would you like to send input to the existing terminal?",
+    "zh": "是否向现有终端发送输入？"
+  },
+  {
+    "en": "Would you like to send input to terminal {process_id}?",
+    "zh": "是否向终端 {process_id} 发送输入？"
+  },
+  {
+    "en": "Would you like to run the following command?",
+    "zh": "是否运行以下命令？"
+  },
+  {
+    "en": "Do you want to approve network access to \"{}\"?",
+    "zh": "是否允许访问网络 \"{}\"？"
+  },
+  {
+    "en": "Would you like to make the following edits?",
+    "zh": "是否应用以下修改？"
+  },
+  {
+    "en": "{} needs your approval.",
+    "zh": "{} 需要你的批准。"
+  },
+  {
+    "en": "You granted additional permissions with strict auto review",
+    "zh": "你已授予额外权限，并启用严格自动审查"
+  },
+  {
+    "en": "You granted additional permissions for this session",
+    "zh": "你已为此会话授予额外权限"
+  },
+  {
+    "en": "Yes, just this once",
+    "zh": "是，仅此次允许"
+  },
+  {
+    "en": "Yes, proceed",
+    "zh": "是，继续"
+  },
+  {
+    "en": "Yes, and don't ask again for commands that start with `{rendered_prefix}`",
+    "zh": "是，并且不再询问以 `{rendered_prefix}` 开头的命令"
+  },
+  {
+    "en": "Yes, and allow this host for this conversation",
+    "zh": "是，并允许此主机在本次会话中访问"
+  },
+  {
+    "en": "Yes, and allow these permissions for this session",
+    "zh": "是，并在本次会话中允许这些权限"
+  },
+  {
+    "en": "Yes, and don't ask again for this command in this session",
+    "zh": "是，本次会话不再询问此命令"
+  },
+  {
+    "en": "Yes, and allow this host in the future",
+    "zh": "是，以后也允许此主机"
+  },
+  {
+    "en": "No, and block this host in the future",
+    "zh": "否，以后阻止此主机"
+  },
+  {
+    "en": "No, and tell Codex what to do differently",
+    "zh": "否，并告诉 Codex 应如何调整"
+  },
+  {
+    "en": "glob `{pattern}`",
+    "zh": "匹配模式 `{pattern}`"
+  },
+  {
+    "en": "Yes, and don't ask again for these files",
+    "zh": "是，并且不再询问这些文件"
+  },
+  {
+    "en": "Yes, grant these permissions for this turn",
+    "zh": "是，仅在本轮授予这些权限"
+  },
+  {
+    "en": "Yes, grant for this turn with strict auto review",
+    "zh": "是，本轮授予权限并启用严格自动审查"
+  },
+  {
+    "en": "Yes, grant these permissions for this session",
+    "zh": "是，在本次会话中授予这些权限"
+  },
+  {
+    "en": "No, but continue without it",
+    "zh": "否，不提供，但继续"
+  },
+  {
+    "en": "absolute path",
+    "zh": "绝对路径"
+  },
+  {
+    "en": "need workspace access",
+    "zh": "需要工作区访问权限"
+  },
+  {
+    "en": "Need more information",
+    "zh": "需要更多信息"
+  },
+  {
+    "en": "prev question",
+    "zh": "上一个问题"
+  },
+  {
+    "en": "next question",
+    "zh": "下一个问题"
+  },
+  {
+    "en": "queued messages",
+    "zh": "排队中的消息"
+  },
+  {
+    "en": "option {}/{}",
+    "zh": "选项 {}/{}"
+  },
+  {
+    "en": "{unanswered} unanswered question{}",
+    "zh": "{unanswered} 个未回答问题"
+  },
+  {
+    "en": "option {selected}/{total}",
+    "zh": "选项 {selected}/{total}"
+  },
+  {
+    "en": "Profile statistics unavailable.",
+    "zh": "无法获取个人统计信息。"
+  },
+  {
+    "en": "Lifetime tokens",
+    "zh": "累计 Token 数"
+  },
+  {
+    "en": "Peak tokens",
+    "zh": "峰值 Token 数"
+  },
+  {
+    "en": "Longest chat",
+    "zh": "最长会话"
+  },
+  {
+    "en": "Current streak",
+    "zh": "当前连续活跃天数"
+  },
+  {
+    "en": "{days} days",
+    "zh": "{days} 天"
+  },
+  {
+    "en": "Longest streak",
+    "zh": "最长连续活跃天数"
+  },
+  {
+    "en": "Token activity",
+    "zh": "Token 活动"
+  },
+  {
+    "en": "Last 12 months",
+    "zh": "过去 12 个月"
+  },
+  {
+    "en": "Token activity history unavailable",
+    "zh": "无法获取 Token 活动历史"
+  },
+  {
+    "en": "Fast Mode",
+    "zh": "快速模式"
+  },
+  {
+    "en": "Most used reasoning",
+    "zh": "最常用推理强度"
+  },
+  {
+    "en": "Skills explored",
+    "zh": "使用过的技能"
+  },
+  {
+    "en": "Total skills used",
+    "zh": "使用技能总数"
+  },
+  {
+    "en": "Total chats",
+    "zh": "会话总数"
+  },
+  {
+    "en": "Activity insights",
+    "zh": "活动分析"
+  },
+  {
+    "en": "Most used plugins and skills",
+    "zh": "最常用的插件和技能"
+  },
+  {
+    "en": "Plugin and skill usage unavailable.",
+    "zh": "无法获取插件和技能使用情况。"
+  },
+  {
+    "en": "Statistics as of {}",
+    "zh": "统计截至 {}"
+  },
+  {
+    "en": "Some profile statistics are unavailable.",
+    "zh": "部分个人统计数据不可用。"
+  },
+  {
+    "en": "{hours}h {minutes}m",
+    "zh": "{hours}小时 {minutes}分钟"
+  },
+  {
+    "en": "Weekly %",
+    "zh": "每周使用率"
+  },
+  {
+    "en": "5-hour %",
+    "zh": "5 小时使用率"
+  },
+  {
+    "en": "Balance credits",
+    "zh": "余额点数"
+  },
+  {
+    "en": "Usage estimates · active in past 30 days · sorted by {}",
+    "zh": "用量估算 · 过去 30 天活跃 · 按 {} 排序"
+  },
+  {
+    "en": "Credits debited from balance · includes adjustments",
+    "zh": "从余额扣除的点数 · 包含调整项"
+  },
+  {
+    "en": "Recorded usage / current full limit · may exceed 100%",
+    "zh": "已记录用量 / 当前完整限额 · 可能超过 100%"
+  },
+  {
+    "en": "Partial ranking · {partial} partial · {missing} unavailable",
+    "zh": "部分排名 · {partial} 项不完整 · {missing} 项不可用"
+  },
+  {
+    "en": "· partial",
+    "zh": "· 部分数据"
+  },
+  {
+    "en": "Model / effort / speed",
+    "zh": "模型 / 推理强度 / 速度"
+  },
+  {
+    "en": "Not reported",
+    "zh": "未报告"
+  },
+  {
+    "en": "Task usage unavailable.",
+    "zh": "任务用量不可用。"
+  },
+  {
+    "en": "Local chats · includes discovered descendants · excludes archived roots",
+    "zh": "本地会话 · 包含发现的子会话 · 不包含已归档的根会话"
+  },
+  {
+    "en": "Partial ranking · 100 most recently active chats",
+    "zh": "部分排名 · 最近活跃的 100 个会话"
+  },
+  {
+    "en": "Updated {} UTC · recent activity may be delayed",
+    "zh": "更新于 {} UTC · 最近活动可能存在延迟"
+  },
+  {
+    "en": "Showing top {} of {count} chats",
+    "zh": "显示 {count} 个会话中的前 {} 个"
+  },
+  {
+    "en": "Some Codex SQLite files on NFS have permissions other than 0600. Migration preserves these permissions and requires your confirmation. Before running `codex migrate-nfs-db`, stop Codex on every host that uses these databases.",
+    "zh": "部分 Codex NFS 上的 SQLite 文件权限不是 0600。迁移会保留这些权限，并需要你确认。运行 `codex migrate-nfs-db` 前，请先在所有使用这些数据库的主机上停止 Codex。"
+  },
+  {
+    "en": "Could not inspect NFS database permissions",
+    "zh": "无法检查 NFS 数据库权限"
+  },
+  {
+    "en": "Skipped loading {error_count} skill(s) due to invalid SKILL.md files.",
+    "zh": "由于 SKILL.md 文件无效，已跳过加载 {error_count} 个技能。"
+  },
+  {
+    "en": "Project-local config, hooks, and exec policies are disabled in the following folders\nuntil the project is trusted, but skills still load.",
+    "zh": "在信任项目之前，以下文件夹中的项目级配置、Hook 和执行策略均已禁用，但仍会加载技能。"
+  },
+  {
+    "en": "Could not generate a recap. Please try again.",
+    "zh": "无法生成摘要，请重试。"
+  },
+  {
+    "en": "A recap is already being generated.",
+    "zh": "正在生成摘要，请稍候。"
+  },
+  {
+    "en": "There is no conversation history to recap.",
+    "zh": "没有可供生成摘要的会话历史。"
+  },
+  {
+    "en": "Conversation recaps are not available for cloud conversations.",
+    "zh": "云端会话暂不支持生成摘要。"
+  },
+  {
+    "en": "Base URL",
+    "zh": "基础 URL"
+  },
+  {
+    "en": "API key variable",
+    "zh": "API 密钥环境变量"
+  },
+  {
+    "en": "External authentication",
+    "zh": "外部身份验证"
+  },
+  {
+    "en": "AWS profile",
+    "zh": "AWS 配置档"
+  },
+  {
+    "en": "AWS region",
+    "zh": "AWS 区域"
+  },
+  {
+    "en": "Project ID",
+    "zh": "项目 ID"
+  },
+  {
+    "en": "Credential file (server)",
+    "zh": "凭据文件（服务器）"
+  },
+  {
+    "en": "This provider configuration is read-only.",
+    "zh": "此提供商配置为只读。"
+  },
+  {
+    "en": "Enter a provider name.",
+    "zh": "请输入提供商名称。"
+  },
+  {
+    "en": "Enter a base URL.",
+    "zh": "请输入基础 URL。"
+  },
+  {
+    "en": "Enter a base URL to use this API key variable.",
+    "zh": "请输入用于此 API 密钥环境变量的基础 URL。"
+  },
+  {
+    "en": "Enter an environment variable name such as TEAM_API_KEY.",
+    "zh": "请输入环境变量名称，例如 TEAM_API_KEY。"
+  },
+  {
+    "en": "Unrecognized Bedrock provider.",
+    "zh": "无法识别的 Bedrock 提供商。"
+  },
+  {
+    "en": "Could not save: {}",
+    "zh": "无法保存：{}"
+  },
+  {
+    "en": "Saved, but could not reload: {error}",
+    "zh": "已保存，但无法重新加载：{error}"
+  },
+  {
+    "en": "Saved · overridden by config or system setting",
+    "zh": "已保存 · 但被配置或系统设置覆盖"
+  },
+  {
+    "en": "Saved · applies to new composers",
+    "zh": "已保存 · 将应用于新输入框"
+  },
+  {
+    "en": "Test already scheduled · switch apps",
+    "zh": "测试已安排 · 请切换应用"
+  },
+  {
+    "en": "Test scheduled in 5s · switch apps",
+    "zh": "测试将在 5 秒后发送 · 请切换应用"
+  },
+  {
+    "en": "Codex notification test",
+    "zh": "Codex 通知测试"
+  },
+  {
+    "en": "Could not send test · check terminal connection",
+    "zh": "无法发送测试 · 请检查终端连接"
+  },
+  {
+    "en": "Test sent · Ghostty hides banners while focused",
+    "zh": "测试已发送 · Ghostty 在窗口聚焦时会隐藏横幅通知"
+  },
+  {
+    "en": "Test sent · check terminal/system settings",
+    "zh": "测试已发送 · 请检查终端/系统设置"
+  }
+]
