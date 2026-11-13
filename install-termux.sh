@@ -5,7 +5,7 @@ set -euo pipefail
 info() { printf '\033[1;36m[codex-zh-termux]\033[0m %s\n' "$*"; }
 err()  { printf '\033[1;31m[codex-zh-termux]\033[0m %s\n' "$*" >&2; }
 
-PREFIX="\${PREFIX:-}"
+PREFIX="${PREFIX:-}"
 if [[ "$PREFIX" != *com.termux* ]]; then
   err "This installer is for Termux only (PREFIX=$PREFIX)."
   exit 1
@@ -23,8 +23,8 @@ command -v codex >/dev/null 2>&1 || {
   exit 1
 }
 
-SOURCE_DIR="$(cd "$(dirname "\${BASH_SOURCE[0]}")" && pwd)"
-INSTALL_DIR="\${CODEX_ZH_INSTALL_DIR:-$HOME/.local/share/codex-code-zh-cn}"
+SOURCE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+INSTALL_DIR="${CODEX_ZH_INSTALL_DIR:-$HOME/.local/share/codex-code-zh-cn}"
 BIN_DIR="$PREFIX/bin"
 EXPECTED_SHA256="660a3025230f6035b7b8c000e8cca6ca3992bedaa05f7b165e7c3a5f1ae8ec8a"
 
