@@ -1635,5 +1635,13 @@
     "en": "`open {url}` exited with {status}",
     "zh": "`open {url}` 已退出，状态码：{status}",
     "pad": false
+  },
+  {
+    "en": "{CODEX_APPS_TOOLS_CACHE_ATTACHMENT_FILENAME} (if available)",
+    "zh": "{CODEX_APPS_TOOLS_CACHE_ATTACHMENT_FILENAME}（如有）"
+  },
+  {
+    "en": "{CODEX_APP_DIRECTORY_CACHE_ATTACHMENT_FILENAME} (if available)",
+    "zh": "{CODEX_APP_DIRECTORY_CACHE_ATTACHMENT_FILENAME}（如有）"
   }
 ]
