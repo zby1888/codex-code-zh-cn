@@ -46,6 +46,8 @@ codex-zh-doctor
 - `/chinese` 或 `/zh`：切换中文
 - `/english` 或 `/en`：切换英文
 
+注意：`/chinese`、`/zh`、`/english` 和 `/en` 是包装器在终端输入流中识别的快捷命令，不是 Codex 内置斜杠命令，因此不会出现在 Codex 自带的斜杠候选菜单中。请完整输入命令并按回车。包装器不向 `~/.codex/prompts` 写入自定义提示文件，以免改动你的 Codex 用户配置。
+
 原版 `codex` 命令保持不变。包装器不修改 `~/.codex`、认证状态、provider 配置或模型配置。语言偏好仍由项目保存在 `~/.codex-code-zh-cn/settings.json`。
 
 ## 卸载
