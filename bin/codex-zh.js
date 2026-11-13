@@ -191,41 +191,70 @@ async function main() {
   // 错误消息替换成切换成功的提示（按错误里的命令名决定中/英文提示）。
   const applyLanguage = (lang, typedCommand) => {
     if (lang === null) return; // /language、/lang 只显示帮助，不切换
-    // Persist first. Only update the live translator after the write succeeds.
-    settings.setLanguage(lang);
-    language = lang;
+    // Avoid redundant writes, but create the settings file on the first toggle.
+    const normalized = lang === 'en' ? 'en' : 'zh-CN';
+    if (!fs.existsSync(settings.settingsPath()) || settings.currentLanguage() !== normalized) {
+      settings.setLanguage(normalized);
+    }
+    language = normalized;
     translator.enabled = language === 'zh-CN';
   };
 
+  let suppressingToggleErrorTail = false;
   const translator = new StreamTranslator(entries, (chunk) => {
     process.stdout.write(chunk);
   }, {
     enabled: language === 'zh-CN',
     onBeforeText: (text) => {
-      const m = /Unrecognized command '\/(chinese|zh|english|en|language|lang)'/i.exec(text);
-      if (m) {
-        const cmd = m[1].toLowerCase();
-        if (cmd === 'language' || cmd === 'lang') {
-          return language === 'zh-CN'
-            ? '语言切换：输入 /chinese 切中文，/english 切英文（全局生效）。'
-            : 'Language: type /chinese for Chinese or /english for English (persisted).';
-        }
-        const lang = cmd === 'chinese' || cmd === 'zh' ? 'zh-CN' : 'en';
-        try {
-          // The feedback path is authoritative too: some terminals deliver
-          // input bytes in a form the stdin line detector cannot recognize.
-          // Persist here before claiming that the language switch succeeded.
-          applyLanguage(lang, cmd);
-        } catch (err) {
-          return lang === 'zh-CN'
-            ? `⚠️ 中文模式切换失败，设置未能保存：${err.message}`
-            : `⚠️ Failed to switch to English; settings were not saved: ${err.message}`;
-        }
-        return lang === 'zh-CN'
-          ? '✅ 中文模式已开启（codex-code-zh-cn），界面已切换为中文。'
-          : '✅ English mode enabled (codex-code-zh-cn).';
+      // Codex 0.169.x may split this error over multiple ANSI-styled text runs.
+      // Remove the entire rejection, not just its first fragment (which used to
+      // leave "of supported commands." on screen after a delayed fake success).
+      if (suppressingToggleErrorTail) {
+        const suffix = 'supported commands.';
+        const end = text.indexOf(suffix);
+        if (end < 0) return '';
+        suppressingToggleErrorTail = false;
+        return text.slice(end + suffix.length);
       }
-      return undefined;
+
+      const m = /Unrecognized command '\\/(chinese|zh|english|en|language|lang)'/i.exec(text);
+      if (!m) return undefined;
+
+      const cmd = m[1].toLowerCase();
+      if (cmd === 'language' || cmd === 'lang') {
+        const suffix = 'supported commands.';
+        const end = text.indexOf(suffix, m.index);
+        if (end >= 0) {
+          return text.slice(0, m.index) +
+            (language === 'zh-CN'
+              ? '语言切换：输入 /chinese 切中文，/english 切英文（全局生效）。'
+              : 'Language: type /chinese for Chinese or /english for English (persisted).') +
+            text.slice(end + suffix.length);
+        }
+        suppressingToggleErrorTail = true;
+        return text.slice(0, m.index) +
+          (language === 'zh-CN'
+            ? '语言切换：输入 /chinese 切中文，/english 切英文（全局生效）。'
+            : 'Language: type /chinese for Chinese or /english for English (persisted).');
+      }
+
+      const lang = cmd === 'chinese' || cmd === 'zh' ? 'zh-CN' : 'en';
+      try {
+        // Fallback for terminal stacks whose key encoding bypasses stdin detection.
+        applyLanguage(lang, cmd);
+      } catch (err) {
+        suppressingToggleErrorTail = true;
+        return lang === 'zh-CN'
+          ? `⚠️ 中文模式切换失败，设置未能保存：${err.message}`
+          : `⚠️ Failed to switch to English; settings were not saved: ${err.message}`;
+      }
+
+      const lineStart = Math.max(0, text.lastIndexOf('\\n', m.index - 1) + 1);
+      const suffix = 'supported commands.';
+      const end = text.indexOf(suffix, m.index);
+      if (end >= 0) return text.slice(0, lineStart) + text.slice(end + suffix.length);
+      suppressingToggleErrorTail = true;
+      return text.slice(0, lineStart);
     },
   });
 
