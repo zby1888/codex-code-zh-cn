@@ -482,5 +482,75 @@
     "en": "or hide the terminal pet",
     "zh": "或隐藏终端宠物",
     "pad": false
+  },
+  {
+    "en": "and token usage",
+    "zh": "及 Token 用量",
+    "pad": false
+  },
+  {
+    "en": "and",
+    "zh": "及",
+    "pad": false
+  },
+  {
+    "en": "view retained warnings",
+    "zh": "查看保留的警告",
+    "pad": false
+  },
+  {
+    "en": "and diagnostic",
+    "zh": "和诊断",
+    "pad": false
+  },
+  {
+    "en": "export the conversation",
+    "zh": "导出当前对话",
+    "pad": false
+  },
+  {
+    "en": "as markdown",
+    "zh": "为 Markdown 格式",
+    "pad": false
+  },
+  {
+    "en": "the current chat",
+    "zh": "当前对话",
+    "pad": false
+  },
+  {
+    "en": "Codex preferences",
+    "zh": "Codex 偏好设置",
+    "pad": false
+  },
+  {
+    "en": "working directory",
+    "zh": "工作目录",
+    "pad": false
+  },
+  {
+    "en": "to Plan mode",
+    "zh": "到 Plan 模式",
+    "pad": false
+  },
+  {
+    "en": "the TUI mode for the next launch",
+    "zh": "下次启动时使用的 TUI 模式",
+    "pad": false
+  },
+  {
+    "en": "file(s)",
+    "zh": "文件",
+    "pad": false
+  },
+  {
+    "en": "show the current",
+    "zh": "显示当前",
+    "pad": false
+  },
+  {
+    "en": "resume a saved",
+    "zh": "继续已保存的",
+    "pad": false
   }
 ]
