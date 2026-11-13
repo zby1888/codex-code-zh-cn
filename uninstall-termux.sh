@@ -1,8 +1,8 @@
 #!/data/data/com.termux/files/usr/bin/bash
 set -euo pipefail
 
-PREFIX="\${PREFIX:-}"
-INSTALL_DIR="\${CODEX_ZH_INSTALL_DIR:-$HOME/.local/share/codex-code-zh-cn}"
+PREFIX="${PREFIX:-}"
+INSTALL_DIR="${CODEX_ZH_INSTALL_DIR:-$HOME/.local/share/codex-code-zh-cn}"
 BIN_DIR="$PREFIX/bin"
 
 remove_link() {
