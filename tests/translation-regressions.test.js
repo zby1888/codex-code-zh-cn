@@ -60,6 +60,16 @@ test('Codex 0.169 new TUI panels and permission prompts have Chinese coverage', 
     ['Sign in to your gateway', '登录你的网关'],
     ['Profile statistics unavailable.', '无法获取个人统计信息。'],
     ['Ask Codex to do anything', '告诉 Codex 你想做什么'],
+    ['Weekly', '每周'],
+    ['No token activity in the last 12 months', '过去 12 个月没有 Token 活动'],
+    ['Rename ›', '重命名 ›'],
+    ['Side chat', '侧边对话'],
+    ['No choices', '没有可选项'],
+    ['Type to search settings', '输入以搜索设置'],
+    ['Unrecognized command \'/{name}\'. Type \"/\" for a list of supported commands.', '无法识别命令 \'/{name}\'。输入 \"/\" 查看支持的命令列表。'],
+    ['Message too long; limit {MAX_USER_INPUT_TEXT_CHARS} characters', '消息过长；上限为 {MAX_USER_INPUT_TEXT_CHARS} 个字符'],
+    ['This will {}. {verb} “{}”?', '这将{}。{verb}“{}”？'],
+    ['Permanently delete task and child agents', '永久删除任务及其子代理'],
   ];
 
   for (const [english, chinese] of cases) {
