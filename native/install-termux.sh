@@ -56,7 +56,8 @@ if [ -e "$BIN_PATH" ] || [ -L "$BIN_PATH" ]; then
 fi
 
 mkdir -p "$RELEASES"
-STAGE="$RELEASES/.stage-$VERSION-$$"
+printf '%s\n' 'managed by codex-zh-native installer' > "$APP_ROOT/.managed-by-codex-zh-native"
+STAGE="$RELEASES/.stage-$VERSION-$"
 trap 'rm -rf "$STAGE"' 0 HUP INT TERM
 rm -rf "$STAGE"
 mkdir -p "$STAGE"
@@ -66,7 +67,6 @@ chmod 700 "$STAGE/codex" "$STAGE/codex-code-mode-host"
 RELEASE_DIR="$RELEASES/$VERSION"
 rm -rf "$RELEASE_DIR"
 mv "$STAGE" "$RELEASE_DIR"
-printf '%s\n' 'managed by codex-zh-native installer' > "$APP_ROOT/.managed-by-codex-zh-native"
 
 WRAPPER_TMP="$PREFIX/bin/.codex-zh-native.$$"
 cat > "$WRAPPER_TMP" <<EOF
