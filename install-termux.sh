@@ -71,8 +71,26 @@ if [[ "$ACTUAL_SHA256" != "$EXPECTED_SHA256" ]]; then
 fi
 
 chmod +x "$INSTALL_DIR/bin/codex-zh.js" "$INSTALL_DIR/bin/codex-zh-doctor.js"
-ln -sfn "$INSTALL_DIR/bin/codex-zh.js" "$BIN_DIR/codex-zh"
-ln -sfn "$INSTALL_DIR/bin/codex-zh-doctor.js" "$BIN_DIR/codex-zh-doctor"
+
+# Termux does not guarantee /usr/bin/env; use Termux's own bash and invoke Node explicitly.
+for name in codex-zh codex-zh-doctor; do
+  target="$BIN_DIR/$name"
+  if [[ -e "$target" ]] && ! grep -q "codex-code-zh-cn Termux launcher" "$target" 2>/dev/null; then
+    err "Refusing to overwrite an existing command: $target"
+    exit 1
+  fi
+done
+cat > "$BIN_DIR/codex-zh" <<EOF
+#!/data/data/com.termux/files/usr/bin/bash
+# codex-code-zh-cn Termux launcher
+exec node "$INSTALL_DIR/bin/codex-zh.js" "\$@"
+EOF
+cat > "$BIN_DIR/codex-zh-doctor" <<EOF
+#!/data/data/com.termux/files/usr/bin/bash
+# codex-code-zh-cn Termux launcher
+exec node "$INSTALL_DIR/bin/codex-zh-doctor.js" "\$@"
+EOF
+chmod +x "$BIN_DIR/codex-zh" "$BIN_DIR/codex-zh-doctor"
 
 info "Checking launcher"
 node "$INSTALL_DIR/bin/codex-zh.js" --codex-zh-help >/dev/null
