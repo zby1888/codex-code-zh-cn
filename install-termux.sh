@@ -80,10 +80,10 @@ fi
 info "Loading Android PTY module on this device"
 node -e 'const p=require(process.argv[1]); if (typeof p.spawn !== "function") throw new Error("node-pty spawn() is unavailable")' "$INSTALL_DIR/node_modules/node-pty"
 
-chmod +x "$INSTALL_DIR/bin/codex-zh.js" "$INSTALL_DIR/bin/codex-zh-doctor.js"
+chmod +x "$INSTALL_DIR/bin/codex-zh.js" "$INSTALL_DIR/bin/codex-zh-doctor.js" "$INSTALL_DIR/bin/codex-zh-language.js"
 
 # Termux does not guarantee /usr/bin/env; use Termux's own bash and invoke Node explicitly.
-for name in codex-zh codex-zh-doctor; do
+for name in codex-zh codex-zh-doctor codex-zh-language; do
   target="$BIN_DIR/$name"
   if [[ -e "$target" || -L "$target" ]] && ! grep -q "codex-code-zh-cn Termux launcher" "$target" 2>/dev/null; then
     err "Refusing to overwrite an existing command: $target"
@@ -100,14 +100,40 @@ cat > "$BIN_DIR/codex-zh-doctor" <<EOF
 # codex-code-zh-cn Termux launcher
 exec node "$INSTALL_DIR/bin/codex-zh-doctor.js" "\$@"
 EOF
-chmod +x "$BIN_DIR/codex-zh" "$BIN_DIR/codex-zh-doctor"
+cat > "$BIN_DIR/codex-zh-language" <<EOF
+#!/data/data/com.termux/files/usr/bin/bash
+# codex-code-zh-cn Termux launcher
+exec node "$INSTALL_DIR/bin/codex-zh-language.js" "\$@"
+EOF
+chmod +x "$BIN_DIR/codex-zh" "$BIN_DIR/codex-zh-doctor" "$BIN_DIR/codex-zh-language"
+
+# Add only the two project-owned custom prompts. Existing user prompts and
+# ~/.codex/config.toml are never overwritten or edited.
+PROMPTS_DIR="$HOME/.codex/prompts"
+install_prompt() {
+  local name="$1"
+  local source="$INSTALL_DIR/prompts/$name"
+  local target="$PROMPTS_DIR/$name"
+  if [[ -e "$target" ]] && ! grep -Fq '<!-- codex-code-zh-cn managed prompt -->' "$target"; then
+    info "Keeping existing user prompt: $target"
+    return
+  fi
+  mkdir -p "$PROMPTS_DIR"
+  cp "$source" "$target"
+  info "Installed Codex slash prompt: /prompts:${name%.md}"
+}
+install_prompt "codex-zh-cn.md"
+install_prompt "codex-zh-en.md"
 
 info "Checking launcher"
 node "$INSTALL_DIR/bin/codex-zh.js" --codex-zh-help >/dev/null
 info "Installed. Original codex command and ~/.codex were not modified."
 info "Run: codex-zh"
 info "Switch language inside Codex: /chinese or /english"
+info "Codex slash menu: /prompts:codex-zh-cn and /prompts:codex-zh-en"
+info "Helper command: codex-zh-language zh-CN|en"
 info "Doctor: codex-zh-doctor"
+info "Restart Codex once so it loads the new custom prompts."
 if [[ ":$PATH:" != *":$BIN_DIR:"* ]]; then
   info "Add Termux bin to PATH if needed: export PATH=\"$BIN_DIR:\$PATH\""
 fi
