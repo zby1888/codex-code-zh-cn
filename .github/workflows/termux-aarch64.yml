@@ -25,6 +25,9 @@ on:
       - "data/**"
       - "verbs/**"
       - "tips/**"
+      - "scripts/**"
+      - "prompts/**"
+      - "tests/**"
       - "package.json"
       - "package-lock.json"
       - "install-termux.sh"
@@ -98,9 +101,10 @@ jobs:
           set -euo pipefail
           BUNDLE="codex-code-zh-cn-termux-aarch64"
           mkdir -p "dist/$BUNDLE"
-          tar --exclude='./.git' --exclude='./.github' --exclude='./dist' \
+          tar --exclude='./.git' --exclude='./.github' --exclude='./dist' --exclude='./upstream-codex' \
             -cf - . | tar -xf - -C "dist/$BUNDLE"
           cp dist/PTY-SHA256SUMS "dist/$BUNDLE/PTY-SHA256SUMS"
+          cp dist/translation-audit-0.169.0.md "dist/$BUNDLE/TRANSLATION-AUDIT-0.169.0.md"
 
       - name: Upload Termux ARM64 bundle
         uses: actions/upload-artifact@v4
