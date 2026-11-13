@@ -1542,5 +1542,57 @@
   {
     "en": "ERR: {err}",
     "zh": "错误：{err}"
+  },
+  {
+    "en": "Archive “{name}”?",
+    "zh": "归档“{name}”？"
+  },
+  {
+    "en": "Archive task",
+    "zh": "归档任务"
+  },
+  {
+    "en": "Archive task and child agents",
+    "zh": "归档任务及其子代理"
+  },
+  {
+    "en": "• Feedback uploaded.",
+    "zh": "• 反馈已上传。"
+  },
+  {
+    "en": "• Feedback recorded (no logs).",
+    "zh": "• 反馈已记录（未包含日志）。"
+  },
+  {
+    "en": "Files may contain prompts, commands, and tool output:",
+    "zh": "文件可能包含提示词、命令和工具输出："
+  },
+  {
+    "en": "Notify only while you are away or while this terminal is focused too",
+    "zh": "仅在你离开时通知，或在终端聚焦时也通知"
+  },
+  {
+    "en": "failed to invoke 'open': {err}",
+    "zh": "调用 'open' 失败：{err}"
+  },
+  {
+    "en": "'open {url}' exited with {status}",
+    "zh": "'open {url}' 已退出，状态码：{status}"
+  },
+  {
+    "en": "failed to launch the Desktop app through PowerShell: {err}",
+    "zh": "通过 PowerShell 启动桌面应用失败：{err}"
+  },
+  {
+    "en": "failed to launch the Desktop app through PowerShell with {}",
+    "zh": "通过 PowerShell 启动桌面应用失败：{}"
+  },
+  {
+    "en": "failed to persist trusted project state for {}: {error}",
+    "zh": "无法保存项目 {} 的信任状态：{error}"
+  },
+  {
+    "en": "Failed to set trust for {}: {error}",
+    "zh": "设置 {} 的信任状态失败：{error}"
   }
 ]
