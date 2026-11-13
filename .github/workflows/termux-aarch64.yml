@@ -1,0 +1,90 @@
+name: Termux Android ARM64 bundle
+
+on:
+  push:
+    branches:
+      - "termux/android-arm64"
+    paths:
+      - "bin/**"
+      - "lib/**"
+      - "data/**"
+      - "verbs/**"
+      - "tips/**"
+      - "package.json"
+      - "package-lock.json"
+      - "install-termux.sh"
+      - "uninstall-termux.sh"
+      - ".github/workflows/termux-aarch64.yml"
+  pull_request:
+    paths:
+      - "bin/**"
+      - "lib/**"
+      - "data/**"
+      - "verbs/**"
+      - "tips/**"
+      - "package.json"
+      - "package-lock.json"
+      - "install-termux.sh"
+      - "uninstall-termux.sh"
+      - ".github/workflows/termux-aarch64.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  bundle:
+    name: Test and package Termux ARM64
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install project dependencies without native compilation
+        run: npm install --omit=dev --ignore-scripts --no-audit --no-fund
+
+      - name: Validate translation data
+        run: npm run lint
+
+      - name: Run unit tests
+        run: npm test
+
+      - name: Install Android ARM64 PTY prebuild under the node-pty module name
+        run: |
+          npm install --no-save --ignore-scripts --package-lock=false \
+            "node-pty@npm:@mmmbuto/node-pty-android-arm64@1.1.2"
+
+      - name: Verify Android native module checksum
+        shell: bash
+        run: |
+          set -euo pipefail
+          PTY="node_modules/node-pty/prebuilds/android-arm64/pty.node"
+          test -s "$PTY"
+          echo "660a3025230f6035b7b8c000e8cca6ca3992bedaa05f7b165e7c3a5f1ae8ec8a  $PTY" | sha256sum --check
+          mkdir -p dist
+          echo "660a3025230f6035b7b8c000e8cca6ca3992bedaa05f7b165e7c3a5f1ae8ec8a  node-pty/prebuilds/android-arm64/pty.node" > dist/PTY-SHA256SUMS
+
+      - name: Assemble portable Termux bundle
+        run: |
+          set -euo pipefail
+          BUNDLE="codex-code-zh-cn-termux-aarch64"
+          mkdir -p "dist/$BUNDLE"
+          tar --exclude='./.git' --exclude='./.github' --exclude='./dist' \
+            -cf - . | tar -xf - -C "dist/$BUNDLE"
+          cp dist/PTY-SHA256SUMS "dist/$BUNDLE/PTY-SHA256SUMS"
+          cd dist
+          zip -qr "$GITHUB_WORKSPACE/$BUNDLE.zip" "$BUNDLE"
+
+      - name: Upload Termux ARM64 bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: codex-code-zh-cn-termux-aarch64
+          path: codex-code-zh-cn-termux-aarch64.zip
+          if-no-files-found: error
+          retention-days: 30
