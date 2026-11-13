@@ -26,6 +26,24 @@ remove_launcher() {
 
 remove_launcher codex-zh
 remove_launcher codex-zh-doctor
+remove_launcher codex-zh-language
+
+remove_managed_prompt() {
+  local name="$1"
+  local target="$HOME/.codex/prompts/$name"
+  local installed="$INSTALL_DIR/prompts/$name"
+  if [[ -f "$target" && -f "$installed" ]] && cmp -s "$target" "$installed"; then
+    rm -f "$target"
+    printf 'Removed managed Codex prompt: %s\\n' "$target"
+  elif [[ -f "$target" ]]; then
+    printf 'Preserved modified or user-owned prompt: %s\\n' "$target"
+  fi
+}
+
+remove_managed_prompt codex-zh-cn.md
+remove_managed_prompt codex-zh-en.md
+rmdir "$HOME/.codex/prompts" 2>/dev/null || true
+
 rm -rf "$INSTALL_DIR"
 printf 'codex-code-zh-cn Termux files removed.\n'
-printf 'Original codex, ~/.codex and ~/.codex-code-zh-cn settings were left untouched.\n'
+printf 'Original codex, ~/.codex/config.toml, user-owned prompts and ~/.codex-code-zh-cn settings were left untouched.\n'
