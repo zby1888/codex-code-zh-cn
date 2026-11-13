@@ -1,12 +1,13 @@
 {
   "name": "codex-code-zh-cn",
-  "version": "1.2.0",
+  "version": "1.3.2",
   "description": "OpenAI Codex CLI 简体中文本地化扩展：实时汉化终端界面、状态动词与提示。只做 CLI，不碰桌面版。",
   "license": "MIT",
   "type": "commonjs",
   "bin": {
     "codex-zh": "bin/codex-zh.js",
-    "codex-zh-doctor": "bin/codex-zh-doctor.js"
+    "codex-zh-doctor": "bin/codex-zh-doctor.js",
+    "codex-zh-language": "bin/codex-zh-language.js"
   },
   "main": "lib/translator.js",
   "files": [
@@ -21,7 +22,9 @@
     "install.ps1",
     "uninstall.ps1",
     "README.md",
-    "CHANGELOG.md"
+    "CHANGELOG.md",
+    "prompts",
+    "bin/codex-zh-language.js"
   ],
   "scripts": {
     "test": "node --test",

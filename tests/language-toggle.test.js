@@ -40,3 +40,18 @@ test('backspace edits the line', () => {
 test('ctrl-c resets the line buffer', () => {
   assert.deepEqual(collect('/chin\x03other\r'), []);
 });
+
+test('detects Enter encoded with the CSI-u keyboard protocol', () => {
+  const calls = [];
+  const feed = createToggleDetector((lang, cmd) => calls.push({ lang, cmd }));
+  feed('/chinese\x1b[13;1u');
+  assert.deepEqual(calls, [{ lang: 'zh-CN', cmd: 'chinese' }]);
+});
+
+test('detects CSI-u Enter when the escape sequence is split across chunks', () => {
+  const calls = [];
+  const feed = createToggleDetector((lang, cmd) => calls.push({ lang, cmd }));
+  feed('/english\x1b[13;');
+  feed('1u');
+  assert.deepEqual(calls, [{ lang: 'en', cmd: 'english' }]);
+});

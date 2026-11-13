@@ -91,6 +91,7 @@ function loadEntries() {
   const candidates = [
     path.join(__dirname, '..', 'data', 'ui-translations.json'),
     path.join(__dirname, '..', 'data', 'ui-translations-extra.json'),
+    path.join(__dirname, '..', 'data', 'ui-translations-0169.json'),
     path.join(__dirname, '..', 'data', 'ui-translations-slash.json'),
     path.join(__dirname, '..', 'data', 'ui-translations-words.json'),
     path.join(__dirname, '..', 'data', 'ui-translations-source.json'),
@@ -168,6 +169,16 @@ async function main() {
   if (language !== 'zh-CN' && language !== 'en') language = 'zh-CN';
   if (!opts.translate) language = 'en';
 
+  // Create the wrapper's own settings file once so external helper commands can
+  // update it and the live TUI can observe changes without touching ~/.codex.
+  if (!fs.existsSync(settings.settingsPath())) {
+    try {
+      settings.setLanguage(language);
+    } catch (err) {
+      fail(`无法初始化语言设置 ${settings.settingsPath()}：${err.message}`);
+    }
+  }
+
   const parent = {
     cols: process.stdout.isTTY ? process.stdout.columns : 120,
     rows: process.stdout.isTTY ? process.stdout.rows : 36,
@@ -187,34 +198,74 @@ async function main() {
   process.stdout.on('error', () => {}); // swallow EPIPE when piped into head/less
   const entries = loadEntries();
 
-  // /chinese、/english 切换：Codex 会报 Unrecognized command，我们把这类
-  // 错误消息替换成切换成功的提示（按错误里的命令名决定中/英文提示）。
+  // /chinese、/english are wrapper-owned commands. The input detector persists
+  // them before Codex receives the Enter key; the output hook remains a fallback.
   const applyLanguage = (lang, typedCommand) => {
     if (lang === null) return; // /language、/lang 只显示帮助，不切换
-    language = lang;
-    settings.setLanguage(language);
-    translator.enabled = language === 'zh-CN';
+    // Avoid redundant writes, but create the settings file on the first toggle.
+    const normalized = lang === 'en' ? 'en' : 'zh-CN';
+    if (!fs.existsSync(settings.settingsPath()) || settings.currentLanguage() !== normalized) {
+      settings.setLanguage(normalized);
+    }
+    language = normalized;
+    translator.enabled = opts.translate && language === 'zh-CN';
   };
 
+  let suppressingToggleErrorTail = false;
   const translator = new StreamTranslator(entries, (chunk) => {
     process.stdout.write(chunk);
   }, {
-    enabled: language === 'zh-CN',
+    enabled: opts.translate && language === 'zh-CN',
     onBeforeText: (text) => {
-      const m = /Unrecognized command '\/(chinese|zh|english|en|language|lang)'/i.exec(text);
-      if (m) {
-        const cmd = m[1].toLowerCase();
-        if (cmd === 'language' || cmd === 'lang') {
-          return language === 'zh-CN'
-            ? '语言切换：输入 /chinese 切中文，/english 切英文（全局生效）。'
-            : 'Language: type /chinese for Chinese or /english for English (persisted).';
-        }
-        const lang = cmd === 'chinese' || cmd === 'zh' ? 'zh-CN' : 'en';
-        return lang === 'zh-CN'
-          ? '✅ 中文模式已开启（codex-code-zh-cn），界面已切换为中文。'
-          : '✅ English mode enabled (codex-code-zh-cn).';
+      // Codex 0.169.x may split this error over multiple ANSI-styled text runs.
+      // Remove the entire rejection, not just its first fragment (which used to
+      // leave "of supported commands." on screen after a delayed fake success).
+      if (suppressingToggleErrorTail) {
+        const suffix = 'supported commands.';
+        const end = text.indexOf(suffix);
+        if (end < 0) return '';
+        suppressingToggleErrorTail = false;
+        return text.slice(end + suffix.length);
       }
-      return undefined;
+
+      const m = /Unrecognized command '\/(chinese|zh|english|en|language|lang)'/i.exec(text);
+      if (!m) return undefined;
+
+      const cmd = m[1].toLowerCase();
+      if (cmd === 'language' || cmd === 'lang') {
+        const suffix = 'supported commands.';
+        const end = text.indexOf(suffix, m.index);
+        if (end >= 0) {
+          return text.slice(0, m.index) +
+            (language === 'zh-CN'
+              ? '语言切换：输入 /chinese 切中文，/english 切英文（全局生效）。'
+              : 'Language: type /chinese for Chinese or /english for English (persisted).') +
+            text.slice(end + suffix.length);
+        }
+        suppressingToggleErrorTail = true;
+        return text.slice(0, m.index) +
+          (language === 'zh-CN'
+            ? '语言切换：输入 /chinese 切中文，/english 切英文（全局生效）。'
+            : 'Language: type /chinese for Chinese or /english for English (persisted).');
+      }
+
+      const lang = cmd === 'chinese' || cmd === 'zh' ? 'zh-CN' : 'en';
+      try {
+        // Fallback for terminal stacks whose key encoding bypasses stdin detection.
+        applyLanguage(lang, cmd);
+      } catch (err) {
+        suppressingToggleErrorTail = true;
+        return lang === 'zh-CN'
+          ? `⚠️ 中文模式切换失败，设置未能保存：${err.message}`
+          : `⚠️ Failed to switch to English; settings were not saved: ${err.message}`;
+      }
+
+      const lineStart = Math.max(0, text.lastIndexOf('\n', m.index - 1) + 1);
+      const suffix = 'supported commands.';
+      const end = text.indexOf(suffix, m.index);
+      if (end >= 0) return text.slice(0, lineStart) + text.slice(end + suffix.length);
+      suppressingToggleErrorTail = true;
+      return text.slice(0, lineStart);
     },
   });
 
@@ -235,6 +286,18 @@ async function main() {
   }
 
   p.onData((data) => translator.feed(data));
+
+  // Custom /prompts:codex-zh-cn and /prompts:codex-zh-en entries ask Codex to
+  // run codex-zh-language. Watch only this wrapper's private settings file so
+  // the current TUI switches live when that helper updates it.
+  const settingsFile = settings.settingsPath();
+  const refreshLanguage = () => {
+    const next = settings.currentLanguage();
+    if (next === language) return;
+    language = next;
+    translator.enabled = opts.translate && language === 'zh-CN';
+  };
+  fs.watchFile(settingsFile, { interval: 200, persistent: false }, refreshLanguage);
 
   // stdin → child PTY.
   if (process.stdin.isTTY) {
@@ -278,6 +341,7 @@ async function main() {
   process.on('SIGHUP', () => forwardSignal('SIGHUP'));
 
   const finish = (code, signal) => {
+    fs.unwatchFile(settingsFile, refreshLanguage);
     translator.end();
     try {
       if (process.stdin.isTTY) process.stdin.setRawMode(false);

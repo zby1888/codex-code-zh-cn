@@ -61,7 +61,7 @@ healthy = check('node-pty 依赖', () => {
 }) && healthy;
 
 healthy = check('翻译数据', () => {
-  const files = ['ui-translations.json', 'ui-translations-extra.json', 'ui-translations-slash.json', 'ui-translations-words.json', 'ui-translations-source.json', 'ui-patterns.json'];
+  const files = ['ui-translations.json', 'ui-translations-extra.json', 'ui-translations-0169.json', 'ui-translations-slash.json', 'ui-translations-words.json', 'ui-translations-source.json', 'ui-patterns.json'];
   const all = [];
   for (const f of files) {
     const p = path.join(ROOT, 'data', f);
@@ -98,6 +98,24 @@ healthy = check('包装器语言设置', () => {
   const lang = currentLanguage();
   console.log(`    语言：${lang}（${settingsPath()}）`);
   console.log('    会话内切换：输入 /chinese 或 /english 后回车');
+  return true;
+}) && healthy;
+
+healthy = check('语言切换助手命令', () => {
+  const found = detect.which('codex-zh-language');
+  if (!found) throw new Error('缺少 codex-zh-language；请重新运行 install-termux.sh');
+  console.log(`    路径：${found}`);
+  return true;
+}) && healthy;
+
+healthy = check('Codex 斜杠菜单入口', () => {
+  const home = process.env.HOME || require('os').homedir();
+  const codexHome = process.env.CODEX_HOME || path.join(home, '.codex');
+  const promptDir = path.join(codexHome, 'prompts');
+  const names = ['codex-zh-cn.md', 'codex-zh-en.md'];
+  const missing = names.filter((name) => !fs.existsSync(path.join(promptDir, name)));
+  if (missing.length) throw new Error('缺少菜单 prompt：' + missing.join(', ') + '；请重新运行 install-termux.sh');
+  console.log('    已安装：/prompts:codex-zh-cn、/prompts:codex-zh-en');
   return true;
 }) && healthy;
 
