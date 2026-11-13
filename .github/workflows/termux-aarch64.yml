@@ -10,6 +10,9 @@ on:
       - "data/**"
       - "verbs/**"
       - "tips/**"
+      - "scripts/**"
+      - "prompts/**"
+      - "tests/**"
       - "package.json"
       - "package-lock.json"
       - "install-termux.sh"
@@ -45,6 +48,23 @@ jobs:
         with:
           node-version: "20"
           cache: npm
+
+      - name: Checkout upstream Codex 0.169.0 TUI source
+        uses: actions/checkout@v4
+        with:
+          repository: openai/codex
+          ref: rust-v0.169.0
+          path: upstream-codex
+          sparse-checkout: |
+            codex-rs/tui/src
+            codex-rs/cli/src
+          sparse-checkout-cone-mode: true
+          fetch-depth: 1
+
+      - name: Audit upstream Codex UI translations
+        run: |
+          mkdir -p dist
+          node scripts/audit-upstream.js upstream-codex dist/translation-audit-0.169.0.md
 
       - name: Validate translation data
         run: npm run lint
