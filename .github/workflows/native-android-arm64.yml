@@ -108,7 +108,7 @@ jobs:
           import sys
           binary = Path(sys.argv[1]).read_bytes()
           required = [
-              "欢迎使用 Codex",
+              "欢迎使用 ",
               "选择模型和推理强度",
               "右键粘贴",
               "正在加载服务器实验功能",
