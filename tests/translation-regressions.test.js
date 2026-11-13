@@ -34,6 +34,10 @@ function translate(text) {
 test('Codex 0.169 welcome and slash-command descriptions have Chinese coverage', () => {
   const cases = [
     ['describe a task or try one of these commands:', '描述任务或尝试以下命令之一：'],
+    ['run or save reusable prompts and slash', '运行或保存可重复使用的提示词和斜杠'],
+    ['commands', '命令'],
+    ['describe a task or try one of these', '描述任务或尝试以下命令'],
+    ['commands:', '命令：'],
     ['show current session configuration', '显示当前会话配置'],
     ['review any changes and find issues', '审查任何更改并查找问题'],
     ['create an AGENTS.md file with instructions for', '创建包含 Codex 说明的 AGENTS.md 文件'],
