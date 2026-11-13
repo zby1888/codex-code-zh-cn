@@ -1,17 +1,5 @@
 [
   {
-    "en": "create an AGENTS.md file with instructions for Codex",
-    "zh": "创建包含 Codex 使用说明的 AGENTS.md 文件"
-  },
-  {
-    "en": "show current session configuration and token usage",
-    "zh": "显示当前会话配置和 Token 用量"
-  },
-  {
-    "en": "review my current changes and find issues",
-    "zh": "审查当前更改并查找问题"
-  },
-  {
     "en": "configure Codex preferences",
     "zh": "配置 Codex 偏好设置"
   },
@@ -20,16 +8,8 @@
     "zh": "向维护者发送日志或保存 ZIP"
   },
   {
-    "en": "start a new chat during a conversation",
-    "zh": "在当前对话中开始新会话"
-  },
-  {
     "en": "summarize the current conversation now",
     "zh": "立即总结当前对话"
-  },
-  {
-    "en": "resume a saved chat",
-    "zh": "恢复已保存的会话"
   },
   {
     "en": "archive this session",
@@ -40,20 +20,8 @@
     "zh": "永久删除当前会话"
   },
   {
-    "en": "clear the terminal and start a new chat",
-    "zh": "清空终端并开始新会话"
-  },
-  {
-    "en": "fork the current chat",
-    "zh": "分叉当前会话"
-  },
-  {
     "en": "start or continue a conversation in a new worktree",
     "zh": "在新的工作树中开始或继续对话"
-  },
-  {
-    "en": "continue this session in the Desktop app",
-    "zh": "在桌面应用中继续此会话"
   },
   {
     "en": "copy the last response or part of it",
@@ -64,28 +32,8 @@
     "zh": "将对话导出为 Markdown"
   },
   {
-    "en": "toggle raw scrollback mode for copy-friendly terminal selection",
-    "zh": "切换原始回滚模式，以便在终端中选择并复制文本"
-  },
-  {
     "en": "choose the TUI mode for the next launch",
     "zh": "选择下次启动时使用的 TUI 模式"
-  },
-  {
-    "en": "show git diff (including untracked files)",
-    "zh": "显示 Git 差异（包括未跟踪文件）"
-  },
-  {
-    "en": "mention a file",
-    "zh": "提及文件"
-  },
-  {
-    "en": "use skills to improve how Codex performs specific tasks",
-    "zh": "使用技能改进 Codex 执行特定任务的方式"
-  },
-  {
-    "en": "import setup, this project, and recent chats from Claude Code",
-    "zh": "从 Claude Code 导入设置、当前项目和最近的会话"
   },
   {
     "en": "Manage the local background server",
@@ -104,18 +52,6 @@
     "zh": "显示当前工作目录"
   },
   {
-    "en": "view account usage or use a usage limit reset",
-    "zh": "查看账户用量或重置用量限制"
-  },
-  {
-    "en": "show config layers and requirement sources for debugging",
-    "zh": "显示配置层和要求来源以便调试"
-  },
-  {
-    "en": "choose what model and reasoning effort to use",
-    "zh": "选择使用的模型和推理强度"
-  },
-  {
     "en": "run or save reusable prompts and slash commands",
     "zh": "运行或保存可重复使用的提示词和斜杠命令"
   },
@@ -124,20 +60,8 @@
     "zh": "开启或关闭 Daybreak"
   },
   {
-    "en": "include current selection, open files, and other context from your IDE",
-    "zh": "包含 IDE 中当前选区、打开的文件和其他上下文"
-  },
-  {
-    "en": "switch to Plan mode",
-    "zh": "切换到计划模式"
-  },
-  {
     "en": "start or stop voice; use /voice settings to choose a voice",
     "zh": "启动或停止语音；使用 /voice settings 选择语音"
-  },
-  {
-    "en": "set or view the goal for a long-running task",
-    "zh": "设置或查看长期任务的目标"
   },
   {
     "en": "open the agent command center",
@@ -152,32 +76,8 @@
     "zh": "开始侧边对话"
   },
   {
-    "en": "choose what Codex is allowed to do",
-    "zh": "选择允许 Codex 执行的操作"
-  },
-  {
-    "en": "set up elevated agent sandbox",
-    "zh": "设置增强型代理沙盒"
-  },
-  {
-    "en": "approve one retry of a recent auto-review denial",
-    "zh": "批准重试一次最近被自动审查拒绝的操作"
-  },
-  {
-    "en": "configure memory use and generation",
-    "zh": "配置记忆的使用和生成"
-  },
-  {
     "en": "list MCP tools; use /mcp verbose or /mcp login <name>",
     "zh": "列出 MCP 工具；使用 /mcp verbose 或 /mcp login <name>"
-  },
-  {
-    "en": "log out of Codex",
-    "zh": "退出 Codex 账户"
-  },
-  {
-    "en": "print the rollout file path",
-    "zh": "输出运行记录文件路径"
   },
   {
     "en": "Collapse turn details",
@@ -372,10 +272,6 @@
     "zh": "侧边对话  {total}"
   },
   {
-    "en": "Retrying…",
-    "zh": "正在重试…"
-  },
-  {
     "en": "Retry loading side chats",
     "zh": "重试加载侧边对话"
   },
@@ -462,10 +358,6 @@
   {
     "en": "Feedback recorded (no logs).",
     "zh": "反馈已记录（未包含日志）。"
-  },
-  {
-    "en": "How was this?",
-    "zh": "体验如何？"
   },
   {
     "en": "Crash, error message, hang, or broken UI/behavior",
@@ -728,10 +620,6 @@
     "zh": "是否允许访问网络 \"{}\"？"
   },
   {
-    "en": "Would you like to make the following edits?",
-    "zh": "是否应用以下修改？"
-  },
-  {
     "en": "{} needs your approval.",
     "zh": "{} 需要你的批准。"
   },
@@ -742,10 +630,6 @@
   {
     "en": "You granted additional permissions for this session",
     "zh": "你已为此会话授予额外权限"
-  },
-  {
-    "en": "Yes, just this once",
-    "zh": "是，仅此次允许"
   },
   {
     "en": "Yes, proceed",
@@ -768,28 +652,8 @@
     "zh": "是，本次会话不再询问此命令"
   },
   {
-    "en": "Yes, and allow this host in the future",
-    "zh": "是，以后也允许此主机"
-  },
-  {
-    "en": "No, and block this host in the future",
-    "zh": "否，以后阻止此主机"
-  },
-  {
-    "en": "No, and tell Codex what to do differently",
-    "zh": "否，并告诉 Codex 应如何调整"
-  },
-  {
     "en": "glob `{pattern}`",
     "zh": "匹配模式 `{pattern}`"
-  },
-  {
-    "en": "Yes, and don't ask again for these files",
-    "zh": "是，并且不再询问这些文件"
-  },
-  {
-    "en": "Yes, grant these permissions for this turn",
-    "zh": "是，仅在本轮授予这些权限"
   },
   {
     "en": "Yes, grant for this turn with strict auto review",
