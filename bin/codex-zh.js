@@ -191,8 +191,9 @@ async function main() {
   // 错误消息替换成切换成功的提示（按错误里的命令名决定中/英文提示）。
   const applyLanguage = (lang, typedCommand) => {
     if (lang === null) return; // /language、/lang 只显示帮助，不切换
+    // Persist first. Only update the live translator after the write succeeds.
+    settings.setLanguage(lang);
     language = lang;
-    settings.setLanguage(language);
     translator.enabled = language === 'zh-CN';
   };
 
@@ -210,6 +211,16 @@ async function main() {
             : 'Language: type /chinese for Chinese or /english for English (persisted).';
         }
         const lang = cmd === 'chinese' || cmd === 'zh' ? 'zh-CN' : 'en';
+        try {
+          // The feedback path is authoritative too: some terminals deliver
+          // input bytes in a form the stdin line detector cannot recognize.
+          // Persist here before claiming that the language switch succeeded.
+          applyLanguage(lang, cmd);
+        } catch (err) {
+          return lang === 'zh-CN'
+            ? `⚠️ 中文模式切换失败，设置未能保存：${err.message}`
+            : `⚠️ Failed to switch to English; settings were not saved: ${err.message}`;
+        }
         return lang === 'zh-CN'
           ? '✅ 中文模式已开启（codex-code-zh-cn），界面已切换为中文。'
           : '✅ English mode enabled (codex-code-zh-cn).';
