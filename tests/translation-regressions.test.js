@@ -53,12 +53,16 @@ test('Codex 0.169 welcome and slash-command descriptions have Chinese coverage',
   }
 });
 
-test('wrapped Codex descriptions translate across terminal line breaks', () => {
-  const presets = translate('run or save reusable prompts and slash\\ncommands');
+test('Codex picker descriptions translate when ANSI styling splits phrases', () => {
+  const presets = translate('run or save reusable prompts and slash \\x1b[0mcommands');
   assert.ok(presets.includes('运行或保存可重复使用的提示词和斜杠'));
   assert.ok(presets.includes('命令'));
 
-  const welcome = translate('describe a task or try one of these\\ncommands:');
+  const presetsWithLeadingSpace = translate('run or save reusable prompts and slash\\x1b[0m commands');
+  assert.ok(presetsWithLeadingSpace.includes('运行或保存可重复使用的提示词和斜杠'));
+  assert.ok(presetsWithLeadingSpace.includes('命令'));
+
+  const welcome = translate('describe a task or try one of these\\x1b[0m commands:');
   assert.ok(welcome.includes('描述任务或尝试以下命令'));
   assert.ok(welcome.includes('命令：'));
 });
