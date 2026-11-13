@@ -114,6 +114,10 @@ function isNonLocalizable(text) {
   if (/^%[A-Za-z0-9_ %-]+$/.test(value)) return true;
   if (/^GPT-[0-9]/i.test(value)) return true;
   if (/^codex-diagnostics-/i.test(value)) return true;
+  if (/^(?:tui-feedback-|feedback-upload-|feedback-save-)/i.test(value)) return true;
+  if (/^-Command$/.test(value)) return true;
+  if (/^\\{BASE_CLI_BUG_ISSUE_URL\\}/.test(value)) return true;
+  if (/^(?:failed to stage TUI feedback logs|failed to remove staged feedback logs|failed to persist model availability nux count|skipping onboarding login step|config\\/batchWrite failed)/i.test(value)) return true;
   if (/^(?:Option::deserialize|minLength|maxLength|additionalProperties|-NoProfile)$/.test(value)) return true;
   if (/^(?:tui-project-trust-write-|projects\.)/.test(value)) return true;
   if (/^(?:app|codex):\/\//.test(value)) return true;
