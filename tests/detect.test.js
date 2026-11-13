@@ -19,7 +19,7 @@ test('isShadowShim returns false for missing files', () => {
   assert.equal(isShadowShim(path.join(os.tmpdir(), 'codex-zh-does-not-exist-12345')), false);
 });
 
-test('which resolves executables from PATH without an external which command', () => {
+test('which resolves executables from PATH without an external which command', { skip: process.platform === 'win32' }, () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'codex-zh-path-'));
   const executable = path.join(dir, 'codex');
   fs.writeFileSync(executable, '#!/bin/sh\nexit 0\n');
