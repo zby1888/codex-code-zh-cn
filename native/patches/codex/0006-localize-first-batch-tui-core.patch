@@ -1,0 +1,1666 @@
+--- a/codex-rs/tui/src/onboarding/auth.rs
++++ b/codex-rs/tui/src/onboarding/auth.rs
+@@ -123,7 +123,7 @@
+     }
+ }
+ 
+-const API_KEY_DISABLED_MESSAGE: &str = "API key login is disabled.";
++const API_KEY_DISABLED_MESSAGE: &str = "此工作区已禁用 API 密钥登录。";
+ pub(super) fn onboarding_request_id() -> codex_app_server_protocol::RequestId {
+     codex_app_server_protocol::RequestId::String(Uuid::new_v4().to_string())
+ }
+@@ -550,19 +550,19 @@
+ 
+     fn render_pick_mode(&self, area: Rect, buf: &mut Buffer) {
+         let mut lines: Vec<Line> = if self.highlighted_mode.is_alternative() {
+-            vec!["  Sign in another way".into(), "".into()]
++            vec!["  其他登录方式".into(), "".into()]
+         } else if self.bedrock_setup_enabled || self.gcp_setup_enabled || self.gateway_setup_enabled
+         {
+-            vec!["  Choose how you want to use Codex.".into(), "".into()]
++            vec!["  选择 Codex 的使用方式。".into(), "".into()]
+         } else {
+             vec![
+                 Line::from(vec![
+                     "  ".into(),
+-                    "Sign in with ChatGPT to use Codex as part of your paid plan".into(),
++                    "使用 ChatGPT 登录，将 Codex 纳入你的付费套餐使用".into(),
+                 ]),
+                 Line::from(vec![
+                     "  ".into(),
+-                    "or connect an API key for usage-based billing".into(),
++                    "或连接 API 密钥，按实际用量计费".into(),
+                 ]),
+                 "".into(),
+             ]
+@@ -601,11 +601,11 @@
+         };
+ 
+         let chatgpt_description = if !self.is_chatgpt_login_allowed() {
+-            "ChatGPT login is disabled"
++            "ChatGPT 登录已禁用"
+         } else {
+-            "Usage included with Plus, Pro, Business, and Enterprise plans"
++            "用量已包含在 Plus、Pro、Business 和 Enterprise 套餐中"
+         };
+-        let device_code_description = "Sign in from another device with a one-time code";
++        let device_code_description = "使用一次性验证码在另一台设备上登录";
+ 
+         for (idx, option) in self.displayed_sign_in_options().into_iter().enumerate() {
+             match option {
+@@ -613,14 +613,14 @@
+                     lines.extend(create_mode_item(
+                         idx,
+                         option,
+-                        "Sign in another way",
++                        "其他登录方式",
+                         if self.bedrock_setup_enabled
+                             || self.gcp_setup_enabled
+                             || self.gateway_setup_enabled
+                         {
+-                            "Use an API key or another provider"
++                            "使用 API 密钥或其他服务提供方"
+                         } else {
+-                            "Use an OpenAI API key"
++                            "使用 OpenAI API 密钥"
+                         },
+                     ));
+                 }
+@@ -628,7 +628,7 @@
+                     lines.extend(create_mode_item(
+                         idx,
+                         option,
+-                        "Sign in with ChatGPT",
++                        "使用 ChatGPT 登录",
+                         chatgpt_description,
+                     ));
+                 }
+@@ -636,7 +636,7 @@
+                     lines.extend(create_mode_item(
+                         idx,
+                         option,
+-                        "Sign in with Device Code",
++                        "使用设备验证码登录",
+                         device_code_description,
+                     ));
+                 }
+@@ -644,24 +644,24 @@
+                     lines.extend(create_mode_item(
+                         idx,
+                         option,
+-                        "Use an OpenAI API key",
++                        "使用 OpenAI API 密钥",
+-                        "Pay for what you use",
++                        "按实际用量付费",
+                     ));
+                 }
+                 SignInOption::Bedrock => {
+                     lines.extend(create_mode_item(
+                         idx,
+                         option,
+-                        "Use Amazon Bedrock",
++                        "使用 Amazon Bedrock",
+-                        "Connect using your AWS credentials",
++                        "使用 AWS 凭据连接",
+                     ));
+                 }
+                 SignInOption::Gcp => {
+                     lines.extend(create_mode_item(
+                         idx,
+                         option,
+-                        "Use Google Cloud Vertex AI",
++                        "使用 Google Cloud Vertex AI",
+-                        "Connect using your Google Cloud credentials",
++                        "使用 Google Cloud 凭据连接",
+                     ));
+                 }
+                 SignInOption::Gateway => {
+@@ -669,7 +669,7 @@
+                         idx,
+                         option,
+                         USE_CUSTOM_PROVIDER,
+-                        "Choose a saved configuration or create a new one",
++                        "选择已保存的配置或创建新配置",
+                     ));
+                 }
+             }
+@@ -679,22 +679,22 @@
+         let options_end = lines.len();
+         if !self.is_api_login_allowed() {
+             lines.push(
+-                "  API key login is disabled by this workspace. Sign in with ChatGPT to continue."
++                "  此工作区已禁用 API 密钥登录。请使用 ChatGPT 登录以继续。"
+                     .dim()
+                     .into(),
+             );
+             lines.push("".into());
+         }
+         lines.push(Line::from(vec![
+-            "  Press ".dim(),
++            "  按 ".dim(),
+             self.confirm_binding().into(),
+-            " to continue".dim(),
++            " 继续".dim(),
+         ]));
+         if self.highlighted_mode.is_alternative() {
+             lines.push(Line::from(vec![
+-                "  Press ".dim(),
++                "  按 ".dim(),
+                 self.cancel_binding().into(),
+-                " to go back".dim(),
++                " 返回".dim(),
+             ]));
+         }
+         if let Some(err) = self.error_message() {
+@@ -727,19 +727,19 @@
+             self.request_frame
+                 .schedule_frame_in(std::time::Duration::from_millis(100));
+             spans.extend(shimmer_text(
+-                "Finish signing in via your browser",
++                "请在浏览器中完成登录",
+                 MotionMode::Animated,
+             ));
+         } else {
+-            spans.push("Finish signing in via your browser".into());
++            spans.push("请在浏览器中完成登录".into());
+         }
+         let mut lines = vec![spans.into(), "".into()];
+ 
+         let auth_url = if !state.auth_url.is_empty() {
+             lines.push(Line::from(vec![
+-                "  If the link doesn't open automatically, press ".into(),
++                "  如果链接未自动打开，请按 ".into(),
+                 keys::COPY_LINK[0].into(),
+-                " to copy it:".into(),
++                " 复制链接：".into(),
+             ]));
+             if let Some(message) = self.error_message() {
+                 lines.push(format!("  {message}").dim().into());
+@@ -751,10 +751,10 @@
+             ]));
+             lines.push("".into());
+             lines.push(Line::from(vec![
+-                "  On a remote or headless machine? Press ".into(),
++                "  在远程或无头设备上？按 ".into(),
+                 self.cancel_binding().into(),
+-                " and choose ".into(),
++                " 并选择 ".into(),
+-                "Sign in with Device Code".cyan(),
++                "使用设备验证码登录".cyan(),
+                 ".".into(),
+             ]));
+             lines.push("".into());
+@@ -764,9 +764,9 @@
+         };
+ 
+         lines.push(Line::from(vec![
+-            "  Press ".dim(),
++            "  按 ".dim(),
+             self.cancel_binding().into(),
+-            " to cancel".dim(),
++            " 取消".dim(),
+         ]));
+         Paragraph::new(lines)
+             .wrap(Wrap { trim: false })
+@@ -781,43 +781,43 @@
+ 
+     fn render_chatgpt_success_message(&self, area: Rect, buf: &mut Buffer) {
+         let mut docs_line =
+-            HyperlinkLine::new(Line::from("  Learn about permissions and approvals in the ").dim());
++            HyperlinkLine::new(Line::from("  了解权限和审批，请参阅 ").dim());
+         docs_line.push_span(
+-            "Codex docs".underlined(),
++            "Codex 文档".underlined(),
+             Some("https://developers.openai.com/codex/security"),
+         );
+         let mut preferences_line =
+-            HyperlinkLine::new(Line::from("  Your plan's rate limits and ").dim());
++            HyperlinkLine::new(Line::from("  你的套餐速率限制和").dim());
+         preferences_line.push_span(
+-            "training data preferences".underlined(),
++            "训练数据偏好设置".underlined(),
+             Some("https://chatgpt.com/#settings"),
+         );
+-        preferences_line.push_span(" apply".into(), /*destination*/ None);
++        preferences_line.push_span(" 会生效".into(), /*destination*/ None);
+ 
+         let lines = vec![
+             HyperlinkLine::new(
+-                "✓ Signed in with your ChatGPT account"
++                "✓ 已使用 ChatGPT 账户登录"
+                     .fg(Color::Green)
+                     .into(),
+             ),
+             "".into(),
+-            "  You're in control".into(),
++            "  权限由你掌控".into(),
+             docs_line,
+             "".into(),
+-            "  Codex can make mistakes".into(),
++            "  Codex 可能会出错".into(),
+             HyperlinkLine::new(
+-                "  Review the code it writes and commands it runs"
++                "  请检查 Codex 编写的代码和执行的命令"
+                     .dim()
+                     .into(),
+             ),
+             "".into(),
+-            "  Included with your ChatGPT plan".into(),
++            "  已包含在你的 ChatGPT 套餐中".into(),
+             preferences_line,
+             "".into(),
+             HyperlinkLine::new(Line::from(vec![
+-                "  Press ".fg(Color::Cyan),
++                "  按 ".fg(Color::Cyan),
+                 self.confirm_binding().into(),
+-                " to continue".fg(Color::Cyan),
++                " 继续".fg(Color::Cyan),
+             ])),
+         ];
+ 
+@@ -829,7 +829,7 @@
+ 
+     fn render_chatgpt_success(&self, area: Rect, buf: &mut Buffer) {
+         let lines = vec![
+-            "✓ Signed in with your ChatGPT account"
++            "✓ 已使用 ChatGPT 账户登录"
+                 .fg(Color::Green)
+                 .into(),
+         ];
+@@ -841,9 +841,9 @@
+ 
+     fn render_api_key_configured(&self, area: Rect, buf: &mut Buffer) {
+         let lines = vec![
+-            "✓ API key configured".fg(Color::Green).into(),
++            "✓ API 密钥已配置".fg(Color::Green).into(),
+             "".into(),
+-            "  Codex will use usage-based billing with your API key.".into(),
++            "  Codex 将使用你的 API 密钥按实际用量计费。".into(),
+         ];
+ 
+         Paragraph::new(lines)
+@@ -862,16 +862,16 @@
+         let mut intro_lines: Vec<Line> = vec![
+             Line::from(vec![
+                 "> ".into(),
+-                "Use your own OpenAI API key for usage-based billing".bold(),
++                "使用自己的 OpenAI API 密钥，按实际用量计费".bold(),
+             ]),
+             "".into(),
+-            "  Paste or type your API key below.".into(),
++            "  请在下方粘贴或输入 API 密钥。".into(),
+             "".into(),
+         ];
+         if state.prepopulated_from_env {
+-            intro_lines.push("  Detected OPENAI_API_KEY environment variable.".into());
++            intro_lines.push("  已检测到 OPENAI_API_KEY 环境变量。".into());
+             intro_lines.push(
+-                "  Paste a different key if you prefer to use another account."
++                "  如需使用其他账户，请粘贴另一个密钥。"
+                     .dim()
+                     .into(),
+             );
+@@ -882,7 +882,7 @@
+             .render(intro_area, buf);
+ 
+         let content_line: Line = if state.value.is_empty() {
+-            vec!["Paste or type your API key".dim()].into()
++            vec!["粘贴或输入 API 密钥".dim()].into()
+         } else {
+             Line::from(state.value.clone())
+         };
+@@ -890,7 +890,7 @@
+             .wrap(Wrap { trim: false })
+             .block(
+                 Block::default()
+-                    .title("API key")
++                    .title("API 密钥")
+                     .borders(Borders::ALL)
+                     .border_type(BorderType::Rounded)
+                     .border_style(Style::default().fg(Color::Cyan)),
+@@ -899,14 +899,14 @@
+ 
+         let mut footer_lines: Vec<Line> = vec![
+             Line::from(vec![
+-                "  Press ".dim(),
++                "  按 ".dim(),
+                 self.confirm_binding().into(),
+-                " to save".dim(),
++                " 保存".dim(),
+             ]),
+             Line::from(vec![
+-                "  Press ".dim(),
++                "  按 ".dim(),
+                 self.cancel_binding().into(),
+-                " to go back".dim(),
++                " 返回".dim(),
+             ]),
+         ];
+         if let Some(error) = self.error_message() {
+@@ -934,7 +934,7 @@
+                 {
+                     let trimmed = state.value.trim().to_string();
+                     if trimmed.is_empty() {
+-                        self.set_error(Some("API key cannot be empty".to_string()));
++                        self.set_error(Some("API 密钥不能为空".to_string()));
+                         should_request_frame = true;
+                     } else {
+                         should_save = Some(trimmed);
+@@ -1062,7 +1062,7 @@
+                 }
+                 Ok(other) => {
+                     *error.write().unwrap() = Some(format!(
+-                        "Unexpected account/login/start response: {other:?}"
++                        "账户登录启动返回了意外响应：{other:?}"
+                     ));
+                     *sign_in_state.write().unwrap() = SignInState::ApiKeyEntry(ApiKeyInputState {
+                         value: api_key,
+@@ -1070,7 +1070,7 @@
+                     });
+                 }
+                 Err(err) => {
+-                    *error.write().unwrap() = Some(format!("Failed to save API key: {err}"));
++                    *error.write().unwrap() = Some(format!("保存 API 密钥失败：{err}"));
+                     *sign_in_state.write().unwrap() = SignInState::ApiKeyEntry(ApiKeyInputState {
+                         value: api_key,
+                         prepopulated_from_env: false,
+@@ -1134,7 +1134,7 @@
+                 Ok(other) => {
+                     *sign_in_state.write().unwrap() = SignInState::PickMode;
+                     *error.write().unwrap() = Some(format!(
+-                        "Unexpected account/login/start response: {other:?}"
++                        "账户登录启动返回了意外响应：{other:?}"
+                     ));
+                 }
+                 Err(err) => {
+@@ -1264,15 +1264,15 @@
+             }
+             SignInState::GatewayOAuth { url, .. } => {
+                 let title = if url.is_some() {
+-                    "Finish signing in to your gateway in the browser."
++                    "请在浏览器中完成网关登录。"
+                 } else {
+-                    "Starting gateway sign-in…"
++                    "正在启动网关登录…"
+                 };
+                 let mut lines = vec![Line::from(title.bold())];
+                 if let Some(url) = url {
+                     lines.push(Line::from(url.clone().cyan().underlined()));
+                 }
+-                lines.push(Line::from("Press Ctrl+C to quit.".dim()));
++                lines.push(Line::from("按 Ctrl+C 退出。".dim()));
+                 Paragraph::new(lines)
+                     .wrap(Wrap { trim: false })
+                     .render(area, buf);
+@@ -1283,23 +1283,23 @@
+             SignInState::GatewayOAuthFailed { message, .. } => {
+                 Paragraph::new(vec![
+                     Line::from(message.clone().red()),
+-                    Line::from("Press Enter to retry or Ctrl+C to quit.".dim()),
++                    Line::from("按 Enter 重试，或按 Ctrl+C 退出。".dim()),
+                 ])
+                 .wrap(Wrap { trim: false })
+                 .render(area, buf);
+             }
+             SignInState::GatewaySelected(_) | SignInState::GatewayConfigured => {
+-                Paragraph::new("✓ Custom provider configured".green())
++                Paragraph::new("✓ 自定义服务提供方已配置".green())
+                     .wrap(Wrap { trim: false })
+                     .render(area, buf);
+             }
+             SignInState::GcpConfigured => {
+-                Paragraph::new("✓ Google Cloud Vertex AI configured".green())
++                Paragraph::new("✓ Google Cloud Vertex AI 已配置".green())
+                     .wrap(Wrap { trim: false })
+                     .render(area, buf);
+             }
+             SignInState::BedrockConfigured => {
+-                Paragraph::new("✓ Amazon Bedrock configured".green())
++                Paragraph::new("✓ Amazon Bedrock 已配置".green())
+                     .wrap(Wrap { trim: false })
+                     .render(area, buf);
+             }
+@@ -1591,18 +1591,18 @@
+             rows.pop();
+         }
+         insta::assert_snapshot!(rows.join("\n"), @r###"
+-          Choose how you want to use Codex.
++          选择 Codex 的使用方式。
+ 
+-        > 1. Sign in with ChatGPT
++        > 1. 使用 ChatGPT 登录
+-             Usage included with Plus, Pro, Business, and Enterprise plans
++             用量已包含在 Plus、Pro、Business 和 Enterprise 套餐中
+ 
+-          2. Sign in with Device Code
++          2. 使用设备验证码登录
+-             Sign in from another device with a one-time code
++             使用一次性验证码在另一台设备上登录
+ 
+-          3. Sign in another way
++          3. 其他登录方式
+-             Use an API key or another provider
++             使用 API 密钥或其他服务提供方
+ 
+-          Press enter to continue
++          按 enter 继续
+         "###);
+ 
+         widget.auth_config.forced_login_method = Some(ForcedLoginMethod::Chatgpt);
+@@ -1740,7 +1740,7 @@
+         let contents = terminal.backend().to_string();
+         insta::assert_snapshot!("continue_in_browser_narrow_long_url", contents);
+         assert!(contents.contains("On a remote or headless machine?"));
+-        assert!(contents.contains("Press esc to cancel"));
++        assert!(contents.contains("Press esc 取消"));
+     }
+ 
+     #[test]
+@@ -1754,11 +1754,11 @@
+ 
+         assert_eq!(
+             collect_osc8_chars(&buf, area, "https://developers.openai.com/codex/security"),
+-            "Codex docs"
++            "Codex 文档"
+         );
+         assert_eq!(
+             collect_osc8_chars(&buf, area, "https://chatgpt.com/#settings"),
+-            "training data preferences"
++            "训练数据偏好设置"
+         );
+         assert_eq!(
+             (0..57).map(|x| buf[(x, 3)].modifier).collect::<Vec<_>>(),
+@@ -1790,18 +1790,18 @@
+             .collect::<Vec<_>>()
+             .join("\n");
+         insta::assert_snapshot!(visible, @r###"
+-        ✓ Signed in with your ChatGPT account
++        ✓ 已使用 ChatGPT 账户登录
+ 
+-          You're in control
++          权限由你掌控
+-          Learn about permissions and approvals in the Codex docs
++          了解权限和审批，请参阅 Codex 文档
+ 
+-          Codex can make mistakes
++          Codex 可能会出错
+-          Review the code it writes and commands it runs
++          请检查 Codex 编写的代码和执行的命令
+ 
+-          Included with your ChatGPT plan
++          已包含在你的 ChatGPT 套餐中
+-          Your plan's rate limits and training data preferences apply
++          你的套餐速率限制和训练数据偏好设置 会生效
+ 
+-          Press enter to continue
++          按 enter 继续
+         "###);
+     }
+ 
+--- a/codex-rs/tui/src/onboarding/auth/headless_chatgpt_login.rs
++++ b/codex-rs/tui/src/onboarding/auth/headless_chatgpt_login.rs
+@@ -66,7 +66,7 @@
+                     &request_frame,
+                     &error,
+                     &request_id,
+-                    format!("Unexpected account/login/start response: {other:?}"),
++                    format!("账户登录启动返回了意外响应：{other:?}"),
+                 );
+             }
+             Err(err) => {
+@@ -89,9 +89,9 @@
+     state: &ContinueWithDeviceCodeState,
+ ) {
+     let banner = if state.is_showing_copyable_auth() {
+-        "Finish signing in via your browser"
++        "请在浏览器中完成登录"
+     } else {
+-        "Preparing device code login"
++        "正在准备设备验证码登录"
+     };
+ 
+     let mut spans = vec!["  ".into()];
+@@ -113,8 +113,8 @@
+             .as_deref()
+             .zip(state.user_code.as_deref()),
+         [
+-            "  1. Open this link in your browser and sign in",
++            "  1. 在浏览器中打开此链接并登录",
+-            "  2. Enter this one-time code after you are signed in (expires in 15 minutes)",
++            "  2. 登录后输入此一次性验证码（15 分钟后过期）",
+         ],
+         widget.cancel_binding(),
+     );
+@@ -142,22 +142,22 @@
+         lines.push(Line::from(vec!["  ".into(), user_code.cyan().bold()]));
+         lines.push("".into());
+         lines.push(
+-            "  Continue only if you started this login in Codex. If a website or another person gave you this code, cancel."
++            "  仅当你在 Codex 中主动发起此次登录时才继续。如果验证码来自网站或他人，请取消。"
+                 .dim()
+                 .into(),
+         );
+         lines.push("".into());
+         Some(verification_url)
+     } else {
+-        lines.push("  Requesting a one-time code...".dim().into());
++        lines.push("  正在申请一次性验证码…".dim().into());
+         lines.push("".into());
+         None
+     };
+ 
+     lines.push(Line::from(vec![
+-        "  Press ".dim(),
++        "  按 ".dim(),
+         cancel.into(),
+-        " to cancel".dim(),
++        " 取消".dim(),
+     ]));
+     Paragraph::new(lines)
+         .wrap(Wrap { trim: false })
+--- a/codex-rs/tui/src/history_cell/session.rs
++++ b/codex-rs/tui/src/history_cell/session.rs
+@@ -216,34 +216,34 @@
+     if is_first_event && local_settings.tui.show_tooltips {
+         // Help lines below the header (new copy and list)
+         let help_lines: Vec<Line<'static>> = vec![
+-            "  To get started, describe a task or try one of these commands:"
++            "  开始使用：描述一项任务，或试试以下命令："
+                 .dim()
+                 .into(),
+             Line::from(""),
+             Line::from(vec![
+                 "  ".into(),
+                 "/init".into(),
+-                " - create an AGENTS.md file with instructions for Codex".dim(),
++                " - 创建包含 Codex 指令的 AGENTS.md 文件".dim(),
+             ]),
+             Line::from(vec![
+                 "  ".into(),
+                 "/status".into(),
+-                " - show current session configuration".dim(),
++                " - 显示当前会话配置".dim(),
+             ]),
+             Line::from(vec![
+                 "  ".into(),
+                 "/permissions".into(),
+-                " - choose what Codex is allowed to do".dim(),
++                " - 设置 Codex 可以执行的操作".dim(),
+             ]),
+             Line::from(vec![
+                 "  ".into(),
+                 "/model".into(),
+-                " - choose what model and reasoning effort to use".dim(),
++                " - 选择模型和推理强度".dim(),
+             ]),
+             Line::from(vec![
+                 "  ".into(),
+                 "/review".into(),
+-                " - review any changes and find issues".dim(),
++                " - 检查更改并查找问题".dim(),
+             ]),
+         ];
+ 
+--- a/codex-rs/tui/src/bottom_pane/chat_composer/passive_hints.rs
++++ b/codex-rs/tui/src/bottom_pane/chat_composer/passive_hints.rs
+@@ -319,12 +319,12 @@
+                     Agents,
+                     [shortcut(
+                         key_hint::plain(KeyCode::Left).into(),
+-                        " for agents",
++                        " 打开智能体",
+                     )],
+                 );
+             }
+             if let Some(key) = self.footer.toggle_shortcuts_key {
+-                hints.add(Shortcuts, [shortcut(key, " for shortcuts")]);
++                hints.add(Shortcuts, [shortcut(key, " 查看快捷键")]);
+             }
+         }
+         let show_warning = self.show_warning_notice(options);
+--- a/codex-rs/tui/src/bottom_pane/footer.rs
++++ b/codex-rs/tui/src/bottom_pane/footer.rs
+@@ -308,27 +308,27 @@
+         SummaryHintKind::Shortcuts => {
+             if let Some(key) = key_hints.agents {
+                 line.extend(key.spans());
+-                line.push_span(" for agents".set_style(secondary_text_style()));
++                line.push_span(" 打开智能体".set_style(secondary_text_style()));
+                 if key_hints.toggle_shortcuts.is_some() {
+                     line.push_span(" · ".set_style(secondary_text_style()));
+                 }
+             }
+             if let Some(key) = key_hints.toggle_shortcuts {
+                 line.extend(key.spans());
+-                line.push_span(" for shortcuts".set_style(secondary_text_style()));
++                line.push_span(" 查看快捷键".set_style(secondary_text_style()));
+             }
+         }
+         SummaryHintKind::QueueMessage => {
+             if let Some(key) = key_hints.queue {
+                 line.extend(key.spans());
+-                line.push_span(" to queue message".set_style(secondary_text_style()));
++                line.push_span(" 排队发送".set_style(secondary_text_style()));
+             }
+         }
+         #[cfg(test)]
+         SummaryHintKind::QueueShort => {
+             if let Some(key) = key_hints.queue {
+                 line.extend(key.spans());
+-                line.push_span(" to queue".set_style(secondary_text_style()));
++                line.push_span(" 排队".set_style(secondary_text_style()));
+             }
+         }
+     };
+@@ -844,7 +844,7 @@
+             line.push_span(" · ".set_style(secondary_text_style()));
+         }
+         line.extend(key.spans());
+-        line.push_span(" for agents".set_style(secondary_text_style()));
++        line.push_span(" 打开智能体".set_style(secondary_text_style()));
+     }
+     line
+ }
+--- a/codex-rs/tui/src/chatwidget.rs
++++ b/codex-rs/tui/src/chatwidget.rs
+@@ -2152,8 +2152,8 @@
+     }
+ }
+ 
+-const PLACEHOLDER: &str = "Ask Codex to do anything";
++const PLACEHOLDER: &str = "让 Codex 帮你完成任何任务";
+-const SIDE_PLACEHOLDER: &str = "Ask a follow-up question";
++const SIDE_PLACEHOLDER: &str = "继续追问";
+ 
+ // Extract the first bold (Markdown) element in the form **...** from `s`.
+ // Returns the inner text if found; otherwise `None`.
+--- a/codex-rs/tui/src/status/card.rs
++++ b/codex-rs/tui/src/status/card.rs
+@@ -433,13 +433,13 @@
+ 
+         vec![
+             Span::from(total_fmt),
+-            Span::from(" total "),
++            Span::from(" 总计 "),
+             Span::from(" (").dim(),
+             Span::from(input_fmt).dim(),
+-            Span::from(" input").dim(),
++            Span::from(" 输入").dim(),
+             Span::from(" + ").dim(),
+             Span::from(output_fmt).dim(),
+-            Span::from(" output").dim(),
++            Span::from(" 输出").dim(),
+             Span::from(")").dim(),
+         ]
+     }
+@@ -451,10 +451,10 @@
+         let window_fmt = format_tokens_compact(context.window);
+ 
+         Some(vec![
+-            Span::from(format!("{percent}% left")),
++            Span::from(format!("剩余 {percent}%")),
+             Span::from(" (").dim(),
+             Span::from(used_fmt).dim(),
+-            Span::from(" used / ").dim(),
++            Span::from(" 已用 / ").dim(),
+             Span::from(window_fmt).dim(),
+             Span::from(")").dim(),
+         ])
+@@ -470,8 +470,8 @@
+             StatusRateLimitData::Available(rows_data) => {
+                 if rows_data.is_empty() {
+                     return vec![formatter.line(
+-                        "Limits",
++                        "用量限制",
+-                        vec![Span::from("not available for this account").dim()],
++                        vec![Span::from("此账户暂无可用数据").dim()],
+                     )];
+                 }
+ 
+@@ -481,11 +481,11 @@
+                 let mut lines =
+                     self.rate_limit_row_lines(rows_data, available_inner_width, formatter);
+                 lines.push(formatter.line(
+-                    "Warning",
++                    "警告",
+                     vec![Span::from(if state.refreshing_rate_limits {
+-                        "limits may be stale - run /status again shortly."
++                        "用量限制可能已过期，请稍后重新运行 /status。"
+                     } else {
+-                        "limits may be stale - start new turn to refresh."
++                        "用量限制可能已过期，请开始新一轮任务以刷新。"
+                     })
+                     .dim()],
+                 ));
+@@ -493,17 +493,17 @@
+             }
+             StatusRateLimitData::Unavailable => {
+                 vec![formatter.line(
+-                    "Limits",
++                    "用量限制",
+-                    vec![Span::from("not available for this account").dim()],
++                    vec![Span::from("此账户暂无可用数据").dim()],
+                 )]
+             }
+             StatusRateLimitData::Missing => {
+                 vec![formatter.line(
+-                    "Limits",
++                    "用量限制",
+                     vec![Span::from(if state.refreshing_rate_limits {
+-                        "refresh requested; run /status again shortly."
++                        "已请求刷新，请稍后重新运行 /status。"
+                     } else {
+-                        "data not available yet"
++                        "暂时没有可用数据"
+                     })
+                     .dim()],
+                 )]
+@@ -546,7 +546,7 @@
+                     let base_line = Line::from(base_spans.clone());
+ 
+                     if let Some(resets_at) = resets_at.as_ref() {
+-                        let resets_span = Span::from(format!("(resets {resets_at})")).dim();
++                        let resets_span = Span::from(format!("（重置于 {resets_at}）")).dim();
+                         let mut inline_spans = base_spans.clone();
+                         inline_spans.push(Span::from(" ").dim());
+                         inline_spans.push(resets_span.clone());
+@@ -555,7 +555,7 @@
+                             lines.push(Line::from(inline_spans));
+                         } else {
+                             lines.push(base_line);
+-                            let reset_text = format!("(resets {resets_at})");
++                            let reset_text = format!("（重置于 {resets_at}）");
+                             let reset_width = formatter.value_width(available_inner_width).max(1);
+                             let wrap_options =
+                                 textwrap::Options::new(reset_width).break_words(false);
+@@ -608,7 +608,7 @@
+         match &state.rate_limits {
+             StatusRateLimitData::Available(rows) => {
+                 if rows.is_empty() {
+-                    push_label(labels, seen, "Limits");
++                    push_label(labels, seen, "用量限制");
+                 } else {
+                     for row in rows {
+                         push_label(labels, seen, row.label.as_str());
+@@ -619,10 +619,10 @@
+                 for row in rows {
+                     push_label(labels, seen, row.label.as_str());
+                 }
+-                push_label(labels, seen, "Warning");
++                push_label(labels, seen, "警告");
+             }
+-            StatusRateLimitData::Unavailable => push_label(labels, seen, "Limits"),
++            StatusRateLimitData::Unavailable => push_label(labels, seen, "用量限制"),
+-            StatusRateLimitData::Missing => push_label(labels, seen, "Limits"),
++            StatusRateLimitData::Missing => push_label(labels, seen, "用量限制"),
+         }
+     }
+ }
+@@ -635,18 +635,18 @@
+     let summary = summarize_permission_profile(permission_profile, cwd, workspace_roots);
+     if let Some(details) = summary.strip_prefix("read-only") {
+         if details.contains("(network access enabled)") {
+-            return "read-only with network access".to_string();
++            return "只读（允许网络访问）".to_string();
+         }
+-        return "read-only".to_string();
++        return "只读".to_string();
+     }
+     if let Some(details) = summary.strip_prefix("workspace-write") {
+         if details.contains("(network access enabled)") {
+-            return "workspace with network access".to_string();
++            return "工作区（允许网络访问）".to_string();
+         }
+-        return "workspace".to_string();
++        return "工作区".to_string();
+     }
+     if summary == "custom permissions (network access enabled)" {
+-        return "custom permissions with network access".to_string();
++        return "自定义权限（允许网络访问）".to_string();
+     }
+     summary
+ }
+@@ -675,23 +675,23 @@
+     let active_id = active_permission_profile.map(|active| active.id.as_str());
+     match active_id {
+         Some(BUILT_IN_PERMISSION_PROFILE_READ_ONLY) => {
+-            let label = if sandbox == "read-only with network access" {
++            let label = if sandbox == "只读（允许网络访问）" {
+-                "Read Only with network access"
++                "只读（允许网络访问）"
+             } else {
+-                "Read Only"
++                "只读"
+             };
+-            return format!("{label} ({approval})");
++            return format!("{label}（{approval}）");
+         }
+         Some(BUILT_IN_PERMISSION_PROFILE_WORKSPACE) => match sandbox {
+-            "workspace" => {
++            "工作区" => {
+                 return format!(
+-                    "Workspace{} ({approval})",
++                    "工作区{}（{approval}）",
+                     workspace_root_suffix.unwrap_or("")
+                 );
+             }
+-            "workspace with network access" => {
++            "工作区（允许网络访问）" => {
+                 return format!(
+-                    "Workspace with network access{} ({approval})",
++                    "工作区（允许网络访问）{}（{approval}）",
+                     workspace_root_suffix.unwrap_or("")
+                 );
+             }
+@@ -701,39 +701,39 @@
+             if permission_profile == &PermissionProfile::Disabled =>
+         {
+             return if approval_policy == AskForApproval::Never {
+-                "Full Access".to_string()
++                "完全访问".to_string()
+             } else {
+-                format!("No Sandbox ({approval})")
++                format!("无沙盒（{approval}）")
+             };
+         }
+         Some(id) => {
+             let sandbox = decorate_workspace_sandbox_label(sandbox, workspace_root_suffix);
+-            return format!("Profile {id} ({sandbox}, {approval})");
++            return format!("权限配置 {id}（{sandbox}，{approval}）");
+         }
+         None => {}
+     }
+ 
+-    if sandbox == "read-only" {
++    if sandbox == "只读" {
+-        return format!("Read Only ({approval})");
++        return format!("只读（{approval}）");
+     }
+     if approval_policy == AskForApproval::OnRequest && sandbox == "workspace" {
+         return format!(
+-            "Workspace{} ({approval})",
++            "工作区{}（{approval}）",
+             workspace_root_suffix.unwrap_or("")
+         );
+     }
+     if approval_policy == AskForApproval::Never
+         && permission_profile == &PermissionProfile::Disabled
+     {
+-        return "Full Access".to_string();
++        return "完全访问".to_string();
+     }
+     let sandbox = decorate_workspace_sandbox_label(sandbox, workspace_root_suffix);
+-    format!("Custom ({sandbox}, {approval})")
++    format!("自定义（{sandbox}，{approval}）")
+ }
+ 
+ fn decorate_workspace_sandbox_label(sandbox: &str, workspace_root_suffix: Option<&str>) -> String {
+     match workspace_root_suffix {
+-        Some(suffix) if sandbox.starts_with("workspace") => format!("{sandbox}{suffix}"),
++        Some(suffix) if sandbox.starts_with("工作区") => format!("{sandbox}{suffix}"),
+         _ => sandbox.to_string(),
+     }
+ }
+@@ -745,12 +745,12 @@
+ ) -> String {
+     if approval_policy == AskForApproval::OnRequest {
+         return match approvals_reviewer {
+-            ApprovalsReviewer::AutoReview => "Approve for me".to_string(),
++            ApprovalsReviewer::AutoReview => "由我代为审批".to_string(),
+-            ApprovalsReviewer::User => "Ask for approval".to_string(),
++            ApprovalsReviewer::User => "请求审批".to_string(),
+         };
+     }
+ 
+-    approval.to_string()
++    match approval { "on-request" => "按需审批".to_string(), "on-failure" => "命令失败时审批".to_string(), "never" => "始终允许".to_string(), "untrusted" => "不受信任时审批".to_string(), "granular" => "精细控制".to_string(), _ => approval.to_string() }
+ }
+ 
+ impl StatusHistoryCell {
+@@ -769,7 +769,7 @@
+                 (None, None) => "ChatGPT".to_string(),
+             },
+             StatusAccountDisplay::ApiKey => {
+-                "API key configured (run codex login to use ChatGPT)".to_string()
++                "API 密钥已配置（运行 codex login 可使用 ChatGPT）".to_string()
+             }
+         });
+ 
+@@ -778,7 +778,7 @@
+             _ => None,
+         };
+ 
+-        let mut labels: Vec<String> = vec!["Model", "Directory", "Permissions", "Agents.md"]
++        let mut labels: Vec<String> = vec!["模型", "目录", "权限", "指令文件"]
+             .into_iter()
+             .map(str::to_string)
+             .collect();
+@@ -797,29 +797,29 @@
+             .clone();
+ 
+         if self.model_provider.is_some() {
+-            push_label(&mut labels, &mut seen, "Model provider");
++            push_label(&mut labels, &mut seen, "模型提供商");
+         }
+         if account_value.is_some() {
+-            push_label(&mut labels, &mut seen, "Account");
++            push_label(&mut labels, &mut seen, "账户");
+         }
+         if workspace.is_some() {
+-            push_label(&mut labels, &mut seen, "ChatGPT workspace");
++            push_label(&mut labels, &mut seen, "ChatGPT 工作区");
+         }
+         if thread_name.is_some() {
+-            push_label(&mut labels, &mut seen, "Thread name");
++            push_label(&mut labels, &mut seen, "线程名称");
+         }
+         if self.session_id.is_some() {
+-            push_label(&mut labels, &mut seen, "Session");
++            push_label(&mut labels, &mut seen, "会话");
+         }
+         if self.session_id.is_some() && self.forked_from.is_some() {
+-            push_label(&mut labels, &mut seen, "Forked from");
++            push_label(&mut labels, &mut seen, "派生自");
+         }
+         if self.collaboration_mode.is_some() {
+-            push_label(&mut labels, &mut seen, "Collaboration mode");
++            push_label(&mut labels, &mut seen, "协作模式");
+         }
+-        push_label(&mut labels, &mut seen, "Token usage");
++        push_label(&mut labels, &mut seen, "Token 用量");
+         if self.token_usage.context_window.is_some() {
+-            push_label(&mut labels, &mut seen, "Context window");
++            push_label(&mut labels, &mut seen, "上下文窗口");
+         }
+         self.collect_rate_limit_labels(&rate_limit_state, &mut seen, &mut labels);
+         self.thread_usage.push_labels(&mut labels, &mut seen);
+@@ -829,7 +829,7 @@
+ 
+         if let Some(remote_connection) = self.remote_connection.as_ref() {
+             let value = if remote_connection.is_local_daemon {
+-                Line::from("Local background server")
++                Line::from("本地后台服务器")
+             } else {
+                 Line::from(vec![
+                     Span::from(remote_connection.address.clone()),
+@@ -841,7 +841,7 @@
+             let wrapped_remote = word_wrap_lines([value], RtOptions::new(value_width.max(1)));
+             let mut wrapped_remote = wrapped_remote.into_iter();
+             if let Some(first) = wrapped_remote.next() {
+-                lines.push(formatter.line("Server", first.spans));
++                lines.push(formatter.line("服务器", first.spans));
+                 lines.extend(wrapped_remote.map(|line| formatter.continuation(line.spans)));
+             }
+             lines.push(Line::from(Vec::<Span<'static>>::new()));
+@@ -856,44 +856,44 @@
+ 
+         let directory_value = format_directory_display(&self.directory, /*max_width*/ None);
+ 
+-        lines.push(formatter.line("Model", model_spans));
++        lines.push(formatter.line("模型", model_spans));
+         if let Some(model_provider) = self.model_provider.as_ref() {
+-            lines.push(formatter.line("Model provider", vec![Span::from(model_provider.clone())]));
++            lines.push(formatter.line("模型提供商", vec![Span::from(model_provider.clone())]));
+         }
+-        lines.push(formatter.line("Directory", vec![Span::from(directory_value)]));
++        lines.push(formatter.line("目录", vec![Span::from(directory_value)]));
+-        lines.push(formatter.line("Permissions", vec![Span::from(self.permissions.clone())]));
++        lines.push(formatter.line("权限", vec![Span::from(self.permissions.clone())]));
+-        lines.push(formatter.line("Agents.md", vec![Span::from(agents_summary)]));
++        lines.push(formatter.line("指令文件", vec![Span::from(if agents_summary == "<none>" { "无".to_string() } else { agents_summary })]));
+ 
+         if let Some(account_value) = account_value {
+-            lines.push(formatter.line("Account", vec![Span::from(account_value)]));
++            lines.push(formatter.line("账户", vec![Span::from(account_value)]));
+         }
+         if let Some(workspace) = workspace {
+-            lines.push(formatter.line("ChatGPT workspace", vec![Span::from(workspace.to_owned())]));
++            lines.push(formatter.line("ChatGPT 工作区", vec![Span::from(workspace.to_owned())]));
+         }
+ 
+         if let Some(thread_name) = thread_name {
+-            lines.push(formatter.line("Thread name", vec![Span::from(thread_name.to_string())]));
++            lines.push(formatter.line("线程名称", vec![Span::from(thread_name.to_string())]));
+         }
+         if let Some(collab_mode) = self.collaboration_mode.as_ref() {
+-            lines.push(formatter.line("Collaboration mode", vec![Span::from(collab_mode.clone())]));
++            lines.push(formatter.line("协作模式", vec![Span::from(collab_mode.clone())]));
+         }
+         if let Some(session) = self.session_id.as_ref() {
+-            lines.push(formatter.line("Session", vec![Span::from(session.clone())]));
++            lines.push(formatter.line("会话", vec![Span::from(session.clone())]));
+         }
+         if self.session_id.is_some()
+             && let Some(forked_from) = self.forked_from.as_ref()
+         {
+-            lines.push(formatter.line("Forked from", vec![Span::from(forked_from.clone())]));
++            lines.push(formatter.line("派生自", vec![Span::from(forked_from.clone())]));
+         }
+ 
+         lines.push(Line::from(Vec::<Span<'static>>::new()));
+         // Hide token usage only for ChatGPT subscribers
+         if !matches!(self.account, Some(StatusAccountDisplay::ChatGpt { .. })) {
+-            lines.push(formatter.line("Token usage", self.token_usage_spans()));
++            lines.push(formatter.line("Token 用量", self.token_usage_spans()));
+         }
+ 
+         if let Some(spans) = self.context_window_spans() {
+-            lines.push(formatter.line("Context window", spans));
++            lines.push(formatter.line("上下文窗口", spans));
+         }
+ 
+         lines.extend(self.rate_limit_lines(&rate_limit_state, available_width, &formatter));
+@@ -923,11 +923,11 @@
+             rendered.extend(word_wrap_lines(
+                 [
+                     Line::from(vec![
+-                        "Visit ".fg(accent_color()),
++                        "查看 ".fg(accent_color()),
+                         CHATGPT_USAGE_URL.fg(accent_color()).underlined(),
+-                        " for up-to-date".fg(accent_color()),
++                        "，获取最新的".fg(accent_color()),
+                     ]),
+-                    "information on rate limits and credits"
++                    "速率限制和额度信息"
+                         .fg(accent_color())
+                         .into(),
+                 ],
+--- a/codex-rs/tui/src/status/rate_limits.rs
++++ b/codex-rs/tui/src/status/rate_limits.rs
+@@ -27,7 +27,7 @@
+ 
+ #[derive(Debug, Clone)]
+ pub(crate) struct StatusRateLimitRow {
+-    /// Human-readable row label, such as `"5h limit"`, `"Monthly limit"`, or `"Credits"`.
++    /// Human-readable row label, such as `"5h limit"`, `"Monthly limit"`, or `"额度"`.
+     pub label: String,
+     /// Value payload for the row.
+     pub value: StatusRateLimitValue,
+@@ -276,7 +276,7 @@
+ 
+         if show_limit_prefix && !combine_non_codex_single_limit {
+             rows.push(StatusRateLimitRow {
+-                label: format!("{limit_bucket_label} limit"),
++                label: format!("{limit_bucket_label} 用量限制"),
+                 value: StatusRateLimitValue::Text(String::new()),
+             });
+         }
+@@ -284,7 +284,7 @@
+         if let Some(primary) = snapshot.primary.as_ref() {
+             let label = if combine_non_codex_single_limit {
+                 format!(
+-                    "{} {} limit",
++                    "{} {} 用量限制",
+                     limit_bucket_label,
+                     primary_label.clone().unwrap_or_else(|| capitalize_first(
+                         fallback_limit_label(/*is_secondary*/ false)
+@@ -292,7 +292,7 @@
+                 )
+             } else {
+                 format!(
+-                    "{} limit",
++                    "{} 用量限制",
+                     primary_label.clone().unwrap_or_else(|| capitalize_first(
+                         fallback_limit_label(/*is_secondary*/ false)
+                     ))
+@@ -311,7 +311,7 @@
+         if let Some(secondary) = snapshot.secondary.as_ref() {
+             let label = if combine_non_codex_single_limit {
+                 format!(
+-                    "{} {} limit",
++                    "{} {} 用量限制",
+                     limit_bucket_label,
+                     secondary_label.clone().unwrap_or_else(|| capitalize_first(
+                         fallback_limit_label(/*is_secondary*/ true)
+@@ -319,7 +319,7 @@
+                 )
+             } else {
+                 format!(
+-                    "{} limit",
++                    "{} 用量限制",
+                     secondary_label.clone().unwrap_or_else(|| capitalize_first(
+                         fallback_limit_label(/*is_secondary*/ true)
+                     ))
+@@ -340,12 +340,12 @@
+         }
+         if let Some(individual_limit) = snapshot.individual_limit.as_ref() {
+             rows.push(StatusRateLimitRow {
+-                label: "Monthly credit limit".to_string(),
++                label: "每月额度上限".to_string(),
+                 value: StatusRateLimitValue::Window {
+                     percent_used: 100.0 - individual_limit.percent_remaining,
+                     resets_at: individual_limit.resets_at.clone(),
+                     details: Some(format!(
+-                        "{} of {} credits used",
++                        "已使用 {} / {} 额度",
+                         individual_limit.used, individual_limit.limit
+                     )),
+                 },
+@@ -385,7 +385,7 @@
+ 
+ /// Formats a compact textual summary from remaining percentage.
+ pub(crate) fn format_status_limit_summary(percent_remaining: f64) -> String {
+-    format!("{percent_remaining:.0}% left")
++    format!("剩余 {percent_remaining:.0}%")
+ }
+ 
+ /// Builds a single `StatusRateLimitRow` when workspace credits are available.
+@@ -394,8 +394,8 @@
+ fn credit_status_row(credits: &CreditsSnapshotDisplay) -> Option<StatusRateLimitRow> {
+     if credits.unlimited {
+         return Some(StatusRateLimitRow {
+-            label: "Credits".to_string(),
++            label: "额度".to_string(),
+-            value: StatusRateLimitValue::Text("Unlimited".to_string()),
++            value: StatusRateLimitValue::Text("不限".to_string()),
+         });
+     }
+     if !credits.has_credits {
+@@ -406,11 +406,11 @@
+         .as_deref()
+         .and_then(format_credit_balance)
+         .map_or_else(
+-            || "Available".to_string(),
++            || "可用".to_string(),
+-            |display_balance| format!("{display_balance} credits"),
++            |display_balance| format!("{display_balance} 额度"),
+         );
+     Some(StatusRateLimitRow {
+-        label: "Credits".to_string(),
++        label: "额度".to_string(),
+         value: StatusRateLimitValue::Text(value),
+     })
+ }
+@@ -503,13 +503,13 @@
+         assert_eq!(
+             labels,
+             vec![
+-                "5h limit".to_string(),
++                "5h 用量限制".to_string(),
+-                "Credits".to_string(),
++                "额度".to_string(),
+-                "codex-other 5h limit".to_string(),
++                "codex-other 5h 用量限制".to_string(),
+-                "Credits".to_string(),
++                "额度".to_string(),
+             ]
+         );
+-        assert_eq!(rows.iter().filter(|row| row.label == "Credits").count(), 2);
++        assert_eq!(rows.iter().filter(|row| row.label == "额度").count(), 2);
+     }
+ 
+     #[test]
+@@ -541,9 +541,9 @@
+         assert_eq!(
+             labels,
+             vec![
+-                "codex-other limit".to_string(),
++                "codex-other 用量限制".to_string(),
+-                "Usage limit".to_string(),
++                "用量限制".to_string(),
+-                "Secondary usage limit".to_string(),
++                "次要用量限制".to_string(),
+             ]
+         );
+     }
+--- a/codex-rs/tui/src/status/thread_usage.rs
++++ b/codex-rs/tui/src/status/thread_usage.rs
+@@ -18,20 +18,20 @@
+ use std::sync::atomic::Ordering;
+ 
+ const REASONING_ORDER: [&str; 8] = [
+-    "None",
++    "无",
+-    "Minimal",
++    "极低",
+-    "Light",
++    "低",
+-    "Medium",
++    "中",
+-    "High",
++    "高",
+-    "Extra High",
++    "极高",
+-    "Max",
++    "最大",
+-    "Ultra",
++    "超高",
+ ];
+-const SPEED_ORDER: [&str; 3] = ["Fast mode", "Ultrafast", "Standard"];
++const SPEED_ORDER: [&str; 3] = ["快速模式", "超高速", "标准"];
+-const MODELS_LABEL: &str = "  Models";
++const MODELS_LABEL: &str = "  模型";
+-const REASONING_LABEL: &str = "  Reasoning";
++const REASONING_LABEL: &str = "  推理强度";
+-const SPEED_LABEL: &str = "  Speed";
++const SPEED_LABEL: &str = "  速度";
+-const BILLED_TOKENS_LABEL: &str = "  Billed tokens";
++const BILLED_TOKENS_LABEL: &str = "  计费 Token";
+ 
+ /// ENT26 is billed directly in dollars; missing native usage is not a zero estimate.
+ pub(crate) fn thread_cost_micros(usage: &ThreadUsage, plan_type: Option<PlanType>) -> Option<i64> {
+@@ -78,7 +78,7 @@
+         let Some(estimate) = stored_estimate.as_ref() else {
+             return;
+         };
+-        push_label(labels, seen, "Thread usage");
++        push_label(labels, seen, "线程用量");
+         if !estimate.groups.is_empty() {
+             push_label(labels, seen, MODELS_LABEL);
+             push_label(labels, seen, REASONING_LABEL);
+@@ -112,12 +112,12 @@
+             // Credit-weighted breakdowns do not describe native dollar usage.
+             return thread_cost_micros(estimate, plan_type)
+                 .and_then(format_estimated_usd_micros)
+-                .map(|cost| vec![formatter.line("Thread usage", vec![cost.into()])])
++                .map(|cost| vec![formatter.line("线程用量", vec![cost.into()])])
+                 .unwrap_or_default();
+         }
+ 
+         let credits_micros = estimate.estimated_usage_credits_micros;
+-        let mut usage = vec![format!("{} credits", format_credit_micros(credits_micros)).into()];
++        let mut usage = vec![format!("{} 额度", format_credit_micros(credits_micros)).into()];
+         if let Some(cost) = estimate
+             .estimated_usage_usd_micros
+             .and_then(format_estimated_usd_micros)
+@@ -125,7 +125,7 @@
+             usage.push(" · ".dim());
+             usage.push(cost.into());
+         }
+-        let mut lines = vec![formatter.line("Thread usage", usage)];
++        let mut lines = vec![formatter.line("线程用量", usage)];
+ 
+         for (label, dimension) in [
+             (MODELS_LABEL, BreakdownDimension::Model),
+@@ -160,16 +160,16 @@
+         if !estimate.groups.is_empty() && (input_tokens.is_some() || output_tokens.is_some()) {
+             let mut tokens = Vec::new();
+             if let Some(input_tokens) = input_tokens {
+-                tokens.push(format!("{} input", format_tokens_compact(input_tokens)));
++                tokens.push(format!("{} 输入", format_tokens_compact(input_tokens)));
+                 if let Some(cached_tokens) = cached_tokens {
+-                    tokens.push(format!("({} cached)", format_tokens_compact(cached_tokens)));
++                    tokens.push(format!("（{} 缓存）", format_tokens_compact(cached_tokens)));
+                 }
+             }
+             if let Some(output_tokens) = output_tokens {
+                 if !tokens.is_empty() {
+                     tokens.push("+".to_string());
+                 }
+-                tokens.push(format!("{} output", format_tokens_compact(output_tokens)));
++                tokens.push(format!("{} 输出", format_tokens_compact(output_tokens)));
+             }
+             lines.push(formatter.line(BILLED_TOKENS_LABEL, vec![tokens.join(" ").into()]));
+         }
+@@ -199,26 +199,26 @@
+                 .model
+                 .as_deref()
+                 .map(format_model_display_name)
+-                .unwrap_or_else(|| "Other".to_string()),
++                .unwrap_or_else(|| "其他".to_string()),
+             BreakdownDimension::Reasoning => match group.reasoning_effort.as_deref() {
+-                Some("none") => "None",
++                Some("none") => "无",
+-                Some("minimal") => "Minimal",
++                Some("minimal") => "极低",
+-                Some("low") => "Light",
++                Some("low") => "低",
+-                Some("medium") => "Medium",
++                Some("medium") => "中",
+-                Some("high") => "High",
++                Some("high") => "高",
+-                Some("xhigh") => "Extra High",
++                Some("xhigh") => "极高",
+-                Some("max") => "Max",
++                Some("max") => "最大",
+-                Some("ultra") => "Ultra",
++                Some("ultra") => "超高",
+                 Some(other) => other,
+-                None => "Other",
++                None => "其他",
+             }
+             .to_string(),
+             BreakdownDimension::Speed => match group.speed.as_deref() {
+-                Some("fast") => "Fast mode",
++                Some("fast") => "快速模式",
+-                Some("ultrafast") => "Ultrafast",
++                Some("ultrafast") => "超高速",
+-                Some("standard") => "Standard",
++                Some("standard") => "标准",
+                 Some(other) => other,
+-                None => "Other",
++                None => "其他",
+             }
+             .to_string(),
+         };
+--- a/codex-rs/tui/src/status/helpers.rs
++++ b/codex-rs/tui/src/status/helpers.rs
+@@ -21,14 +21,14 @@
+ ) -> (String, Vec<String>) {
+     let mut details: Vec<String> = Vec::new();
+     if let Some((_, effort)) = entries.iter().find(|(k, _)| *k == "reasoning effort") {
+-        details.push(format!("reasoning {}", effort.to_ascii_lowercase()));
++        details.push(format!("推理强度 {}", match effort.as_str() { "none" => "无", "minimal" => "极低", "low" => "低", "medium" => "中", "high" => "高", "xhigh" => "极高", "max" => "最大", "ultra" => "超高", other => other }));
+     }
+     if let Some((_, summary)) = entries.iter().find(|(k, _)| *k == "reasoning summaries") {
+         let summary = summary.trim();
+         if summary.eq_ignore_ascii_case("none") || summary.eq_ignore_ascii_case("off") {
+-            details.push("summaries off".to_string());
++            details.push("推理摘要 关闭".to_string());
+         } else if !summary.is_empty() {
+-            details.push(format!("summaries {}", summary.to_ascii_lowercase()));
++            details.push(format!("推理摘要 {}", match summary.to_ascii_lowercase().as_str() { "auto" => "自动", "concise" => "简洁", "detailed" => "详细", other => other }));
+         }
+     }
+ 
+@@ -177,7 +177,7 @@
+     if dt.date_naive() == captured_at.date_naive() {
+         time
+     } else {
+-        format!("{time} on {}", dt.format("%-d %b"))
++        format!("{time}，{}", dt.format("%-d %b"))
+     }
+ }
+ 
+--- a/codex-rs/tui/src/chatwidget/model_popups.rs
++++ b/codex-rs/tui/src/chatwidget/model_popups.rs
+@@ -65,9 +65,9 @@
+             let effort = selection
+                 .effort
+                 .as_ref()
+-                .map_or_else(|| "server effort".to_string(), Self::reasoning_effort_label);
++                .map_or_else(|| "服务器推理强度".to_string(), Self::reasoning_effort_label);
+             header.push(
+-                format!("Accepted for future turns: {} · {effort}", selection.model)
++                format!("后续轮次将使用：{} · {effort}", selection.model)
+                     .dim()
+                     .into(),
+             );
+@@ -81,7 +81,7 @@
+     fn model_menu_warning_line(&self) -> Option<Line<'static>> {
+         let base_url = self.custom_openai_base_url()?;
+         let warning = format!(
+-            "Warning: OpenAI base URL is overridden to {base_url}. Selecting models may not be supported or work properly."
++            "警告：OpenAI 基础 URL 已被覆盖为 {base_url}。选择模型可能不受支持或无法正常工作。"
+         );
+         Some(Line::from(warning.red()))
+     }
+@@ -189,7 +189,7 @@
+             .collect();
+ 
+         if !other_presets.is_empty() {
+-            model_ids.push("All models".to_string());
++            model_ids.push("全部模型".to_string());
+             let scoped = self.scope_model_picker_event();
+             let actions: Vec<SelectionAction> = vec![Box::new(move |tx| {
+                 tx.send(scoped(AppEvent::OpenAllModelsPopup));
+@@ -197,11 +197,11 @@
+ 
+             let is_current = !items.iter().any(|item| item.is_current);
+             let description = Some(format!(
+-                "Choose a specific model and reasoning level (current: {current_label})"
++                "选择具体模型和推理等级（当前：{current_label}）"
+             ));
+ 
+             items.push(SelectionItem {
+-                name: "All models".to_string(),
++                name: "全部模型".to_string(),
+                 description,
+                 is_current,
+                 actions,
+@@ -211,8 +211,8 @@
+         }
+ 
+         let header = self.model_menu_header(
+-            "Select Model",
++            "选择模型",
+-            "Pick a quick auto mode or browse all models.",
++            "选择快速自动模式，或浏览全部模型。",
+         );
+         self.show_model_selection_view(
+             model_ids,
+@@ -264,7 +264,7 @@
+         if presets.is_empty() {
+             self.bottom_pane.dismiss_view_by_id(view_id);
+             self.add_info_message(
+-                "No additional models are available right now.".to_string(),
++                "当前没有其他可用模型。".to_string(),
+                 /*hint*/ None,
+             );
+             return;
+@@ -305,7 +305,7 @@
+             });
+         }
+ 
+-        let header = self.model_menu_header("Select Model and Effort", "");
++        let header = self.model_menu_header("选择模型和推理强度", "");
+         self.show_model_selection_view(
+             model_ids,
+             SelectionViewParams {
+@@ -393,21 +393,21 @@
+         effort: Option<ReasoningEffortConfig>,
+     ) {
+         let reasoning_phrase = match effort.as_ref() {
+-            Some(ReasoningEffortConfig::None) => "no reasoning".to_string(),
++            Some(ReasoningEffortConfig::None) => "不进行推理".to_string(),
+             Some(selected_effort) => {
+                 format!(
+-                    "{} reasoning",
++                    "{} 推理",
+                     Self::reasoning_effort_sentence_label(selected_effort)
+                 )
+             }
+-            None => "the selected reasoning".to_string(),
++            None => "所选推理等级".to_string(),
+         };
+-        let plan_only_description = format!("Always use {reasoning_phrase} in Plan mode");
++        let plan_only_description = format!("在计划模式下始终使用 {reasoning_phrase}");
+         let plan_reasoning_source = if let Some(plan_override) =
+             self.config.plan_mode_reasoning_effort.as_ref()
+         {
+             format!(
+-                "user-chosen Plan override ({})",
++                "用户设置的计划模式覆盖项（{}）",
+                 Self::reasoning_effort_sentence_label(plan_override)
+             )
+         } else if let Some(plan_mask) = collaboration_modes::plan_mask(self.model_catalog.as_ref())
+@@ -418,18 +418,18 @@
+                 .and_then(|effort| effort.as_ref())
+             {
+                 Some(plan_effort) => format!(
+-                    "built-in Plan default ({})",
++                    "内置计划模式默认值（{}）",
+                     Self::reasoning_effort_sentence_label(plan_effort)
+                 ),
+-                None => "built-in Plan default (no reasoning)".to_string(),
++                None => "内置计划模式默认值（不进行推理）".to_string(),
+             }
+         } else {
+-            "built-in Plan default".to_string()
++            "内置计划模式默认值".to_string()
+         };
+         let all_modes_description = format!(
+-            "Set the global default reasoning level and Plan mode override, replacing the current {plan_reasoning_source}"
++            "设置全局默认推理等级和计划模式覆盖项，替换当前的 {plan_reasoning_source}"
+         );
+-        let subtitle = format!("Choose where to apply {reasoning_phrase}.");
++        let subtitle = format!("选择将 {reasoning_phrase} 应用于何处。");
+         let warning = effort
+             .as_ref()
+             .and_then(|effort| self.ultra_reasoning_concurrency_warning(effort));
+@@ -534,7 +534,7 @@
+         };
+         let warning_text = warn_effort.as_ref().map(|effort| {
+             let effort_label = Self::reasoning_effort_label(effort);
+-            format!("⚠ {effort_label} reasoning effort can quickly consume Plus plan rate limits")
++            format!("⚠ {effort_label} 推理强度可能很快耗尽 Plus 套餐的速率限额")
+         });
+         let warn_for_model = preset.model.starts_with("gpt-5.1-codex")
+             || preset.model.starts_with("gpt-5.1-codex-max")
+@@ -597,7 +597,7 @@
+             let effort = choice.clone();
+             let mut effort_label = Self::reasoning_effort_label(&effort);
+             if Some(choice) == default_choice.as_ref() {
+-                effort_label.push_str(" (default)");
++                effort_label.push_str("（默认）");
+             }
+ 
+             let description = supported
+@@ -647,11 +647,11 @@
+                 .iter()
+                 .map(Self::reasoning_effort_label)
+                 .collect::<Vec<_>>()
+-                .join(" and ");
++                .join(" 和 ");
+             let verb = if advanced_choices.len() == 1 {
+-                "consumes"
++                "会更快消耗"
+             } else {
+-                "consume"
++                "会更快消耗"
+             };
+             let preset_for_action = preset;
+             let scoped = self.scope_model_picker_event();
+@@ -661,8 +661,8 @@
+                 }));
+             })];
+             items.push(SelectionItem {
+-                name: "More reasoning…".to_string(),
++                name: "更多推理选项…".to_string(),
+-                description: Some(format!("{advanced_label} {verb} usage limits faster")),
++                description: Some(format!("{advanced_label}{verb}用量限额")),
+                 is_current: is_current_model
+                     && highlight_choice
+                         .as_ref()
+@@ -674,7 +674,7 @@
+         }
+ 
+         let header = Paragraph::new(Line::from(
+-            format!("Select Reasoning Level for {model_label}").bold(),
++            format!("为 {model_label} 选择推理等级").bold(),
+         ))
+         .wrap(Wrap { trim: false });
+ 
+@@ -714,10 +714,10 @@
+         for effort in choices {
+             let description = match &effort {
+                 ReasoningEffortConfig::Max => {
+-                    "For difficult problems when quality matters more than speed · higher usage"
++                    "适用于质量优先于速度的复杂问题 · 用量较高"
+                 }
+                 ReasoningEffortConfig::Ultra => {
+-                    "For demanding work using multiple agents · highest usage"
++                    "适用于使用多个智能体的高强度任务 · 用量最高"
+                 }
+                 _ => unreachable!("advanced choices are limited to Max and Ultra"),
+             };
+@@ -742,8 +742,8 @@
+         }
+ 
+         let header = Paragraph::new(vec![
+-            Line::from("Advanced Reasoning".bold()),
++            Line::from("高级推理".bold()),
+-            Line::from("⚠ Consumes usage limits faster".cyan()),
++            Line::from("⚠ 会更快消耗用量限额".cyan()),
+         ])
+         .wrap(Wrap { trim: false });
+         self.bottom_pane.show_selection_view(SelectionViewParams {
+@@ -763,15 +763,15 @@
+ 
+     pub(super) fn reasoning_effort_label(effort: &ReasoningEffortConfig) -> String {
+         match effort {
+-            ReasoningEffortConfig::None => "None".to_string(),
++            ReasoningEffortConfig::None => "无".to_string(),
+-            ReasoningEffortConfig::Minimal => "Minimal".to_string(),
++            ReasoningEffortConfig::Minimal => "极低".to_string(),
+-            ReasoningEffortConfig::Low => "Low".to_string(),
++            ReasoningEffortConfig::Low => "低".to_string(),
+-            ReasoningEffortConfig::Medium => "Medium".to_string(),
++            ReasoningEffortConfig::Medium => "中".to_string(),
+-            ReasoningEffortConfig::High => "High".to_string(),
++            ReasoningEffortConfig::High => "高".to_string(),
+-            ReasoningEffortConfig::XHigh => "Extra high".to_string(),
++            ReasoningEffortConfig::XHigh => "极高".to_string(),
+-            ReasoningEffortConfig::Max => "Max".to_string(),
++            ReasoningEffortConfig::Max => "最大".to_string(),
+-            ReasoningEffortConfig::Ultra => "Ultra".to_string(),
++            ReasoningEffortConfig::Ultra => "超高".to_string(),
+-            ReasoningEffortConfig::Persistent => "Persistent".to_string(),
++            ReasoningEffortConfig::Persistent => "持续".to_string(),
+             ReasoningEffortConfig::Custom(value) => value.clone(),
+         }
+     }
+@@ -801,10 +801,10 @@
+ 
+         let max_subagents = max_threads.saturating_sub(1);
+         Some(format!(
+-            "Ultra reasoning may proactively use multiple agents. This session is configured for \
++            "超高推理可能主动使用多个智能体。本会话配置为最多同时运行 \
+-             {max_threads} concurrent threads with up to {max_subagents} subagents which can \
++             {max_threads} 个线程和 {max_subagents} 个子智能体，可能快速增加用量。建议将 \
+-             increase usage quickly. Consider setting \
++             features.multi_agent_v2.max_concurrent_threads_per_session 设置为 \
+-             features.multi_agent_v2.max_concurrent_threads_per_session below 8."
++             小于 8 的值。"
+         ))
+     }
+ 
+--- a/codex-rs/tui/src/chatwidget/settings.rs
++++ b/codex-rs/tui/src/chatwidget/settings.rs
+@@ -45,14 +45,14 @@
+ 
+     pub(super) fn daybreak_command_description(&self) -> Option<&'static str> {
+         if self.daybreak_enabled {
+-            Some("Disable broader access for cybersecurity work")
++            Some("关闭网络安全工作所需的扩展访问权限")
+         } else if !self.daybreak_account_eligible() {
+             None
+         } else {
+             match crate::daybreak::availability(&self.model_catalog.models) {
+-                Some(true) => Some("Enable broader access for cybersecurity work"),
++                Some(true) => Some("启用网络安全工作所需的扩展访问权限"),
+-                Some(false) => Some("Learn about broader access for cybersecurity work"),
++                Some(false) => Some("了解网络安全工作所需的扩展访问权限"),
+-                None => Some("Manage broader access for cybersecurity work"),
++                None => Some("管理网络安全工作所需的更广泛访问权限"),
+             }
+         }
+     }
+--- a/codex-rs/tui/src/bottom_pane/command_popup.rs
++++ b/codex-rs/tui/src/bottom_pane/command_popup.rs
+@@ -247,7 +247,7 @@
+                     description: Some(description),
+                     is_disabled: unavailable,
+                     disabled_reason: unavailable
+-                        .then(|| "not available in a side conversation".to_string()),
++                        .then(|| "旁支对话中不可用".to_string()),
+                     ..Default::default()
+                 }
+             })
+@@ -308,7 +308,7 @@
+     fn description(&self) -> &str {
+         match self {
+             Self::Builtin(cmd) => cmd.description(),
+-            Self::ServiceTier(command) => &command.description,
++            Self::ServiceTier(command) => if command.name.eq_ignore_ascii_case("fast") && command.description == "Fastest inference with increased plan usage" { "速度最快的推理模式，但会增加套餐用量" } else { &command.description },
+         }
+     }
+ }
+@@ -322,7 +322,7 @@
+             &rows,
+             &self.state,
+             MAX_POPUP_ROWS,
+-            "no matches",
++            "没有匹配项",
+             COMMAND_COLUMN_WIDTH,
+         );
+     }
+@@ -451,7 +451,7 @@
+         let rows = popup.rows_from_matches(popup.filtered());
+         assert_eq!(
+             rows.first().and_then(|row| row.description.as_deref()),
+-            Some("Fastest inference with increased plan usage")
++            Some("速度最快的推理模式，但会增加套餐用量")
+         );
+     }
+ 
