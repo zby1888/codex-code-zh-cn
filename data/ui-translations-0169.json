@@ -1530,5 +1530,17 @@
   {
     "en": "{hours}h",
     "zh": "{hours} 小时"
+  },
+  {
+    "en": "image dimensions={}x{}",
+    "zh": "图像尺寸={}x{}"
+  },
+  {
+    "en": "attached image format={}",
+    "zh": "附件图像格式={}"
+  },
+  {
+    "en": "ERR: {err}",
+    "zh": "错误：{err}"
   }
 ]
