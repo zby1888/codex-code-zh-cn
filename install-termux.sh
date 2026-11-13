@@ -109,7 +109,8 @@ chmod +x "$BIN_DIR/codex-zh" "$BIN_DIR/codex-zh-doctor" "$BIN_DIR/codex-zh-langu
 
 # Add only the two project-owned custom prompts. Existing user prompts and
 # ~/.codex/config.toml are never overwritten or edited.
-PROMPTS_DIR="$HOME/.codex/prompts"
+CODEX_HOME_DIR="${CODEX_HOME:-$HOME/.codex}"
+PROMPTS_DIR="$CODEX_HOME_DIR/prompts"
 install_prompt() {
   local name="$1"
   local source="$INSTALL_DIR/prompts/$name"
@@ -127,7 +128,7 @@ install_prompt "codex-zh-en.md"
 
 info "Checking launcher"
 node "$INSTALL_DIR/bin/codex-zh.js" --codex-zh-help >/dev/null
-info "Installed. Original codex command and ~/.codex were not modified."
+info "Installed. Original codex, config.toml, auth and provider settings were not modified; only two owned prompts were added."
 info "Run: codex-zh"
 info "Switch language inside Codex: /chinese or /english"
 info "Codex slash menu: /prompts:codex-zh-cn and /prompts:codex-zh-en"
