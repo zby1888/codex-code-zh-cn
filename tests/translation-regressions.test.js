@@ -9,6 +9,7 @@ const { StreamTranslator } = require('../lib/translator');
 const ROOT = path.join(__dirname, '..');
 const DATA_FILES = [
   'data/ui-translations-slash.json',
+  'data/ui-translations-0169.json',
   'data/ui-translations-source.json',
 ];
 const ENTRIES = DATA_FILES.flatMap((file) =>
@@ -39,6 +40,27 @@ test('Codex 0.169 welcome and slash-command descriptions have Chinese coverage',
     assert.ok(
       translate(english).includes(chinese),
       `Expected translation for: ${english}`
+    );
+  }
+});
+
+test('Codex 0.169 new TUI panels and permission prompts have Chinese coverage', () => {
+  const cases = [
+    ['Agent command center', '代理命令中心'],
+    ['Collapse turn details', '折叠轮次详情'],
+    ['Create a custom provider or gateway', '创建自定义提供商或网关'],
+    ['Loading side chats…', '正在加载侧边对话…'],
+    ['Would you like to run the following command?', '是否运行以下命令？'],
+    ['Yes, just this once', '是，仅此次允许'],
+    ['Sign in to your gateway', '登录你的网关'],
+    ['Profile statistics unavailable.', '无法获取个人统计信息。'],
+    ['Ask Codex to do anything', '告诉 Codex 你想做什么'],
+  ];
+
+  for (const [english, chinese] of cases) {
+    assert.ok(
+      translate(english).includes(chinese),
+      `Expected 0.169.0 translation for: ${english}`
     );
   }
 });
