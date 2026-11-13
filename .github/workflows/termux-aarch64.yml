@@ -69,6 +69,13 @@ jobs:
           mkdir -p dist
           node scripts/audit-upstream.js upstream-codex dist/translation-audit-0.169.0.md
 
+      - name: Check JavaScript syntax
+        run: |
+          node --check scripts/audit-upstream.js
+          node --check bin/codex-zh.js
+          node --check bin/codex-zh-language.js
+          node --check bin/codex-zh-doctor.js
+
       - name: Validate translation data
         run: npm run lint
 
