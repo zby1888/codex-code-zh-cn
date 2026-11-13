@@ -1,5 +1,7 @@
 # codex-code-zh-cn
 
+> **Termux / Android ARM64 用户：** [查看云端构建与安装说明](README-TERMUX.md)。
+
 > OpenAI **Codex CLI** 简体中文本地化扩展 —— 让终端里的 Codex 说中文。
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
