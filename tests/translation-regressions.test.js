@@ -179,3 +179,29 @@ test('Codex 0.169 slash menu descriptions translate when TUI wraps or splits the
     );
   }
 });
+
+
+test('additional Codex slash-menu fragments remain translated across ANSI boundaries', () => {
+  const cases = [
+    ['and token usage', '及 Token 用量'],
+    ['token usage', 'Token 用量'],
+    ['view retained warnings', '查看保留的警告'],
+    ['and diagnostic', '和诊断'],
+    ['export the conversation', '导出当前对话'],
+    ['as markdown', '为 Markdown 格式'],
+    ['the current chat', '当前对话'],
+    ['Codex preferences', 'Codex 偏好设置'],
+    ['working directory', '工作目录'],
+    ['to Plan mode', '到 Plan 模式'],
+    ['the TUI mode for the next launch', '下次启动时使用的 TUI 模式'],
+    ['file(s)', '文件'],
+    ['show the current', '显示当前'],
+    ['resume a saved', '继续已保存的']
+  ];
+  for (const [english, chinese] of cases) {
+    assert.ok(
+      translate(english).includes(chinese),
+      `Expected additional menu-fragment translation for: ${english}`
+    );
+  }
+});
