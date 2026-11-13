@@ -1490,5 +1490,45 @@
   {
     "en": "clear search",
     "zh": "清除搜索"
+  },
+  {
+    "en": "Could not {verb} task",
+    "zh": "无法{verb}任务"
+  },
+  {
+    "en": "Start in Vim mode",
+    "zh": "以 Vim 模式启动"
+  },
+  {
+    "en": "Resume directory",
+    "zh": "恢复会话目录"
+  },
+  {
+    "en": "Send in 5s",
+    "zh": "5 秒后发送"
+  },
+  {
+    "en": "app server unavailable",
+    "zh": "应用服务器不可用"
+  },
+  {
+    "en": "[Skill]",
+    "zh": "[技能]"
+  },
+  {
+    "en": "cut here",
+    "zh": "在此处截断"
+  },
+  {
+    "en": "{seconds}s",
+    "zh": "{seconds} 秒"
+  },
+  {
+    "en": "{minutes}m",
+    "zh": "{minutes} 分钟"
+  },
+  {
+    "en": "{hours}h",
+    "zh": "{hours} 小时"
   }
 ]
