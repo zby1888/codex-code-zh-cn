@@ -2,7 +2,18 @@
 set -euo pipefail
 
 PREFIX="${PREFIX:-}"
+if [[ "$PREFIX" != *com.termux* ]]; then
+  printf 'This uninstaller is for Termux only.\n' >&2
+  exit 1
+fi
 INSTALL_DIR="${CODEX_ZH_INSTALL_DIR:-$HOME/.local/share/codex-code-zh-cn}"
+mkdir -p "$INSTALL_DIR"
+INSTALL_DIR="$(cd "$INSTALL_DIR" && pwd -P)"
+HOME_REAL="$(cd "$HOME" && pwd -P)"
+case "$INSTALL_DIR" in
+  "$HOME_REAL"/*) ;;
+  *) printf 'Refusing to remove a path outside HOME: %s\n' "$INSTALL_DIR" >&2; exit 1 ;;
+esac
 BIN_DIR="$PREFIX/bin"
 
 remove_launcher() {
