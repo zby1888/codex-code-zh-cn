@@ -15,6 +15,8 @@ case "$INSTALL_DIR" in
   *) printf 'Refusing to remove a path outside HOME: %s\n' "$INSTALL_DIR" >&2; exit 1 ;;
 esac
 BIN_DIR="$PREFIX/bin"
+CODEX_HOME_DIR="${CODEX_HOME:-$HOME/.codex}"
+PROMPTS_DIR="$CODEX_HOME_DIR/prompts"
 
 remove_launcher() {
   local name="$1"
@@ -30,7 +32,7 @@ remove_launcher codex-zh-language
 
 remove_managed_prompt() {
   local name="$1"
-  local target="$HOME/.codex/prompts/$name"
+  local target="$PROMPTS_DIR/$name"
   local installed="$INSTALL_DIR/prompts/$name"
   if [[ -f "$target" && -f "$installed" ]] && cmp -s "$target" "$installed"; then
     rm -f "$target"
@@ -42,7 +44,7 @@ remove_managed_prompt() {
 
 remove_managed_prompt codex-zh-cn.md
 remove_managed_prompt codex-zh-en.md
-rmdir "$HOME/.codex/prompts" 2>/dev/null || true
+rmdir "$PROMPTS_DIR" 2>/dev/null || true
 
 rm -rf "$INSTALL_DIR"
 printf 'codex-code-zh-cn Termux files removed.\n'
