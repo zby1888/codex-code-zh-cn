@@ -68,7 +68,7 @@ jobs:
           test -s "$PTY"
           echo "660a3025230f6035b7b8c000e8cca6ca3992bedaa05f7b165e7c3a5f1ae8ec8a  $PTY" | sha256sum --check
           mkdir -p dist
-          echo "660a3025230f6035b7b8c000e8cca6ca3992bedaa05f7b165e7c3a5f1ae8ec8a  node-pty/prebuilds/android-arm64/pty.node" > dist/PTY-SHA256SUMS
+          echo "660a3025230f6035b7b8c000e8cca6ca3992bedaa05f7b165e7c3a5f1ae8ec8a  node_modules/node-pty/prebuilds/android-arm64/pty.node" > dist/PTY-SHA256SUMS
 
       - name: Assemble portable Termux bundle
         run: |
@@ -78,13 +78,11 @@ jobs:
           tar --exclude='./.git' --exclude='./.github' --exclude='./dist' \
             -cf - . | tar -xf - -C "dist/$BUNDLE"
           cp dist/PTY-SHA256SUMS "dist/$BUNDLE/PTY-SHA256SUMS"
-          cd dist
-          zip -qr "$GITHUB_WORKSPACE/$BUNDLE.zip" "$BUNDLE"
 
       - name: Upload Termux ARM64 bundle
         uses: actions/upload-artifact@v4
         with:
           name: codex-code-zh-cn-termux-aarch64
-          path: codex-code-zh-cn-termux-aarch64.zip
+          path: dist/codex-code-zh-cn-termux-aarch64/
           if-no-files-found: error
           retention-days: 30
