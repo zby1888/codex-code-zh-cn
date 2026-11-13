@@ -110,7 +110,8 @@ healthy = check('语言切换助手命令', () => {
 
 healthy = check('Codex 斜杠菜单入口', () => {
   const home = process.env.HOME || require('os').homedir();
-  const promptDir = path.join(home, '.codex', 'prompts');
+  const codexHome = process.env.CODEX_HOME || path.join(home, '.codex');
+  const promptDir = path.join(codexHome, 'prompts');
   const names = ['codex-zh-cn.md', 'codex-zh-en.md'];
   const missing = names.filter((name) => !fs.existsSync(path.join(promptDir, name)));
   if (missing.length) throw new Error('缺少菜单 prompt：' + missing.join(', ') + '；请重新运行 install-termux.sh');
