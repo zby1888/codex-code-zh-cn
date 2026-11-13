@@ -34,9 +34,9 @@ remove_managed_prompt() {
   local installed="$INSTALL_DIR/prompts/$name"
   if [[ -f "$target" && -f "$installed" ]] && cmp -s "$target" "$installed"; then
     rm -f "$target"
-    printf 'Removed managed Codex prompt: %s\\n' "$target"
+    printf 'Removed managed Codex prompt: %s\n' "$target"
   elif [[ -f "$target" ]]; then
-    printf 'Preserved modified or user-owned prompt: %s\\n' "$target"
+    printf 'Preserved modified or user-owned prompt: %s\n' "$target"
   fi
 }
 
