@@ -237,7 +237,8 @@
   },
   {
     "en": "Resize · ←/h →/l · Shift+←/→ 10 cols · Enter/Esc done",
-    "zh": "调整大小 · ←/h →/l · Shift+←/→ 每次 10 列 · Enter/Esc 完成"
+    "zh": "调整大小 · ←/h →/l · Shift+←/→ 每次 10 列 · Enter/Esc 完成",
+    "pad": false
   },
   {
     "en": "Could not save sidebar width: {err}",
@@ -245,7 +246,8 @@
   },
   {
     "en": "←/→ resize · Enter/Esc done",
-    "zh": "←/→ 调整大小 · Enter/Esc 完成"
+    "zh": "←/→ 调整大小 · Enter/Esc 完成",
+    "pad": false
   },
   {
     "en": "You can start a side chat after your first message in the main chat.",
@@ -285,7 +287,8 @@
   },
   {
     "en": "Opening…",
-    "zh": "正在打开…"
+    "zh": "正在打开…",
+    "pad": false
   },
   {
     "en": "Retry · {error}",
@@ -413,15 +416,18 @@
   },
   {
     "en": "1 MCP server",
-    "zh": "1 个 MCP 服务器"
+    "zh": "1 个 MCP 服务器",
+    "pad": false
   },
   {
     "en": "{mcp_server_count} MCP servers",
-    "zh": "{mcp_server_count} 个 MCP 服务器"
+    "zh": "{mcp_server_count} 个 MCP 服务器",
+    "pad": false
   },
   {
     "en": "{app_count} apps",
-    "zh": "{app_count} 个应用"
+    "zh": "{app_count} 个应用",
+    "pad": false
   },
   {
     "en": "Plugin · {}",
@@ -453,7 +459,8 @@
   },
   {
     "en": "… resize to see all",
-    "zh": "… 调整终端大小以查看全部"
+    "zh": "… 调整终端大小以查看全部",
+    "pad": false
   },
   {
     "en": "Needs input",
@@ -537,7 +544,8 @@
   },
   {
     "en": "Running daemon: {}",
-    "zh": "正在运行的后台服务：{}"
+    "zh": "正在运行的后台服务：{}",
+    "pad": false
   },
   {
     "en": "Not connected to the local background server.",
@@ -557,7 +565,8 @@
   },
   {
     "en": "Use this CLI build",
-    "zh": "使用当前 CLI 构建版本"
+    "zh": "使用当前 CLI 构建版本",
+    "pad": false
   },
   {
     "en": "This CLI has no local package to copy",
@@ -653,7 +662,8 @@
   },
   {
     "en": "glob `{pattern}`",
-    "zh": "匹配模式 `{pattern}`"
+    "zh": "匹配模式 `{pattern}`",
+    "pad": false
   },
   {
     "en": "Yes, grant for this turn with strict auto review",
@@ -713,7 +723,8 @@
   },
   {
     "en": "Peak tokens",
-    "zh": "峰值 Token 数"
+    "zh": "峰值 Token 数",
+    "pad": false
   },
   {
     "en": "Longest chat",
@@ -721,7 +732,8 @@
   },
   {
     "en": "Current streak",
-    "zh": "当前连续活跃天数"
+    "zh": "当前连续活跃天数",
+    "pad": false
   },
   {
     "en": "{days} days",
@@ -729,7 +741,8 @@
   },
   {
     "en": "Longest streak",
-    "zh": "最长连续活跃天数"
+    "zh": "最长连续活跃天数",
+    "pad": false
   },
   {
     "en": "Token activity",
@@ -785,15 +798,18 @@
   },
   {
     "en": "{hours}h {minutes}m",
-    "zh": "{hours}小时 {minutes}分钟"
+    "zh": "{hours}小时 {minutes}分钟",
+    "pad": false
   },
   {
     "en": "Weekly %",
-    "zh": "每周使用率"
+    "zh": "每周使用率",
+    "pad": false
   },
   {
     "en": "5-hour %",
-    "zh": "5 小时使用率"
+    "zh": "5 小时使用率",
+    "pad": false
   },
   {
     "en": "Balance credits",
@@ -817,7 +833,8 @@
   },
   {
     "en": "· partial",
-    "zh": "· 部分数据"
+    "zh": "· 部分数据",
+    "pad": false
   },
   {
     "en": "Model / effort / speed",
@@ -1029,7 +1046,8 @@
   },
   {
     "en": "Daemon",
-    "zh": "后台服务"
+    "zh": "后台服务",
+    "pad": false
   },
   {
     "en": "Subagents",
@@ -1041,7 +1059,8 @@
   },
   {
     "en": "No active chat",
-    "zh": "没有活动中的会话"
+    "zh": "没有活动中的会话",
+    "pad": false
   },
   {
     "en": "Location",
@@ -1073,7 +1092,8 @@
   },
   {
     "en": "Server:",
-    "zh": "服务器："
+    "zh": "服务器：",
+    "pad": false
   },
   {
     "en": "Thread:",
@@ -1105,7 +1125,8 @@
   },
   {
     "en": "1 app",
-    "zh": "1 个应用"
+    "zh": "1 个应用",
+    "pad": false
   },
   {
     "en": "Plugin",
@@ -1117,7 +1138,8 @@
   },
   {
     "en": "[App]",
-    "zh": "[应用]"
+    "zh": "[应用]",
+    "pad": false
   },
   {
     "en": "Shutting down...",
@@ -1133,7 +1155,8 @@
   },
   {
     "en": "Sentry URL:",
-    "zh": "Sentry URL："
+    "zh": "Sentry URL：",
+    "pad": false
   },
   {
     "en": "bad result",
@@ -1185,11 +1208,13 @@
   },
   {
     "en": "[x] On",
-    "zh": "[x] 开启"
+    "zh": "[x] 开启",
+    "pad": false
   },
   {
     "en": "[ ] Off",
-    "zh": "[ ] 关闭"
+    "zh": "[ ] 关闭",
+    "pad": false
   },
   {
     "en": "Unavailable",
@@ -1429,7 +1454,8 @@
   },
   {
     "en": "{prefix} You can share this in #codex-feedback:",
-    "zh": "{prefix} 你可以在 #codex-feedback 中分享此内容："
+    "zh": "{prefix} 你可以在 #codex-feedback 中分享此内容：",
+    "pad": false
   },
   {
     "en": "{prefix} Please open an issue using the following URL:",
@@ -1517,19 +1543,23 @@
   },
   {
     "en": "cut here",
-    "zh": "在此处截断"
+    "zh": "在此处截断",
+    "pad": false
   },
   {
     "en": "{seconds}s",
-    "zh": "{seconds} 秒"
+    "zh": "{seconds} 秒",
+    "pad": false
   },
   {
     "en": "{minutes}m",
-    "zh": "{minutes} 分钟"
+    "zh": "{minutes} 分钟",
+    "pad": false
   },
   {
     "en": "{hours}h",
-    "zh": "{hours} 小时"
+    "zh": "{hours} 小时",
+    "pad": false
   },
   {
     "en": "image dimensions={}x{}",
@@ -1541,7 +1571,8 @@
   },
   {
     "en": "ERR: {err}",
-    "zh": "错误：{err}"
+    "zh": "错误：{err}",
+    "pad": false
   },
   {
     "en": "Archive “{name}”?",
@@ -1577,7 +1608,8 @@
   },
   {
     "en": "'open {url}' exited with {status}",
-    "zh": "'open {url}' 已退出，状态码：{status}"
+    "zh": "'open {url}' 已退出，状态码：{status}",
+    "pad": false
   },
   {
     "en": "failed to launch the Desktop app through PowerShell: {err}",
@@ -1601,6 +1633,7 @@
   },
   {
     "en": "`open {url}` exited with {status}",
-    "zh": "`open {url}` 已退出，状态码：{status}"
+    "zh": "`open {url}` 已退出，状态码：{status}",
+    "pad": false
   }
 ]
