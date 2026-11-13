@@ -1,3 +1,9 @@
+## 1.3.2
+
+- Fix untranslated Codex 0.169 slash-menu descriptions when ANSI styling or terminal rendering splits a phrase into fragments.
+- Add 50 menu-fragment translations covering model, IDE, memory, skills, import, chat/worktree actions, plan, export, status, diagnostics, title/status line, theme, and terminal pet.
+- Add regression coverage for 41 wrapped or split menu fragments.
+
 ## 1.3.0
 
 - Add Codex slash-menu prompts for Chinese and English mode using the native custom-prompt picker.
