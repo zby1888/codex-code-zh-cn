@@ -1,0 +1,125 @@
+name: Native Codex Android ARM64 bootstrap
+
+on:
+  push:
+    branches:
+      - "native/android-arm64"
+    paths:
+      - "native/**"
+      - "README-NATIVE-TERMUX.md"
+      - ".github/workflows/native-android-arm64.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: native-codex-android-arm64
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build upstream Codex 0.169.0 for Termux ARM64
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    steps:
+      - name: Checkout localization repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Checkout pinned Termux package build system
+        uses: actions/checkout@v4
+        with:
+          repository: termux/termux-packages
+          ref: 1d8cc3f98c8a685f3a1475becbb0fe7d7dcda7fd
+          path: termux-packages
+          persist-credentials: false
+          fetch-depth: 1
+
+      - name: Verify pinned upstream build recipe
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd termux-packages
+          grep -Fq 'TERMUX_PKG_VERSION="0.169.0"' packages/codex/build.sh
+          grep -Fq 'TERMUX_PKG_SRCURL="https://github.com/openai/codex/archive/refs/tags/rust-v$TERMUX_PKG_VERSION.tar.gz"' packages/codex/build.sh
+          grep -Fq 'TERMUX_PKG_SHA256=d9b6335151f66d1d4ae9123f55553164ff339f30b14f64a358ea78139c4c093e' packages/codex/build.sh
+          test "$(git rev-parse HEAD)" = "1d8cc3f98c8a685f3a1475becbb0fe7d7dcda7fd"
+          echo "Termux package builder commit: $(git rev-parse HEAD)"
+          echo "Codex source: openai/codex rust-v0.169.0"
+
+      - name: Stage native localization patches (if present)
+        shell: bash
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          patches=("$GITHUB_WORKSPACE"/native/patches/codex/*.patch)
+          if (("${#patches[@]}" > 0)); then
+            cp "${patches[@]}" termux-packages/packages/codex/
+            printf 'Staged %s Codex patch(es)\n' "${#patches[@]}"
+          else
+            echo "No native translation patches yet; building the untouched upstream baseline."
+          fi
+
+      - name: Reclaim runner disk space
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo rm -rf /usr/local/lib/android /opt/ghc /usr/share/dotnet /usr/local/share/boost /opt/hostedtoolcache/CodeQL
+          df -h /
+
+      - name: Check Docker availability
+        run: docker info
+
+      - name: Build with the official Termux package builder
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd termux-packages
+          ./scripts/run-docker.sh bash -c 'cd /home/builder/termux-packages && export TERMUX_PKG_MAKE_PROCESSES=2 && ./build-package.sh -I codex'
+
+      - name: Extract and verify Android ARM64 binaries
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p dist/root dist/codex-native-termux-aarch64
+          deb="$(find termux-packages/output -maxdepth 1 -type f -name 'codex_*_aarch64.deb' -print -quit)"
+          test -n "$deb"
+          dpkg-deb --info "$deb"
+          dpkg-deb -x "$deb" dist/root
+
+          codex_bin="$(find dist/root -type f -path '*/bin/codex' -print -quit)"
+          helper_bin="$(find dist/root -type f -name 'codex-code-mode-host' -print -quit)"
+          test -n "$codex_bin"
+          test -n "$helper_bin"
+
+          cp "$codex_bin" dist/codex-native-termux-aarch64/codex
+          cp "$helper_bin" dist/codex-native-termux-aarch64/codex-code-mode-host
+          chmod 0755 dist/codex-native-termux-aarch64/codex dist/codex-native-termux-aarch64/codex-code-mode-host
+
+          file dist/codex-native-termux-aarch64/codex dist/codex-native-termux-aarch64/codex-code-mode-host
+          readelf -h dist/codex-native-termux-aarch64/codex | grep -F 'AArch64'
+          readelf -h dist/codex-native-termux-aarch64/codex-code-mode-host | grep -F 'AArch64'
+
+          {
+            echo "Upstream: openai/codex"
+            echo "Upstream tag: rust-v0.169.0"
+            echo "Target: aarch64-linux-android"
+            echo "Termux build system commit: 1d8cc3f98c8a685f3a1475becbb0fe7d7dcda7fd"
+            echo "Package: $(basename "$deb")"
+            echo "Build type: untouched upstream baseline unless native patches were staged"
+          } > dist/codex-native-termux-aarch64/BUILD-METADATA.txt
+
+          (
+            cd dist/codex-native-termux-aarch64
+            sha256sum codex codex-code-mode-host > SHA256SUMS
+          )
+
+      - name: Upload baseline binaries
+        uses: actions/upload-artifact@v4
+        with:
+          name: codex-native-termux-aarch64-bootstrap
+          path: dist/codex-native-termux-aarch64/
+          if-no-files-found: error
+          retention-days: 30
