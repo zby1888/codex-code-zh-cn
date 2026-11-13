@@ -92,7 +92,7 @@ function decodeNormal(token) {
 }
 
 function extract(source, relative) {
-  source = source.replace(/#\[cfg\(test\)\]\s*mod\s+(?:tests|test_support)\s*\{[\s\S]*$/m, '');
+  source = source.replace(/#\[cfg\(test\)\][\s\S]*$/m, '');
   const out = [];
   const re = /r(#+)?"([\s\S]*?)"\1|("(?:\\.|[^"\\])*")/gs;
   let match;
@@ -115,14 +115,14 @@ function isNonLocalizable(text) {
   if (/^GPT-[0-9]/i.test(value)) return true;
   if (/^codex-diagnostics-/i.test(value)) return true;
   if (/^(?:Option::deserialize|minLength|maxLength|additionalProperties|-NoProfile)$/.test(value)) return true;
-  if (/^(?:tui-project-trust-write-|projects\\.)/.test(value)) return true;
-  if (/^(?:app|codex):\\/\\//.test(value)) return true;
+  if (/^(?:tui-project-trust-write-|projects\.)/.test(value)) return true;
+  if (/^(?:app|codex):\/\//.test(value)) return true;
   if (/^(?:colors dark light palette|animations motion|welcome hints|statusline footer|title tab window|alerts bell|keymap bindings|burst clipboard|dense comfortable|cwd folder|editor modal|clipboard mouse|collapse_turn_details)/.test(value)) return true;
   if (/^on_plain_char_no_hold/.test(value)) return true;
   const remainder = value
-    .replace(/\\{[^}]*\\}/g, '')
+    .replace(/\{[^}]*\}/g, '')
     .replace(/%[A-Za-z0-9_]+/g, '')
-    .replace(/[0-9\\s:.,%/\\\\_$#-]/g, '');
+    .replace(/[0-9\s:.,%/\\_$#-]/g, '');
   return remainder.length === 0;
 }
 
