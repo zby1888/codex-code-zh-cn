@@ -232,5 +232,255 @@
     "en": "the context limit",
     "zh": "上下文上限",
     "pad": false
+  },
+  {
+    "en": "choose what model and reasoning effort",
+    "zh": "选择要使用的模型与推理",
+    "pad": false
+  },
+  {
+    "en": "to use",
+    "zh": "强度",
+    "pad": false
+  },
+  {
+    "en": "1.5x speed",
+    "zh": "1.5 倍速度",
+    "pad": false
+  },
+  {
+    "en": "include current selection, open files,",
+    "zh": "包含当前选中内容和已打开文件，",
+    "pad": false
+  },
+  {
+    "en": "and other context from your IDE",
+    "zh": "以及 IDE 中的其他上下文",
+    "pad": false
+  },
+  {
+    "en": "approve one retry of a recent auto-",
+    "zh": "批准重试最近一次自动",
+    "pad": false
+  },
+  {
+    "en": "review denial",
+    "zh": "审查拒绝的操作",
+    "pad": false
+  },
+  {
+    "en": "configure memory use and",
+    "zh": "配置记忆的使用与",
+    "pad": false
+  },
+  {
+    "en": "generation",
+    "zh": "生成",
+    "pad": false
+  },
+  {
+    "en": "configure memory use and g",
+    "zh": "配置记忆的使用与生",
+    "pad": false
+  },
+  {
+    "en": "eneration",
+    "zh": "成",
+    "pad": false
+  },
+  {
+    "en": "use skills to improve how Codex",
+    "zh": "使用技能提升 Codex 执行",
+    "pad": false
+  },
+  {
+    "en": "performs specific tasks",
+    "zh": "特定任务的能力",
+    "pad": false
+  },
+  {
+    "en": "import setup, this project, and recent",
+    "zh": "导入设置、本项目及最近的",
+    "pad": false
+  },
+  {
+    "en": "chats from Claude Code",
+    "zh": "Claude Code 对话",
+    "pad": false
+  },
+  {
+    "en": "permanently delete this",
+    "zh": "永久删除当前",
+    "pad": false
+  },
+  {
+    "en": "fork the current",
+    "zh": "派生当前",
+    "pad": false
+  },
+  {
+    "en": "chat",
+    "zh": "对话",
+    "pad": false
+  },
+  {
+    "en": "start or continue a conversation in a",
+    "zh": "在新的工作树中开始或继续",
+    "pad": false
+  },
+  {
+    "en": "new worktree",
+    "zh": "对话",
+    "pad": false
+  },
+  {
+    "en": "create an AGENTS.md file with",
+    "zh": "创建 AGENTS.md 文件，其中",
+    "pad": false
+  },
+  {
+    "en": "instructions for Codex",
+    "zh": "包含 Codex 的使用说明",
+    "pad": false
+  },
+  {
+    "en": "summarize conversation to prevent",
+    "zh": "总结对话，以避免",
+    "pad": false
+  },
+  {
+    "en": "hitting the context limit",
+    "zh": "超出上下文长度限制",
+    "pad": false
+  },
+  {
+    "en": "configure Codex",
+    "zh": "配置 Codex",
+    "pad": false
+  },
+  {
+    "en": "preferences",
+    "zh": "偏好设置",
+    "pad": false
+  },
+  {
+    "en": "summarize the current conversation",
+    "zh": "总结当前对话",
+    "pad": false
+  },
+  {
+    "en": "now",
+    "zh": "立即",
+    "pad": false
+  },
+  {
+    "en": "switch to Plan",
+    "zh": "切换到 Plan",
+    "pad": false
+  },
+  {
+    "en": "mode",
+    "zh": "模式",
+    "pad": false
+  },
+  {
+    "en": "export the conversation as",
+    "zh": "导出当前对话为",
+    "pad": false
+  },
+  {
+    "en": "markdown",
+    "zh": "Markdown",
+    "pad": false
+  },
+  {
+    "en": "toggle raw scrollback mode for copy-",
+    "zh": "切换原始滚动模式，以便",
+    "pad": false
+  },
+  {
+    "en": "friendly terminal selection",
+    "zh": "在终端中方便地选择和复制文本",
+    "pad": false
+  },
+  {
+    "en": "choose the TUI mode",
+    "zh": "选择 TUI 模式",
+    "pad": false
+  },
+  {
+    "en": "for the next launch",
+    "zh": "供下次启动使用",
+    "pad": false
+  },
+  {
+    "en": "show git diff",
+    "zh": "显示 Git 差异",
+    "pad": false
+  },
+  {
+    "en": "including untracked",
+    "zh": "包括未跟踪的",
+    "pad": false
+  },
+  {
+    "en": "file",
+    "zh": "文件",
+    "pad": false
+  },
+  {
+    "en": "files",
+    "zh": "文件",
+    "pad": false
+  },
+  {
+    "en": "show current session configuration and",
+    "zh": "显示当前会话配置及",
+    "pad": false
+  },
+  {
+    "en": "token usage",
+    "zh": "Token 用量",
+    "pad": false
+  },
+  {
+    "en": "view retained warnings and diagnostic",
+    "zh": "查看保留的警告和诊断",
+    "pad": false
+  },
+  {
+    "en": "show the current working",
+    "zh": "显示当前工作",
+    "pad": false
+  },
+  {
+    "en": "directory",
+    "zh": "目录",
+    "pad": false
+  },
+  {
+    "en": "configure which items appear in the",
+    "zh": "配置要显示在",
+    "pad": false
+  },
+  {
+    "en": "terminal title",
+    "zh": "终端标题中的项目",
+    "pad": false
+  },
+  {
+    "en": "status line",
+    "zh": "状态栏中的项目",
+    "pad": false
+  },
+  {
+    "en": "a syntax highlighting theme",
+    "zh": "语法高亮主题",
+    "pad": false
+  },
+  {
+    "en": "or hide the terminal pet",
+    "zh": "或隐藏终端宠物",
+    "pad": false
   }
 ]
