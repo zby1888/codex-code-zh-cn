@@ -15,7 +15,7 @@ permissions:
 
 concurrency:
   group: native-codex-android-arm64
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   build:
