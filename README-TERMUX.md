@@ -52,7 +52,7 @@ codex-zh-doctor
 
 注意：OpenAI 当前已将 Custom Prompts 标记为弃用，推荐新项目改用 Skills；但该机制仍支持以 `/prompts:<名称>` 形式显示在斜杠菜单中。本项目使用它，是因为用户明确需要菜单候选入口。若未来 Codex 移除该机制，需迁移到当时支持的扩展方式。
 
-安装器只在 `~/.codex/prompts/` 下添加两个独立文件：
+安装器只在 `${CODEX_HOME:-~/.codex}/prompts/` 下添加两个独立文件（未设置 CODEX_HOME 时默认使用 `~/.codex/prompts/`）：
 - `codex-zh-cn.md`
 - `codex-zh-en.md`
 
