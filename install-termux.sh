@@ -75,7 +75,7 @@ chmod +x "$INSTALL_DIR/bin/codex-zh.js" "$INSTALL_DIR/bin/codex-zh-doctor.js"
 # Termux does not guarantee /usr/bin/env; use Termux's own bash and invoke Node explicitly.
 for name in codex-zh codex-zh-doctor; do
   target="$BIN_DIR/$name"
-  if [[ -e "$target" ]] && ! grep -q "codex-code-zh-cn Termux launcher" "$target" 2>/dev/null; then
+  if [[ -e "$target" || -L "$target" ]] && ! grep -q "codex-code-zh-cn Termux launcher" "$target" 2>/dev/null; then
     err "Refusing to overwrite an existing command: $target"
     exit 1
   fi
