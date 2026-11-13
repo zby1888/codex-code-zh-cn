@@ -1643,5 +1643,21 @@
   {
     "en": "{CODEX_APP_DIRECTORY_CACHE_ATTACHMENT_FILENAME} (if available)",
     "zh": "{CODEX_APP_DIRECTORY_CACHE_ATTACHMENT_FILENAME}（如有）"
+  },
+  {
+    "en": "run or save reusable prompts and slash",
+    "zh": "运行或保存可重复使用的提示词和斜杠"
+  },
+  {
+    "en": "commands",
+    "zh": "命令"
+  },
+  {
+    "en": "describe a task or try one of these",
+    "zh": "描述任务或尝试以下命令"
+  },
+  {
+    "en": "commands:",
+    "zh": "命令："
   }
 ]
