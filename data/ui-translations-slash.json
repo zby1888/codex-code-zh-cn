@@ -202,5 +202,35 @@
   {
     "en": "test approval request",
     "zh": "测试审批请求"
+  },
+  {
+    "en": "describe a task or try one of these commands:",
+    "zh": "描述任务或尝试以下命令之一：",
+    "pad": false
+  },
+  {
+    "en": "show current session configuration",
+    "zh": "显示当前会话配置",
+    "pad": false
+  },
+  {
+    "en": "review any changes and find issues",
+    "zh": "审查任何更改并查找问题",
+    "pad": false
+  },
+  {
+    "en": "create an AGENTS.md file with instructions for",
+    "zh": "创建包含 Codex 说明的 AGENTS.md 文件",
+    "pad": false
+  },
+  {
+    "en": "summarize conversation to prevent hitting",
+    "zh": "压缩会话摘要，避免触达",
+    "pad": false
+  },
+  {
+    "en": "the context limit",
+    "zh": "上下文上限",
+    "pad": false
   }
 ]
