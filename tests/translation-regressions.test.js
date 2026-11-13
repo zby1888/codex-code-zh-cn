@@ -70,6 +70,14 @@ test('Codex 0.169 new TUI panels and permission prompts have Chinese coverage', 
     ['Message too long; limit {MAX_USER_INPUT_TEXT_CHARS} characters', '消息过长；上限为 {MAX_USER_INPUT_TEXT_CHARS} 个字符'],
     ['This will {}. {verb} “{}”?', '这将{}。{verb}“{}”？'],
     ['Permanently delete task and child agents', '永久删除任务及其子代理'],
+    ['No recent local chats.', '没有近期本地会话。'],
+    ['This stops any running work in this task and archives it. Child agents stay unchanged. Its history can be restored from the resume picker.', '这会停止此任务中正在运行的工作并将其归档。子代理不受影响。可从恢复会话选择器中恢复其历史记录。'],
+    ['Message too long; limit {MAX_USER_INPUT_TEXT_CHARS} characters', '消息过长；上限为 {MAX_USER_INPUT_TEXT_CHARS} 个字符'],
+    ['Failed to save feedback ZIP', '反馈 ZIP 保存失败'],
+    ['Open in sidebar', '在侧边栏中打开'],
+    ['Animations', '动画'],
+    ['[x] On', '[x] 开启'],
+    ['This will {}. {verb} “{}”?', '这将{}。{verb}“{}”？'],
   ];
 
   for (const [english, chinese] of cases) {
