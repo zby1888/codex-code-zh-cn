@@ -19,6 +19,7 @@ const ROOT = path.join(__dirname, '..');
 const FILES = [
   'data/ui-translations.json',
   'data/ui-translations-extra.json',
+  'data/ui-translations-0169.json',
   'data/ui-translations-slash.json',
   'data/ui-translations-words.json',
   'data/ui-translations-source.json',
