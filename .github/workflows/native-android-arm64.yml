@@ -1,4 +1,4 @@
-name: Native Codex Android ARM64 bootstrap
+name: Native Codex Android ARM64 Chinese
 
 on:
   push:
@@ -19,7 +19,7 @@ concurrency:
 
 jobs:
   build:
-    name: Build upstream Codex 0.169.0 for Termux ARM64
+    name: Build native Chinese Codex 0.169.0 for Termux ARM64
     runs-on: ubuntu-24.04
     timeout-minutes: 360
     steps:
@@ -49,18 +49,14 @@ jobs:
           echo "Termux package builder commit: $(git rev-parse HEAD)"
           echo "Codex source: openai/codex rust-v0.169.0"
 
-      - name: Stage native localization patches (if present)
+      - name: Stage native localization patches
         shell: bash
         run: |
           set -euo pipefail
-          shopt -s nullglob
-          patches=("$GITHUB_WORKSPACE"/native/patches/codex/*.patch)
-          if (("${#patches[@]}" > 0)); then
-            cp "${patches[@]}" termux-packages/packages/codex/
-            printf 'Staged %s Codex patch(es)\n' "${#patches[@]}"
-          else
-            echo "No native translation patches yet; building the untouched upstream baseline."
-          fi
+          PATCH_COUNT="$(find "$GITHUB_WORKSPACE/native/patches/codex" -maxdepth 1 -type f -name '*.patch' | wc -l | tr -d ' ')"
+          test "$PATCH_COUNT" -eq 5
+          cp "$GITHUB_WORKSPACE"/native/patches/codex/*.patch termux-packages/packages/codex/
+          printf 'Staged %s Codex localization patch(es)\n' "$PATCH_COUNT"
 
       - name: Reclaim runner disk space
         shell: bash
@@ -79,11 +75,11 @@ jobs:
           cd termux-packages
           ./scripts/run-docker.sh bash -c 'cd /home/builder/termux-packages && export TERMUX_PKG_MAKE_PROCESSES=2 && ./build-package.sh -I codex'
 
-      - name: Extract and verify Android ARM64 binaries
+      - name: Extract, verify and package native Chinese ARM64 binaries
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p dist/root dist/codex-native-termux-aarch64
+          mkdir -p dist/root dist/codex-native-termux-aarch64-zh
           deb="$(find termux-packages/output -maxdepth 1 -type f -name 'codex_*_aarch64.deb' -print -quit)"
           test -n "$deb"
           dpkg-deb --info "$deb"
@@ -94,32 +90,62 @@ jobs:
           test -n "$codex_bin"
           test -n "$helper_bin"
 
-          cp "$codex_bin" dist/codex-native-termux-aarch64/codex
-          cp "$helper_bin" dist/codex-native-termux-aarch64/codex-code-mode-host
-          chmod 0755 dist/codex-native-termux-aarch64/codex dist/codex-native-termux-aarch64/codex-code-mode-host
+          OUT="dist/codex-native-termux-aarch64-zh"
+          cp "$codex_bin" "$OUT/codex"
+          cp "$helper_bin" "$OUT/codex-code-mode-host"
+          cp "$GITHUB_WORKSPACE/native/install-termux.sh" "$OUT/install-termux.sh"
+          cp "$GITHUB_WORKSPACE/native/uninstall-termux.sh" "$OUT/uninstall-termux.sh"
+          cp "$GITHUB_WORKSPACE/native/README-INSTALL-TERMUX.md" "$OUT/README-INSTALL-TERMUX.md"
+          chmod 0700 "$OUT/codex" "$OUT/codex-code-mode-host"
+          chmod 0755 "$OUT/install-termux.sh" "$OUT/uninstall-termux.sh"
 
-          file dist/codex-native-termux-aarch64/codex dist/codex-native-termux-aarch64/codex-code-mode-host
-          readelf -h dist/codex-native-termux-aarch64/codex | grep -F 'AArch64'
-          readelf -h dist/codex-native-termux-aarch64/codex-code-mode-host | grep -F 'AArch64'
+          file "$OUT/codex" "$OUT/codex-code-mode-host"
+          readelf -h "$OUT/codex" | grep -F 'AArch64'
+          readelf -h "$OUT/codex-code-mode-host" | grep -F 'AArch64'
 
+          python3 - "$OUT/codex" <<'PY'
+          from pathlib import Path
+          import sys
+          binary = Path(sys.argv[1]).read_bytes()
+          required = [
+              "欢迎使用 Codex",
+              "选择模型和推理强度",
+              "右键粘贴",
+              "正在加载服务器实验功能",
+          ]
+          missing = [item for item in required if item.encode("utf-8") not in binary]
+          if missing:
+              raise SystemExit("Native Chinese localization verification failed; missing: " + ", ".join(missing))
+          print("Verified native Chinese strings:", ", ".join(required))
+          PY
+
+          PATCH_COUNT="$(find "$GITHUB_WORKSPACE/native/patches/codex" -maxdepth 1 -type f -name '*.patch' | wc -l | tr -d ' ')"
+          test "$PATCH_COUNT" -eq 5
+          SHORT_SHA="$(printf '%s' "$GITHUB_SHA" | cut -c1-7)"
+          INSTALL_VERSION="0.169.0-zh-$SHORT_SHA"
           {
             echo "Upstream: openai/codex"
             echo "Upstream tag: rust-v0.169.0"
             echo "Target: aarch64-linux-android"
+            echo "Minimum Android API: 24"
             echo "Termux build system commit: 1d8cc3f98c8a685f3a1475becbb0fe7d7dcda7fd"
             echo "Package: $(basename "$deb")"
-            echo "Build type: untouched upstream baseline unless native patches were staged"
-          } > dist/codex-native-termux-aarch64/BUILD-METADATA.txt
+            echo "Build type: native-patched Chinese source build"
+            echo "Localization patches: $PATCH_COUNT"
+            echo "Install version: $INSTALL_VERSION"
+            echo "Localization source commit: $GITHUB_SHA"
+          } > "$OUT/BUILD-METADATA.txt"
 
           (
-            cd dist/codex-native-termux-aarch64
-            sha256sum codex codex-code-mode-host > SHA256SUMS
+            cd "$OUT"
+            sha256sum codex codex-code-mode-host install-termux.sh uninstall-termux.sh BUILD-METADATA.txt > SHA256SUMS
+            sha256sum -c SHA256SUMS
           )
 
-      - name: Upload baseline binaries
+      - name: Upload native Chinese Termux ARM64 package
         uses: actions/upload-artifact@v4
         with:
-          name: codex-native-termux-aarch64-bootstrap
-          path: dist/codex-native-termux-aarch64/
+          name: codex-native-termux-aarch64-zh
+          path: dist/codex-native-termux-aarch64-zh/
           if-no-files-found: error
           retention-days: 30
