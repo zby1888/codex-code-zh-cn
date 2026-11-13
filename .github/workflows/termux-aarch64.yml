@@ -46,19 +46,22 @@ jobs:
           node-version: "20"
           cache: npm
 
-      - name: Install project dependencies without native compilation
-        run: npm install --omit=dev --ignore-scripts --no-audit --no-fund
-
       - name: Validate translation data
         run: npm run lint
 
       - name: Run unit tests
         run: npm test
 
-      - name: Install Android ARM64 PTY prebuild under the node-pty module name
+      - name: Download and unpack Android ARM64 PTY prebuild
         run: |
-          npm install --no-save --ignore-scripts --package-lock=false \
-            "node-pty@npm:@mmmbuto/node-pty-android-arm64@1.1.2"
+          set -euo pipefail
+          TARBALL="$(npm pack --silent @mmmbuto/node-pty-android-arm64@1.1.2)"
+          mkdir -p node_modules/node-pty
+          tar -xzf "$TARBALL" --strip-components=1 -C node_modules/node-pty
+          rm -f "$TARBALL"
+
+      - name: Check installer shell syntax
+        run: bash -n install-termux.sh uninstall-termux.sh
 
       - name: Verify Android native module checksum
         shell: bash
