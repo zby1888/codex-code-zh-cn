@@ -1425,7 +1425,7 @@
   },
   {
     "en": "'/{}' is disabled while a task is in progress.",
-    "zh": "任务运行期间，'/{ }' 已禁用。"
+    "zh": "任务运行期间，'/{}' 已禁用。"
   },
   {
     "en": "{prefix} You can share this in #codex-feedback:",
