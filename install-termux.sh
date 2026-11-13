@@ -55,7 +55,7 @@ if [[ ! -f "$PTY_BINARY" ]]; then
   err "Android PTY binary was not installed: $PTY_BINARY"
   exit 1
 fi
-ACTUAL_SHA256="$(node -e "const fs=require('fs'),c=require('crypto');process.stdout.write(c.createHash('sha256').update(fs.readFileSync(process.argv[1])).digest('hex')" "$PTY_BINARY")"
+ACTUAL_SHA256="$(node -e "const fs=require('fs'),c=require('crypto');process.stdout.write(c.createHash('sha256').update(fs.readFileSync(process.argv[1])).digest('hex'))" "$PTY_BINARY")"
 if [[ "$ACTUAL_SHA256" != "$EXPECTED_SHA256" ]]; then
   err "PTY binary checksum mismatch. Refusing to install."
   err "Expected: $EXPECTED_SHA256"
