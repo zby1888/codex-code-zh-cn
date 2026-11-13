@@ -970,5 +970,9 @@
   {
     "en": "Test sent · check terminal/system settings",
     "zh": "测试已发送 · 请检查终端/系统设置"
+  },
+  {
+    "en": "Ask Codex to do anything",
+    "zh": "告诉 Codex 你想做什么"
   }
 ]
