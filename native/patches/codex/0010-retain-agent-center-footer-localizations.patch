@@ -1,0 +1,25 @@
+--- a/codex-rs/tui/src/app/agent_center/hints.rs
++++ b/codex-rs/tui/src/app/agent_center/hints.rs
+@@ -15,7 +15,7 @@
+         }
+         line.spans.extend(key_hint::key_label_spans(key));
+         line.spans.push(Span::styled(
+-            format!(" {label}"),
++            format!(" {}", localize_footer_label(label.as_str())),
+             footer_hint_label_style().not_bold(),
+         ));
+     }
+@@ -20,5 +20,14 @@
+     line
+ }
+ 
++#[inline(never)]
++fn localize_footer_label(label: &str) -> &str {
++    match label {
++        "help" | "帮助" => "帮助",
++        "move" | "移动" => "移动",
++        other => other,
++    }
++}
++
+ impl AgentsOverviewView {
