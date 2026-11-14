@@ -24,6 +24,11 @@
 | Skill / Skills | 技能 | 功能名可写作“技能” |
 | Workflow | 工作流 | 自动化步骤集合 |
 | Workspace | 工作区 | Codex 工作目录及其配置上下文 |
+| Working directory | 工作目录 | Codex 当前执行命令和智能体操作所在的目录 |
+| Current directory | 当前目录 | 本次启动时所在的工作目录 |
+| Session directory | 会话目录 | 会话记录的工作目录 |
+| Resume | 恢复会话 | 继续已有会话 |
+| Fork | 复制会话 | 从已有会话创建独立副本；用户界面优先使用易懂的“复制会话” |
 | Session / Thread | 会话 | Codex 对话及其执行上下文统一称呼 |
 | Chat | 聊天 | 仅在明确指聊天界面时使用 |
 | Context | 上下文 | 不简写为“语境” |
