@@ -1,6 +1,6 @@
 --- a/codex-rs/tui/src/app/agent_center/hints.rs
 +++ b/codex-rs/tui/src/app/agent_center/hints.rs
-@@ -15,5 +15,5 @@
+@@ -14,7 +14,7 @@
          }
          line.spans.extend(key_hint::key_label_spans(key));
          line.spans.push(Span::styled(
