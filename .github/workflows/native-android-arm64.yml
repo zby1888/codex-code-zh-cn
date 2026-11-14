@@ -54,7 +54,7 @@ jobs:
         run: |
           set -euo pipefail
           PATCH_COUNT="$(find "$GITHUB_WORKSPACE/native/patches/codex" -maxdepth 1 -type f -name '*.patch' | wc -l | tr -d ' ')"
-          test "$PATCH_COUNT" -eq 9
+          test "$PATCH_COUNT" -eq 10
           cp "$GITHUB_WORKSPACE"/native/patches/codex/*.patch termux-packages/packages/codex/
           printf 'Staged %s Codex localization patch(es)\n' "$PATCH_COUNT"
 
@@ -166,7 +166,7 @@ jobs:
           PY
 
           PATCH_COUNT="$(find "$GITHUB_WORKSPACE/native/patches/codex" -maxdepth 1 -type f -name '*.patch' | wc -l | tr -d ' ')"
-          test "$PATCH_COUNT" -eq 9
+          test "$PATCH_COUNT" -eq 10
           SHORT_SHA="$(printf '%s' "$GITHUB_SHA" | cut -c1-7)"
           INSTALL_VERSION="0.169.0-zh-$SHORT_SHA"
           {
