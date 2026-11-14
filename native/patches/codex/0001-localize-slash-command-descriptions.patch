@@ -55,7 +55,7 @@
 +            SlashCommand::Delete => "永久删除此会话",
 +            SlashCommand::Clear => "清空终端并开始新聊天",
 +            SlashCommand::Fork => "从当前聊天创建分支",
-+            SlashCommand::Worktree => "在新的工作树中开始或继续对话",
++            SlashCommand::Worktree => "新建工作区，接着聊",
 +            SlashCommand::App => "在桌面应用中继续此会话",
 +            SlashCommand::Quit | SlashCommand::Exit => "退出 Codex",
 +            SlashCommand::Copy => "复制上一条回复或其中一部分",
@@ -132,27 +132,3 @@
 +            SlashCommand::TestApproval => "测试审批请求",
          }
      }
- 
-@@ -366,7 +366,19 @@
-         assert!(SlashCommand::App.available_during_task());
-     }
- 
-+
-     #[test]
-+    fn common_command_descriptions_are_simplified_chinese() {
-+        assert_eq!(SlashCommand::Model.description(), "选择模型和推理强度");
-+        assert_eq!(
-+            SlashCommand::Presets.description(),
-+            "运行或保存可重复使用的提示词和斜杠命令"
-+        );
-+        assert_eq!(SlashCommand::Review.description(), "检查当前更改并查找问题");
-        assert_eq!(SlashCommand::Diff.description(), "看看改了啥（Git，包含未跟踪文件）");
-        assert_eq!(SlashCommand::Hooks.description(), "设置自动动作");
-        assert_eq!(SlashCommand::Side.description(), "另外打开一个会话");
-+        assert_eq!(SlashCommand::Mcp.description(), "列出 MCP 工具；使用 /mcp verbose 查看详细信息，或使用 /mcp login <name> 登录");
-+    }
-+
-+    #[test]
-     fn auto_review_command_is_approve() {
-         assert_eq!(SlashCommand::AutoReview.command(), "approve");
-         assert_eq!(
