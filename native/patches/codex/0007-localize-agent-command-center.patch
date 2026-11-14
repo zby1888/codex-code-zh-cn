@@ -185,7 +185,7 @@
 -            (ListAction::MoveDown, "Down"),
 +            (ListAction::MoveDown, "下移"),
 -            (ListAction::Accept, "Open"),
-+            (ListAction::Accept, "打开"),
++            (ListAction::Accept, "确认"),
 -            (ListAction::PageUp, "Page up"),
 +            (ListAction::PageUp, "向上翻页"),
 -            (ListAction::PageDown, "Page down"),
@@ -287,7 +287,7 @@
 +                    "重命名"
                  } else {
 -                    "open"
-+                    "打开"
++                    "确认"
                  }
                  .into(),
 @@ -182,5 +182,5 @@
