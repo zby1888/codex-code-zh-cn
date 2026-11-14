@@ -450,7 +450,8 @@
 @@ -1740,7 +1740,7 @@
          let contents = terminal.backend().to_string();
          insta::assert_snapshot!("continue_in_browser_narrow_long_url", contents);
-         assert!(contents.contains("在远程或无头设备上？按"));
+-        assert!(contents.contains("On a remote or headless machine?"));
++        assert!(contents.contains("在远程或无头设备上？按"));
 -        assert!(contents.contains("Press esc to cancel"));
 +        assert!(contents.contains("按 esc 取消"));
      }
