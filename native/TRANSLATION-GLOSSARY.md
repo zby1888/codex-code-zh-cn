@@ -41,7 +41,7 @@
 | Side conversation | 旁支对话 | 与主会话并行的短对话；命令说明可写作“另外打开一个会话” |
 | Composer | 输入框 | 用户编写提示词的区域 |
 | Status line | 状态栏 | TUI 底部状态信息 |
-| Worktree | 工作树 | Git worktree；命令和路径不翻译 |
+| Worktree | 工作区（Git worktree） | 面向用户的提示优先说“工作区”；开发说明中可保留 Git worktree |
 | Sandbox | 沙盒 | elevated sandbox 译为“增强型沙盒” |
 | Plan mode | 计划模式 | 命令 `/plan` 保留原样 |
 | Slash command | 斜杠命令 | 命令名保留，例如 `/model` |
@@ -67,7 +67,7 @@ Codex、OpenAI、Operit、OpenCode、RikkaHub 等产品名；MCP、API、JSON-RP
 - `/presets`：运行或保存可重复使用的提示词和斜杠命令
 - `/review`：检查当前更改并查找问题
 - `/compact`：总结对话，避免达到上下文长度限制
-- `/worktree`：在新的工作树中开始或继续对话
+- `/worktree`：新建工作区，接着聊
 - `/permissions`：选择 Codex 可以执行的操作
 - `/skills`：使用技能提升 Codex 执行特定任务的能力
 - `/mcp`：列出 MCP 工具；使用 `/mcp verbose` 查看详细信息，或使用 `/mcp login <name>` 登录
