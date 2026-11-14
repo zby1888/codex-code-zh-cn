@@ -7,6 +7,7 @@
 | English | 统一简体中文 | 使用说明 |
 |---|---|---|
 | Agent | 智能体 | 不译为“代理” |
+| Agent command center | 智能体指挥中心 | Codex 多会话任务管理界面 |
 | Subagent | 子智能体 | 多智能体任务中的子任务执行者 |
 | Provider | 模型服务商 | 指模型 API 提供方；服务商 ID 保留原文 |
 | Model provider(s) | 模型服务商 | 统一单复数译法 |
@@ -30,13 +31,14 @@
 | Token | Token | LLM 用量单位保留英文 |
 | Token usage | Token 用量 | 不使用“令牌用量” |
 | Reasoning effort | 推理强度 | 模型推理档位统一使用 |
+| Service tier | 服务档位 | 模型请求的速度/服务等级，例如 priority、flex |
 | Approval | 操作审批 | 狭窄 UI 标签可简写为“审批” |
 | Permission | 权限 | 权限范围或授权能力 |
 | Prompt | 提示词 | 不改写用户实际输入 |
 | Memory | 记忆 | 产品功能名称 |
 | Streaming | 流式输出 | 逐段返回模型内容 |
-| Hook | 钩子 | lifecycle hook 译为“生命周期钩子” |
-| Side conversation | 旁支对话 | 与主会话并行的短对话 |
+| Hook / Hooks | 自动动作（生命周期钩子） | 面向用户的设置入口优先使用“自动动作”；技术说明中保留“生命周期钩子” |
+| Side conversation | 旁支对话 | 与主会话并行的短对话；命令说明可写作“另外打开一个会话” |
 | Composer | 输入框 | 用户编写提示词的区域 |
 | Status line | 状态栏 | TUI 底部状态信息 |
 | Worktree | 工作树 | Git worktree；命令和路径不翻译 |
@@ -69,3 +71,6 @@ Codex、OpenAI、Operit、OpenCode、RikkaHub 等产品名；MCP、API、JSON-RP
 - `/permissions`：选择 Codex 可以执行的操作
 - `/skills`：使用技能提升 Codex 执行特定任务的能力
 - `/mcp`：列出 MCP 工具；使用 `/mcp verbose` 查看详细信息，或使用 `/mcp login <name>` 登录
+- `/side`：另外打开一个会话
+- `/diff`：看看改了啥（Git，包含未跟踪文件）
+- `/hooks`：设置自动动作

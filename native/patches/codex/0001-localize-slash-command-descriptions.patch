@@ -62,11 +62,11 @@
 +            SlashCommand::Export => "将对话导出为 Markdown",
 +            SlashCommand::Raw => "切换原始滚屏模式，方便在终端中选择和复制文本",
 +            SlashCommand::Tui => "选择下次启动时使用的 TUI 模式",
-+            SlashCommand::Diff => "显示 Git 差异（包括未跟踪文件）",
++            SlashCommand::Diff => "看看改了啥（Git，包含未跟踪文件）",
 +            SlashCommand::Mention => "引用文件",
 +            SlashCommand::Skills => "使用技能提升 Codex 执行特定任务的能力",
 +            SlashCommand::Import => "从 Claude Code 导入配置、本项目和最近的聊天记录",
-+            SlashCommand::Hooks => "查看和管理生命周期钩子",
++            SlashCommand::Hooks => "设置自动动作",
 +            SlashCommand::Daemon => "管理本地后台服务器",
 +            SlashCommand::Warnings => "查看保留的警告和诊断详情",
 +            SlashCommand::Status => "显示当前会话配置和令牌用量",
@@ -116,7 +116,7 @@
 +            SlashCommand::Goal => "设置或查看长期任务的目标",
 +            SlashCommand::Agents => "打开智能体指挥中心",
 +            SlashCommand::MultiAgents => "在当前会话的子智能体之间切换",
-+            SlashCommand::Side | SlashCommand::Btw => "开始旁支对话",
++            SlashCommand::Side | SlashCommand::Btw => "另外打开一个会话",
 +            SlashCommand::Permissions => "选择 Codex 可以执行的操作",
 +            SlashCommand::Keymap => "重新映射 TUI 快捷键",
 +            SlashCommand::Vim => "为输入框切换 Vim 模式",
@@ -146,6 +146,9 @@
 +            "运行或保存可重复使用的提示词和斜杠命令"
 +        );
 +        assert_eq!(SlashCommand::Review.description(), "检查当前更改并查找问题");
+        assert_eq!(SlashCommand::Diff.description(), "看看改了啥（Git，包含未跟踪文件）");
+        assert_eq!(SlashCommand::Hooks.description(), "设置自动动作");
+        assert_eq!(SlashCommand::Side.description(), "另外打开一个会话");
 +        assert_eq!(SlashCommand::Mcp.description(), "列出 MCP 工具；使用 /mcp verbose 查看详细信息，或使用 /mcp login <name> 登录");
 +    }
 +

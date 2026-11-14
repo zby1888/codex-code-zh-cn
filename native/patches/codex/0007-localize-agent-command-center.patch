@@ -1,0 +1,456 @@
+--- a/codex-rs/tui/src/app/agent_center/render.rs
++++ b/codex-rs/tui/src/app/agent_center/render.rs
+@@ -111,5 +111,5 @@
+             }
+             let input = &state.search;
+-            let prefix = "Search › ";
++            let prefix = "搜索 › ";
+             let available = usize::from(layout.search.width).saturating_sub(prefix.width() + 1);
+             return Some((
+@@ -137,8 +137,8 @@
+         };
+         let grouping = match state.grouping {
+-            AgentsOverviewGrouping::Project => "Project",
++            AgentsOverviewGrouping::Project => "项目",
+-            AgentsOverviewGrouping::Directory => "Directory",
++            AgentsOverviewGrouping::Directory => "目录",
+-            AgentsOverviewGrouping::Status => "Status",
++            AgentsOverviewGrouping::Status => "状态",
+-            AgentsOverviewGrouping::Model => "Model",
++            AgentsOverviewGrouping::Model => "模型",
+         };
+         let group_key = self
+@@ -149,6 +149,6 @@
+         line(
+             vec![
+-                "Agent command center".bold(),
++                "智能体指挥中心".bold(),
+-                format!("  Group: {grouping}  {group_key}").dim(),
++                format!("  分组：{grouping}  {group_key}").dim(),
+             ],
+             inset(layout.header),
+@@ -169,5 +169,5 @@
+             .collect::<Vec<_>>();
+         let mut tabs = inset(row(layout.header, /*offset*/ 1, /*height*/ 1));
+-        let filter_hint = hint_line(&[(filter_keys, "filter".into())]);
++        let filter_hint = hint_line(&[(filter_keys, "筛选".into())]);
+         if tabs.width >= 80 && filter_hint.width() > 0 {
+             let hint_width = filter_hint.width() as u16;
+@@ -194,5 +194,5 @@
+             buf.set_style(layout.search, crate::bottom_pane::active_tab_style());
+             if state.rename_target.is_some() {
+-                line("Rename › ".cyan().bold(), layout.search, buf);
++                line("重命名 › ".cyan().bold(), layout.search, buf);
+                 let mut area = layout.search;
+                 let prefix_width = 9.min(area.width);
+@@ -201,5 +201,5 @@
+                 WidgetRef::render_ref(&&state.input, area, buf);
+             } else {
+-                let label = "Search › ";
++                let label = "搜索 › ";
+                 let available = usize::from(layout.search.width).saturating_sub(label.width() + 1);
+                 line(
+@@ -219,13 +219,13 @@
+                 state
+                     .creating_worktree
+-                    .then(|| "Creating worktree…".to_owned())
++                    .then(|| "正在创建工作树…".to_owned())
+             })
+             .or_else(|| {
+                 state.removal.map(|action| match action {
+                     AgentsOverviewAction::Archive => {
+-                        "Archiving task…  You can still browse.".to_owned()
++                        "正在归档任务…  你仍可继续浏览。".to_owned()
+                     }
+                     AgentsOverviewAction::Delete => {
+-                        "Deleting task…  You can still browse.".to_owned()
++                        "正在删除任务…  你仍可继续浏览。".to_owned()
+                     }
+                 })
+@@ -233,5 +233,5 @@
+             .or_else(|| {
+                 let failed = state.refresh_failed || history.is_some_and(|s| s.failed);
+-                (failed && !state.loading).then(|| "Error loading tasks".to_owned())
++                (failed && !state.loading).then(|| "加载任务失败".to_owned())
+             })
+             .or_else(|| state.server_version_notice.clone());
+@@ -254,5 +254,5 @@
+             if lines.len() > usize::from(body.height) {
+                 lines.truncate(usize::from(body.height.saturating_sub(/*rhs*/ 1)));
+-                lines.push("… resize to see all".dim().into());
++                lines.push("… 调整终端大小以显示全部内容".dim().into());
+             }
+             Paragraph::new(lines).render(body, buf);
+--- a/codex-rs/tui/src/app/agent_center/mod.rs
++++ b/codex-rs/tui/src/app/agent_center/mod.rs
+@@ -11,9 +11,9 @@
+ // Counts and filtering use the same status groups.
+ pub(super) const TASK_FILTERS: &[(&str, Option<AgentsOverviewGroup>)] = &[
+-    ("All", None),
++    ("全部", None),
+-    ("Needs you", Some(AgentsOverviewGroup::NeedsYou)),
++    ("待你处理", Some(AgentsOverviewGroup::NeedsYou)),
+-    ("Working", Some(AgentsOverviewGroup::Working)),
++    ("执行中", Some(AgentsOverviewGroup::Working)),
+-    ("Ready", Some(AgentsOverviewGroup::Ready)),
++    ("已就绪", Some(AgentsOverviewGroup::Ready)),
+-    ("Inactive", Some(AgentsOverviewGroup::Finished)),
++    ("已结束", Some(AgentsOverviewGroup::Finished)),
+ ];
+ 
+--- a/codex-rs/tui/src/app/agent_center/rows.rs
++++ b/codex-rs/tui/src/app/agent_center/rows.rs
+@@ -50,15 +50,15 @@
+             line(
+                 if state.connection_notice.is_some() {
+-                    "Reconnecting…"
++                    "正在重新连接…"
+                 } else if state.history.is_some() {
+-                    "No matching tasks"
++                    "没有匹配的任务"
+                 } else if state.loading && self.rows.is_empty() {
+-                    "Loading tasks…"
++                    "正在加载任务…"
+                 } else if state.refresh_failed {
+-                    "Could not load tasks"
++                    "加载任务失败"
+                 } else if self.rows.is_empty() {
+-                    "No tasks yet"
++                    "暂无任务"
+                 } else {
+-                    "No matching tasks"
++                    "没有匹配的任务"
+                 }
+                 .dim(),
+@@ -81,7 +81,7 @@
+         if padding > 0 {
+             let (title, status, updated) = columns(row(area, /*offset*/ 0, /*height*/ 1));
+-            line("Tasks".dim(), title, buf);
++            line("任务".dim(), title, buf);
+-            line("Status".dim(), status, buf);
++            line("状态".dim(), status, buf);
+-            Line::from("Updated".dim())
++            Line::from("更新时间".dim())
+                 .right_aligned()
+                 .render(updated, buf);
+@@ -126,16 +126,16 @@
+                     let label = if let Some(search) = &state.history {
+                         if search.loading {
+-                            "Searching history…"
++                            "正在搜索历史记录…"
+                         } else if search.failed {
+-                            "Show more (retry)"
++                            "重试加载更多"
+                         } else {
+-                            "Show more matches"
++                            "显示更多匹配项"
+                         }
+                     } else if state.loading {
+-                        "Loading more…"
++                        "正在加载更多…"
+                     } else if state.refresh_failed {
+-                        "Show more (retry)"
++                        "重试加载更多"
+                     } else {
+-                        "Show more"
++                        "显示更多"
+                     };
+                     let marker = if selected { "›" } else { " " };
+@@ -153,5 +153,5 @@
+                 let group = match state.grouping {
+                     AgentsOverviewGrouping::Status => task.group.label().to_owned(),
+-                    _ if self.is_pinned(index) => "Pinned".to_owned(),
++                    _ if self.is_pinned(index) => "已置顶".to_owned(),
+                     AgentsOverviewGrouping::Project => format_directory_display(
+                         &self.project_groups[index].heading,
+@@ -242,5 +242,5 @@
+                 );
+                 title.width -= 8;
+-                line(Line::from("  voice").style(style), badge, buf);
++                line(Line::from("  语音").style(style), badge, buf);
+             }
+             let title_style = if index == self.selected {
+--- a/codex-rs/tui/src/app/agent_center/hints.rs
++++ b/codex-rs/tui/src/app/agent_center/hints.rs
+@@ -58,13 +58,13 @@
+     pub(super) fn center_help_lines(&self, width: u16) -> Vec<Line<'static>> {
+         let mut navigate = Group {
+-            title: "Navigate",
++            title: "导航",
+             entries: Vec::new(),
+         };
+         for (action, label) in [
+-            (ListAction::MoveUp, "Up"),
++            (ListAction::MoveUp, "上移"),
+-            (ListAction::MoveDown, "Down"),
++            (ListAction::MoveDown, "下移"),
+-            (ListAction::Accept, "Open"),
++            (ListAction::Accept, "打开"),
+-            (ListAction::PageUp, "Page up"),
++            (ListAction::PageUp, "向上翻页"),
+-            (ListAction::PageDown, "Page down"),
++            (ListAction::PageDown, "向下翻页"),
+         ] {
+             navigate.push(self.center_list_hint(action), label);
+@@ -72,24 +72,24 @@
+         navigate
+             .entries
+-            .push(Shortcut::new(key_hint::ctrl(KeyCode::Char('c')), "Quit"));
++            .push(Shortcut::new(key_hint::ctrl(KeyCode::Char('c')), "退出"));
+         let mut tasks = Group {
+-            title: "Tasks",
++            title: "任务",
+             entries: Vec::new(),
+         };
+         for (action, bindings, label) in [
+-            ("new_task", &self.agents_keymap.new_task, "New"),
++            ("new_task", &self.agents_keymap.new_task, "新建任务"),
+             (
+                 "new_worktree",
+                 &self.agents_keymap.new_worktree,
+-                "New worktree",
++                "新建工作树",
+             ),
+-            ("resume", &self.agents_keymap.resume, "Resume"),
++            ("resume", &self.agents_keymap.resume, "恢复会话"),
+-            ("fork", &self.agents_keymap.fork, "Fork"),
++            ("fork", &self.agents_keymap.fork, "创建分支"),
+-            ("rename", &self.agents_keymap.rename, "Rename"),
++            ("rename", &self.agents_keymap.rename, "重命名"),
+-            ("stop", &self.agents_keymap.stop, "Stop"),
++            ("stop", &self.agents_keymap.stop, "停止任务"),
+-            ("archive", &self.agents_keymap.archive, "Archive"),
++            ("archive", &self.agents_keymap.archive, "归档任务"),
+-            ("hide", &self.agents_keymap.hide, "Hide"),
++            ("hide", &self.agents_keymap.hide, "隐藏任务"),
+-            ("delete", &self.agents_keymap.delete, "Delete"),
++            ("delete", &self.agents_keymap.delete, "删除任务"),
+-            ("toggle_pin", &self.agents_keymap.toggle_pin, "Pin/unpin"),
++            ("toggle_pin", &self.agents_keymap.toggle_pin, "置顶/取消置顶"),
+         ] {
+             if (action != "new_worktree" || self.worktrees_enabled)
+@@ -100,5 +100,5 @@
+         }
+         let mut view = Group {
+-            title: "View",
++            title: "视图",
+             entries: Vec::new(),
+         };
+@@ -107,18 +107,18 @@
+             view.entries.push(Shortcut {
+                 key: filter,
+-                action: "Filter",
++                action: "筛选",
+             });
+         }
+         for (action, bindings, label) in [
+-            ("search", &self.agents_keymap.search, "Search"),
++            ("search", &self.agents_keymap.search, "搜索"),
+             (
+                 "toggle_grouping",
+                 &self.agents_keymap.toggle_grouping,
+-                "Group",
++                "切换分组",
+             ),
+         ] {
+             view.push(self.agents_keymap.primary_hint(action, bindings), label);
+         }
+-        let mut lines = vec!["Task shortcuts".bold().into(), Line::default()];
++        let mut lines = vec!["任务快捷键".bold().into(), Line::default()];
+         lines.extend(crate::shortcut_help::group_lines(
+             [navigate, tasks, view],
+@@ -140,5 +140,5 @@
+                 })
+         {
+-            hints.push(("?".into(), "help".into()));
++            hints.push(("?".into(), "帮助".into()));
+         }
+         let cancel = if state.help {
+@@ -150,5 +150,5 @@
+         };
+         if let Some(hint) = cancel {
+-            hints.push((hint.display_label(), "back".into()));
++            hints.push((hint.display_label(), "返回".into()));
+         }
+         if state.help {
+@@ -163,5 +163,5 @@
+                 .join("/");
+             if !navigation.is_empty() {
+-                hints.push((navigation, "move".into()));
++                hints.push((navigation, "移动".into()));
+             }
+         }
+@@ -170,7 +170,7 @@
+                 hint.display_label(),
+                 if state.rename_target.is_some() {
+-                    "rename"
++                    "重命名"
+                 } else {
+-                    "open"
++                    "打开"
+                 }
+                 .into(),
+@@ -182,5 +182,5 @@
+                 .primary_hint("new_task", &self.agents_keymap.new_task)
+         {
+-            hints.push((hint.display_label(), "new".into()));
++            hints.push((hint.display_label(), "新建".into()));
+         }
+         hints
+--- a/codex-rs/tui/src/app/agents_overview_view.rs
++++ b/codex-rs/tui/src/app/agents_overview_view.rs
+@@ -95,8 +95,8 @@
+     fn label(self) -> &'static str {
+         match self {
+-            Self::NeedsYou => "Needs input",
++            Self::NeedsYou => "待你处理",
+-            Self::Working => "Working",
++            Self::Working => "执行中",
+-            Self::Ready => "Ready",
++            Self::Ready => "已就绪",
+-            Self::Finished => "Inactive",
++            Self::Finished => "已结束",
+         }
+     }
+@@ -121,5 +121,5 @@
+ fn display_title(thread: &Thread) -> &str {
+     let title = thread.name.as_deref().unwrap_or(&thread.preview);
+-    title.trim().lines().next().unwrap_or("Untitled task")
++    title.trim().lines().next().unwrap_or("未命名任务")
+ }
+ 
+@@ -480,10 +480,10 @@
+                 if row.thread.status == ThreadStatus::SystemError && !is_subagent(&row.thread) =>
+             {
+-                ("Error", "!".red())
++                ("出错", "!".red())
+             }
+-            AgentsOverviewGroup::NeedsYou => ("Needs input", "●".red()),
++            AgentsOverviewGroup::NeedsYou => ("待你处理", "●".red()),
+-            AgentsOverviewGroup::Working => ("Working", "●".green()),
++            AgentsOverviewGroup::Working => ("执行中", "●".green()),
+-            AgentsOverviewGroup::Ready => ("Ready", "○".cyan()),
++            AgentsOverviewGroup::Ready => ("已就绪", "○".cyan()),
+-            AgentsOverviewGroup::Finished => ("Inactive", "○".dim()),
++            AgentsOverviewGroup::Finished => ("已结束", "○".dim()),
+         }
+     }
+@@ -497,5 +497,5 @@
+         let model = crate::line_truncation::truncate_line_with_ellipsis_if_overflow(
+             Line::from(vec![
+-                "Model: ".dim(),
++                "模型：".dim(),
+                 model_name(&row.thread).to_string().into(),
+             ]),
+@@ -504,9 +504,9 @@
+         let reasoning = crate::line_truncation::truncate_line_with_ellipsis_if_overflow(
+             Line::from(vec![
+-                "Reasoning: ".dim(),
++                "推理强度：".dim(),
+                 row.thread
+                     .reasoning_effort
+                     .as_ref()
+-                    .map_or("Unknown", ReasoningEffort::as_str)
++                    .map_or("未知", ReasoningEffort::as_str)
+                     .to_string()
+                     .into(),
+@@ -515,5 +515,5 @@
+         );
+         let mut lines = vec![
+-            Line::from("Task details".bold()),
++            Line::from("任务详情".bold()),
+             Line::default(),
+             crate::line_truncation::truncate_line_with_ellipsis_if_overflow(
+@@ -529,5 +529,5 @@
+             reasoning,
+             Line::default(),
+-            Line::from("Project".dim()),
++            Line::from("项目".dim()),
+             Line::from(row.thread.cwd.display().to_string()),
+         ];
+@@ -540,5 +540,5 @@
+         {
+             lines.push(Line::default());
+-            lines.push("Branch".dim().into());
++            lines.push("分支".dim().into());
+             lines.push(branch.clone().into());
+         }
+--- a/codex-rs/tui/src/app/agents_overview_actions.rs
++++ b/codex-rs/tui/src/app/agents_overview_actions.rs
+@@ -201,5 +201,5 @@
+             .next()
+             .filter(|name| !name.is_empty())
+-            .unwrap_or("Untitled task");
++            .unwrap_or("未命名任务");
+         let (title, description, label) = match action {
+             AgentsOverviewAction::Archive
+@@ -207,18 +207,18 @@
+             {
+                 (
+-                    format!("Archive “{name}”?"),
++                    format!("归档“{name}”？"),
+-                    "This stops any running work in this task and archives it. Child agents stay unchanged. Its history can be restored from the resume picker.",
++                    "归档后将停止此任务中正在运行的工作，但不会影响子智能体。之后可在会话恢复列表中恢复历史记录。",
+-                    "Archive task",
++                    "归档任务",
+                 )
+             }
+             AgentsOverviewAction::Archive => (
+-                format!("Archive “{name}”?"),
++                format!("归档“{name}”？"),
+-                "This stops any running work in this task and its child agents, then archives them. Their history can be restored from the resume picker.",
++                "归档后将停止此任务及其子智能体正在执行的工作，并将它们一并归档。之后可在会话恢复列表中恢复历史记录。",
+-                "Archive task and child agents",
++                "归档任务及子智能体",
+             ),
+             AgentsOverviewAction::Delete => (
+-                format!("Permanently delete “{name}”?"),
++                format!("永久删除“{name}”？"),
+-                "Tasks with saved side chats stay intact. Otherwise, deleting this task stops its running work and permanently deletes its history and its child agents’ history.",
++                "如果任务包含已保存的旁支会话，则会保留这些会话。否则，删除任务会停止正在运行的工作，并永久删除该任务及其子智能体的历史记录。",
+-                "Permanently delete task and child agents",
++                "永久删除任务及子智能体",
+             ),
+         };
+@@ -230,5 +230,5 @@
+             items: vec![
+                 SelectionItem {
+-                    name: "Cancel".to_string(),
++                    name: "取消".to_string(),
+                     dismiss_on_select: true,
+                     ..Default::default()
+@@ -439,14 +439,14 @@
+         if let Err(error) = result {
+             let verb = match action {
+-                AgentsOverviewAction::Archive => "archive",
++                AgentsOverviewAction::Archive => "归档",
+-                AgentsOverviewAction::Delete => "delete",
++                AgentsOverviewAction::Delete => "删除",
+             };
+             let mut header = vec![
+-                format!("Could not {verb} task").red().bold().into(),
++                format!("无法{verb}任务").red().bold().into(),
+                 format!("{error:#}").red().into(),
+             ];
+             if attempted {
+                 header.push(
+-                    "Work may have stopped. Resume the task to continue, or retry the action."
++                    "任务可能已停止。你可以恢复任务以继续执行，或重试此操作。"
+                         .dim()
+                         .into(),
+@@ -456,5 +456,5 @@
+                 header: Box::new(LifecycleHeader(header)),
+                 items: vec![SelectionItem {
+-                    name: "Back to agents".to_string(),
++                    name: "返回智能体列表".to_string(),
+                     dismiss_on_select: true,
+                     ..Default::default()
+--- a/codex-rs/tui/src/app/agents_overview_grouping.rs
++++ b/codex-rs/tui/src/app/agents_overview_grouping.rs
+@@ -45,5 +45,5 @@
+         .as_deref()
+         .filter(|model| !model.is_empty())
+-        .unwrap_or("Unknown")
++        .unwrap_or("未知")
+ }
+ 

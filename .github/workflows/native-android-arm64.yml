@@ -54,7 +54,7 @@ jobs:
         run: |
           set -euo pipefail
           PATCH_COUNT="$(find "$GITHUB_WORKSPACE/native/patches/codex" -maxdepth 1 -type f -name '*.patch' | wc -l | tr -d ' ')"
-          test "$PATCH_COUNT" -eq 6
+          test "$PATCH_COUNT" -eq 9
           cp "$GITHUB_WORKSPACE"/native/patches/codex/*.patch termux-packages/packages/codex/
           printf 'Staged %s Codex localization patch(es)\n' "$PATCH_COUNT"
 
@@ -122,6 +122,17 @@ jobs:
               "自定义模型服务商已配置",
               "Token 用量",
               "选择具体模型和推理强度",
+              "智能体指挥中心",
+              "待你处理",
+              "未命名任务",
+              "键盘快捷键",
+              "排队发送消息",
+              "宠物功能不可用",
+              "此终端不支持宠物显示",
+              "服务档位已设为：",
+              "另外打开一个会话",
+              "看看改了啥（Git，包含未跟踪文件）",
+              "设置自动动作",
           ]
           missing = [item for item in required if item.encode("utf-8") not in binary]
           if missing:
@@ -130,7 +141,7 @@ jobs:
           PY
 
           PATCH_COUNT="$(find "$GITHUB_WORKSPACE/native/patches/codex" -maxdepth 1 -type f -name '*.patch' | wc -l | tr -d ' ')"
-          test "$PATCH_COUNT" -eq 6
+          test "$PATCH_COUNT" -eq 9
           SHORT_SHA="$(printf '%s' "$GITHUB_SHA" | cut -c1-7)"
           INSTALL_VERSION="0.169.0-zh-$SHORT_SHA"
           {

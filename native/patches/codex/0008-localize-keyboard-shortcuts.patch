@@ -1,0 +1,153 @@
+--- a/codex-rs/tui/src/bottom_pane/shortcut_overlay.rs
++++ b/codex-rs/tui/src/bottom_pane/shortcut_overlay.rs
+@@ -27,12 +27,12 @@
+     let hints = props.key_hints;
+     let mut compose = Group {
+-        title: "Compose",
++        title: "输入",
+         entries: vec![
+-            Shortcut::new(key_hint::plain(KeyCode::Char('/')), "Commands"),
++            Shortcut::new(key_hint::plain(KeyCode::Char('/')), "命令"),
+-            Shortcut::new(key_hint::plain(KeyCode::Char('@')), "Mention files"),
++            Shortcut::new(key_hint::plain(KeyCode::Char('@')), "引用文件"),
+-            Shortcut::new(key_hint::plain(KeyCode::Char('!')), "Shell command"),
++            Shortcut::new(key_hint::plain(KeyCode::Char('!')), "Shell 命令"),
+         ],
+     };
+-    compose.push(hints.insert_newline, "New line");
++    compose.push(hints.insert_newline, "换行");
+     compose.entries.push(Shortcut::new(
+         if props.is_wsl {
+@@ -41,8 +41,8 @@
+             key_hint::ctrl(KeyCode::Char('v'))
+         },
+-        "Paste image",
++        "粘贴图片",
+     ));
+-    compose.push(hints.external_editor, "External editor");
++    compose.push(hints.external_editor, "外部编辑器");
+-    compose.push(hints.history_search, "Search history");
++    compose.push(hints.history_search, "搜索历史记录");
+     if let Some(key) = hints.edit_previous {
+         let label = key.display_label();
+@@ -53,10 +53,10 @@
+                 format!("{label} {label}")
+             },
+-            action: "Edit last message",
++            action: "编辑上一条消息",
+         });
+     }
+ 
+     let mut session = Group {
+-        title: "Session",
++        title: "会话",
+         entries: Vec::new(),
+     };
+@@ -64,7 +64,7 @@
+         hints.queue,
+         if props.is_task_running || props.queue_submissions {
+-            "Queue message"
++            "排队发送消息"
+         } else {
+-            "Send message"
++            "发送消息"
+         },
+     );
+@@ -72,10 +72,10 @@
+         session
+             .entries
+-            .push(Shortcut::new(key_hint::shift(KeyCode::Tab), "Change mode"));
++            .push(Shortcut::new(key_hint::shift(KeyCode::Tab), "切换模式"));
+     }
+-    session.push(hints.reasoning_down, "Less reasoning");
++    session.push(hints.reasoning_down, "降低推理强度");
+-    session.push(hints.reasoning_up, "More reasoning");
++    session.push(hints.reasoning_up, "提高推理强度");
+-    session.push(hints.toggle_voice, "Voice");
++    session.push(hints.toggle_voice, "语音");
+-    session.push(hints.agents, "Agents (empty prompt)");
++    session.push(hints.agents, "智能体中心（空输入）");
+     session.entries.push(Shortcut {
+         key: format!(
+@@ -84,28 +84,28 @@
+             next_agent_shortcut().display_label()
+         ),
+-        action: "Subagents (empty prompt)",
++        action: "子智能体（空输入时）",
+     });
+-    session.push(hints.focus_activity, "Inspect activity");
++    session.push(hints.focus_activity, "查看活动");
+     session.entries.push(Shortcut::new(
+         key_hint::ctrl(KeyCode::Char('c')),
+         if props.is_task_running {
+-            "Interrupt"
++            "中断"
+         } else {
+-            "Quit"
++            "退出"
+         },
+     ));
+ 
+     let mut transcript = Group {
+-        title: "Transcript (open first)",
++        title: "对话记录（先打开）",
+         entries: Vec::new(),
+     };
+-    transcript.push(hints.show_transcript, "Open transcript");
++    transcript.push(hints.show_transcript, "打开对话记录");
+-    transcript.push(hints.find_transcript, "Find text");
++    transcript.push(hints.find_transcript, "查找文本");
+     transcript.entries.extend([
+         Shortcut {
+             key: "pgup / pgdn".into(),
+-            action: "Scroll",
++            action: "滚动",
+         },
+-        Shortcut::new(key_hint::ctrl(KeyCode::Char(' ')), "Start selection"),
++        Shortcut::new(key_hint::ctrl(KeyCode::Char(' ')), "开始选择"),
+         Shortcut {
+             key: format!(
+@@ -114,5 +114,5 @@
+                 key_hint::ctrl(KeyCode::End).display_label()
+             ),
+-            action: "Top / latest",
++            action: "最早 / 最新",
+         },
+         // Keep both jump alternatives: the terminal may be on another OS over SSH.
+@@ -131,9 +131,9 @@
+                 .display_label()
+             ),
+-            action: "Top / latest",
++            action: "最早 / 最新",
+         },
+     ]);
+ 
+-    let mut result = vec![Line::from("Keyboard shortcuts").bold(), Line::default()];
++    let mut result = vec![Line::from("键盘快捷键").bold(), Line::default()];
+     result.extend(crate::shortcut_help::group_lines(
+         [compose, session, transcript],
+@@ -153,8 +153,8 @@
+     }
+     line.extend(key_hint::plain(KeyCode::Esc).spans());
+-    line.push_span(" close".set_style(secondary_text_style()));
++    line.push_span(" 关闭".set_style(secondary_text_style()));
+     if line.width() > usize::from(width) {
+         line = Line::from(key_hint::plain(KeyCode::Esc).spans());
+-        line.push_span(" close".set_style(secondary_text_style()));
++        line.push_span(" 关闭".set_style(secondary_text_style()));
+     }
+     line
+@@ -165,5 +165,5 @@
+         [Line::from(vec![
+             "/keymap".fg(accent_color()),
+-            " customize".set_style(secondary_text_style()),
++            " 自定义".set_style(secondary_text_style()),
+         ])],
+         width,
+@@ -180,5 +180,5 @@
+         lines.truncate(body_height.saturating_sub(/*rhs*/ 1));
+         if body_height > 0 {
+-            lines.push(Line::from("… resize to see all").dim());
++            lines.push(Line::from("… 调整终端大小以显示全部内容").dim());
+         }
+         lines.extend(footer);

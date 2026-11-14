@@ -1,0 +1,53 @@
+--- a/codex-rs/tui/src/chatwidget/pets.rs
++++ b/codex-rs/tui/src/chatwidget/pets.rs
+@@ -199,8 +199,8 @@
+         // just invoked also needs an immediate explanation above the composer.
+         self.bottom_pane.show_selection_view(SelectionViewParams {
+-            title: Some("Pets unavailable".to_string()),
++            title: Some("宠物功能不可用".to_string()),
+             subtitle: Some(message.to_string()),
+             items: vec![SelectionItem {
+-                name: "Close".to_string(),
++                name: "关闭".to_string(),
+                 dismiss_on_select: true,
+                 ..Default::default()
+--- a/codex-rs/tui/src/pets/image_protocol.rs
++++ b/codex-rs/tui/src/pets/image_protocol.rs
+@@ -72,14 +72,14 @@
+         match self {
+             Self::Tmux => {
+-                "Pets are unavailable in this tmux pane. Use fullscreen Codex with allow-passthrough all, or run Codex outside tmux."
++                "此 tmux 窗格无法显示宠物。请在全屏模式下运行 Codex，并设置 allow-passthrough all；或在 tmux 外运行 Codex。"
+             }
+             Self::Zellij => {
+-                "Pets are disabled in Zellij. Terminal images don’t stay reliably pane-local in Zellij. Run Codex outside Zellij to use pets."
++                "Zellij 中已禁用宠物功能，因为终端图像无法在各窗格中可靠显示。请在 Zellij 外运行 Codex 以使用宠物。"
+             }
+             Self::Iterm2TooOld => {
+-                "Pets require iTerm2 3.6 or newer. Upgrade iTerm2 to use terminal pets."
++                "宠物功能需要 iTerm2 3.6 或更高版本。请升级 iTerm2 后再使用终端宠物。"
+             }
+             Self::Terminal => {
+-                "Pets aren’t available in this terminal. Terminal pets need image support, and this terminal environment doesn’t expose a supported image protocol. Try a terminal with Kitty graphics or Sixel support, or run Codex outside tmux."
++                "此终端不支持宠物显示。终端宠物需要图像显示支持，但当前终端环境未提供受支持的图像协议。请尝试使用支持 Kitty 图形协议或 Sixel 的终端，或在 tmux 外运行 Codex。"
+             }
+         }
+@@ -541,5 +541,5 @@
+         assert_eq!(
+             message,
+-            Some("Pets require iTerm2 3.6 or newer. Upgrade iTerm2 to use terminal pets.")
++            Some("宠物功能需要 iTerm2 3.6 或更高版本。请升级 iTerm2 后再使用终端宠物。")
+         );
+     }
+--- a/codex-rs/tui/src/app/event_dispatch.rs
++++ b/codex-rs/tui/src/app/event_dispatch.rs
+@@ -2987,7 +2987,7 @@
+                     Ok(()) => {
+                         let message = if let Some(service_tier) = service_tier {
+-                            format!("Service tier set to {service_tier}")
++                            format!("服务档位已设为：{}", match service_tier.as_str() { "priority" => "优先级", "flex" => "灵活", "ultrafast" => "极速", "default" => "标准", other => other })
+                         } else {
+-                            "Service tier cleared".to_string()
++                            "已清除服务档位设置".to_string()
+                         };
+                         self.chat_widget.add_info_message(message, /*hint*/ None);
