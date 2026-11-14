@@ -76,6 +76,10 @@
     "zh": "派生当前对话"
   },
   {
+    "en": "start or continue a conversation in a new worktree",
+    "zh": "新建工作区，接着聊"
+  },
+  {
     "en": "continue this session in the Desktop app",
     "zh": "在桌面版应用中继续当前会话"
   },
