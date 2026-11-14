@@ -1,6 +1,6 @@
 --- a/codex-rs/tui/src/cwd_prompt.rs
 +++ b/codex-rs/tui/src/cwd_prompt.rs
-@@ -41,13 +41,6 @@
+@@ -42,15 +42,8 @@
  impl CwdPromptAction {
 -    fn verb(self) -> &'static str {
 -        match self {
@@ -19,7 +19,7 @@
          }
      }
  }
-@@ -174,7 +167,7 @@
+@@ -179,6 +172,6 @@
          Err(err) => {
              tracing::error!(error = %err, "failed to persist working directory preference");
 -            Some(Line::from("Failed to save working directory preference.").red())
@@ -27,7 +27,7 @@
          }
      }
  }
-@@ -279,8 +272,7 @@
+@@ -283,8 +276,7 @@
          Clear.render(area, buf);
          let mut column = FlexRenderable::new();
  
@@ -37,7 +37,7 @@
          let current_cwd = self.current_cwd.as_str();
          let session_cwd = self.session_cwd.as_str();
  
-@@ -289,7 +281,7 @@
+@@ -292,6 +284,6 @@
          column.push(
              /*flex*/ 0,
 -            Paragraph::new(format!("Working directory · {action_verb}").bold())
@@ -45,7 +45,7 @@
                  .wrap(Wrap { trim: false })
                  .inset(Insets::vh(/*v*/ 0, /*h*/ 2)),
          );
-@@ -297,10 +289,10 @@
+@@ -298,9 +290,9 @@
          column.push(
              /*flex*/ 0,
 -            Paragraph::new(format!(
@@ -59,7 +59,7 @@
              .dim()
              .wrap(Wrap { trim: false })
              .inset(Insets::vh(/*v*/ 0, /*h*/ 2)),
-@@ -308,16 +300,16 @@
+@@ -308,14 +300,14 @@
          let mut labels = vec![
 -            format!("Use session directory ({session_cwd})"),
 -            format!("Use current directory ({current_cwd})"),
@@ -79,7 +79,7 @@
                      self.remembered_current_cwd
                  )
              };
-@@ -330,11 +322,11 @@
+@@ -333,10 +325,10 @@
              Paragraph::new(Line::from(vec![
                  key_hint::plain(KeyCode::Enter).into(),
 -                " continue · ".dim(),
@@ -93,7 +93,7 @@
              ]))
              .wrap(Wrap { trim: false })
              .inset(Insets::vh(/*v*/ 0, /*h*/ 2)),
-@@ -382,7 +374,17 @@
+@@ -382,7 +374,14 @@
          terminal
              .draw(|frame| frame.render_widget_ref(&screen, frame.area()))
              .expect("render cwd prompt");
@@ -109,7 +109,7 @@
      }
  
      #[test]
-@@ -398,7 +400,8 @@
+@@ -400,7 +399,8 @@
          terminal
              .draw(|frame| frame.render_widget_ref(&screen, frame.area()))
              .expect("render cwd prompt");
@@ -119,7 +119,7 @@
      }
  
      #[test]
-@@ -419,7 +422,9 @@
+@@ -423,8 +423,10 @@
              .lines()
              .map(str::trim_end)
              .collect::<Vec<_>>()
@@ -131,7 +131,7 @@
      }
  
      #[test]
-@@ -442,7 +447,7 @@
+@@ -447,8 +449,8 @@
              .lines()
              .map(str::trim_end)
              .collect::<Vec<_>>()
@@ -141,7 +141,7 @@
      }
  
      #[test]
-@@ -480,10 +485,9 @@
+@@ -479,8 +481,7 @@
              .expect("render resized directory picker");
          let rendered = terminal.backend().to_string();
 -        assert!(rendered.contains("› 4. Always use current directory"));
@@ -152,7 +152,7 @@
 -        insta::assert_snapshot!(format!("cwd_picker_selected_{width}x{height}"), rendered);
          screen.handle_key(KeyEvent::new(KeyCode::Esc, KeyModifiers::NONE));
          assert_eq!(screen.selection(), Some(CwdSelection::Session));
-@@ -582,7 +586,7 @@
+@@ -579,9 +580,9 @@
          terminal
              .draw(|frame| frame.render_widget(error_line, frame.area()))
              .expect("render persistence error");
