@@ -59,7 +59,7 @@
                              || self.gateway_setup_enabled
                          {
 -                            "Use an API key or another provider"
-+                            "使用 API 密钥或其他服务提供方"
++                            "使用 API 密钥或其他模型服务商"
                          } else {
 -                            "Use an OpenAI API key"
 +                            "使用 OpenAI API 密钥"
@@ -207,7 +207,7 @@
      fn render_chatgpt_success_message(&self, area: Rect, buf: &mut Buffer) {
          let mut docs_line =
 -            HyperlinkLine::new(Line::from("  Learn about permissions and approvals in the ").dim());
-+            HyperlinkLine::new(Line::from("  了解权限和审批，请参阅 ").dim());
++            HyperlinkLine::new(Line::from("  了解权限与操作审批，请参阅 ").dim());
          docs_line.push_span(
 -            "Codex docs".underlined(),
 +            "Codex 文档".underlined(),
@@ -404,7 +404,7 @@
              }
              SignInState::GatewaySelected(_) | SignInState::GatewayConfigured => {
 -                Paragraph::new("✓ Custom provider configured".green())
-+                Paragraph::new("✓ 自定义服务提供方已配置".green())
++                Paragraph::new("✓ 自定义模型服务商已配置".green())
                      .wrap(Wrap { trim: false })
                      .render(area, buf);
              }
@@ -440,7 +440,7 @@
 -          3. Sign in another way
 +          3. 其他登录方式
 -             Use an API key or another provider
-+             使用 API 密钥或其他服务提供方
++             使用 API 密钥或其他模型服务商
  
 -          Press enter to continue
 +          按 enter 继续
@@ -450,9 +450,9 @@
 @@ -1740,7 +1740,7 @@
          let contents = terminal.backend().to_string();
          insta::assert_snapshot!("continue_in_browser_narrow_long_url", contents);
-         assert!(contents.contains("On a remote or headless machine?"));
+         assert!(contents.contains("在远程或无头设备上？按"));
 -        assert!(contents.contains("Press esc to cancel"));
-+        assert!(contents.contains("Press esc 取消"));
++        assert!(contents.contains("按 esc 取消"));
      }
  
      #[test]
@@ -480,7 +480,7 @@
 -          You're in control
 +          权限由你掌控
 -          Learn about permissions and approvals in the Codex docs
-+          了解权限和审批，请参阅 Codex 文档
++          了解权限与操作审批，请参阅 Codex 文档
  
 -          Codex can make mistakes
 +          Codex 可能会出错
@@ -940,7 +940,7 @@
  
          if self.model_provider.is_some() {
 -            push_label(&mut labels, &mut seen, "Model provider");
-+            push_label(&mut labels, &mut seen, "模型提供商");
++            push_label(&mut labels, &mut seen, "模型服务商");
          }
          if account_value.is_some() {
 -            push_label(&mut labels, &mut seen, "Account");
@@ -1000,7 +1000,7 @@
 +        lines.push(formatter.line("模型", model_spans));
          if let Some(model_provider) = self.model_provider.as_ref() {
 -            lines.push(formatter.line("Model provider", vec![Span::from(model_provider.clone())]));
-+            lines.push(formatter.line("模型提供商", vec![Span::from(model_provider.clone())]));
++            lines.push(formatter.line("模型服务商", vec![Span::from(model_provider.clone())]));
          }
 -        lines.push(formatter.line("Directory", vec![Span::from(directory_value)]));
 +        lines.push(formatter.line("目录", vec![Span::from(directory_value)]));
@@ -1399,7 +1399,7 @@
              let is_current = !items.iter().any(|item| item.is_current);
              let description = Some(format!(
 -                "Choose a specific model and reasoning level (current: {current_label})"
-+                "选择具体模型和推理等级（当前：{current_label}）"
++                "选择具体模型和推理强度（当前：{current_label}）"
              ));
  
              items.push(SelectionItem {
@@ -1451,7 +1451,7 @@
                  )
              }
 -            None => "the selected reasoning".to_string(),
-+            None => "所选推理等级".to_string(),
++            None => "所选推理强度".to_string(),
          };
 -        let plan_only_description = format!("Always use {reasoning_phrase} in Plan mode");
 +        let plan_only_description = format!("在计划模式下始终使用 {reasoning_phrase}");
@@ -1481,7 +1481,7 @@
          };
          let all_modes_description = format!(
 -            "Set the global default reasoning level and Plan mode override, replacing the current {plan_reasoning_source}"
-+            "设置全局默认推理等级和计划模式覆盖项，替换当前的 {plan_reasoning_source}"
++            "设置全局默认推理强度和计划模式覆盖项，替换当前的 {plan_reasoning_source}"
          );
 -        let subtitle = format!("Choose where to apply {reasoning_phrase}.");
 +        let subtitle = format!("选择将 {reasoning_phrase} 应用于何处。");
@@ -1537,7 +1537,7 @@
  
          let header = Paragraph::new(Line::from(
 -            format!("Select Reasoning Level for {model_label}").bold(),
-+            format!("为 {model_label} 选择推理等级").bold(),
++            format!("为 {model_label} 选择推理强度").bold(),
          ))
          .wrap(Wrap { trim: false });
  

@@ -182,10 +182,10 @@
 +            description: "当前目录与已保存会话的目录不同时，选择要使用的工作目录",
 @@ -415,1 +415,1 @@
 -            label: "Model providers",
-+            label: "模型提供方",
++            label: "模型服务商",
 @@ -416,1 +416,1 @@
 -            description: "Choose the default provider for new chats on the connected server",
-+            description: "选择连接的服务器上新建对话时默认使用的提供方",
++            description: "选择连接的服务器上新建对话时默认使用的模型服务商",
 @@ -422,1 +422,1 @@
 -            label: "Copy on select",
 +            label: "选中时复制",
