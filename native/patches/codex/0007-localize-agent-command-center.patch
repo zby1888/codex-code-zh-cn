@@ -54,7 +54,7 @@
                  state
                      .creating_worktree
 -                    .then(|| "Creating worktree…".to_owned())
-+                    .then(|| "正在创建工作树…".to_owned())
++                    .then(|| "正在创建工作区…".to_owned())
              })
              .or_else(|| {
                  state.removal.map(|action| match action {
@@ -209,7 +209,7 @@
                  "new_worktree",
                  &self.agents_keymap.new_worktree,
 -                "New worktree",
-+                "新建工作树",
++                "新建工作区",
              ),
 -            ("resume", &self.agents_keymap.resume, "Resume"),
 +            ("resume", &self.agents_keymap.resume, "恢复会话"),
